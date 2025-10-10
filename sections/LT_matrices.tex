@@ -1,0 +1,894 @@
+\chapter{Linear Transformations and Matrices}
+
+\oldsection{Linear Transformations}
+\begin{definition}
+    A linear transformation $T$ from a $\mathbb{F}$-vector space $V$ to a vector space $W$ is a function with domain $V$ and codomain $W$ that satisfies the following two properties:
+    \begin{enumerate}
+        \item $\forall \vec{v},\vec{u}\in V,\, T(\vec{v})+T(\vec{u})=T(\vec{v}+\vec{u})$
+        \item $\forall\vec{v}\in V,\forall \alpha\in\mathbb{F}, \alpha T(\vec{v})=T(\alpha\vec{v})$
+    \end{enumerate}
+    It suffices to prove that $T(\sum a_i\vec{v}_i)=\sum a_iT(\vec{v}_i)$ for all choices $a_i\in\mathbb{F}$ and $\vec{v}_i\in V$. This is simply a combination of properties (1) and (2) plus a little induction.
+\end{definition}
+\begin{remark}
+    There are a lot of different words often used interchangeably with "transformation". You may hear terms such as "map", "operator", or simply "function". No one will misunderstand you if you use any one of these even though they technically have nuanced meanings. For example, "operator" is used to refer to linear transformations which have the same domain and codomain.
+\end{remark}
+These two properties of linear transformations make them much easier to study than arbitrary transformations, but they are still just as useful. You've probably actually seen and used a lot of linear transformations just haven't realized that they were linear transformations.
+\begin{example}
+    Let $V$ be an $\mathbb{F}$-vector space. Define the transformation $T:V\to V$ via $T(\vec{v})=\vec{v}$. This is known as the identity transformation.
+\end{example}
+\begin{example}
+    Let $V$ be an $\mathbb{F}$-vector space. Define the transformation $T:V\to V$ via $T(\vec{v})=\vec{0}$. This is known as the zero transformation.
+\end{example}
+The word "linear" in linear transformation can be a bit misleading. We are used to thinking of "linear" as meaning a straight line in the $xy$-plane. However, there are many of these straight lines which are not linear transformations.
+\begin{example}
+    Consider the vector space $\mathbb{R}$ over $\mathbb{R}$. Define the transformation $T:\mathbb{R}\to\mathbb{R}$ via $T(x)=x+1$. This is not a linear transformation. Consider $T(x)+T(y)=x+1+y+1=x+y+2\neq x+y+1=T(x+y)$.
+\end{example}
+There are also many linear transformations which are not obviously linear but you are likely very familiar with.
+\begin{example}
+    Consider the vector space $\mathbb{P}_n$ over $\mathbb{R}$. This is the set of all polynomials with real coefficients that have degree less than or equal to $n$. Define the transformation $T:\mathbb{P}_n\to\mathbb{P}_{n-1}$ via $T(p)=p'$ where $p'$ is the derivative of $p$. We know that for $p, q\in\mathbb{P}_n$ we have that $p'+q'=(p+q)'$ and $(\alpha p)'=\alpha p'$. These are simply facts from Calculus. Thus, this is a linear transformation.
+\end{example}
+\begin{example}
+    Consider the vector space $\mathbb{R}^2$ over $\mathbb{R}$. Define the transformation $T:\mathbb{R}^2\to\mathbb{R}^2$ via $T(x,y)=(x\cos(\theta)-y\sin(\theta),x\sin(\theta)+y\cos(\theta))$. This is a counterclockwise rotation about the origin by an angle $\theta$. This is also a linear transformation.
+\end{example}
+One of the conditions for a defined function is that is must be defined for the whole domain. This is still true of a linear transformation, however, linear transformations have a special property. Instead of needing to know what the function does to every single value, for example $f(x,y)=(x^2+y, x-y), \forall x,y\in\mathbb{R}$, we only need to know what the linear transformation does to a basis of the vector space. The remark following the theorem shows why.
+\newpage
+\begin{theorem}
+    Let $V$ and $W$ be $\mathbb{F}$-vector spaces. Let $(\vec{v}_1,\ldots,\vec{v}_n)$ be a basis for $V$ and let $(\vec{w}_1,\ldots,\vec{w}_n)$ be an arbitrary list of vectors in $W$. There exists a unique linear transformation $T:V\to W$ such that $T(\vec{v}_i)=\vec{w}_i$ for each $i\in\{1,\ldots, n\}$.
+\end{theorem}
+\begin{proof}
+    We are going to prove this by constructing a linear transformation which satisfies the properties and then prove its unique.
+
+    First, we will prove the existence of a such a transformation and prove its linear. Since $(\vec{v}_1,\ldots,\vec{v}_n)$ is a basis, for all $\vec{v}\in V$, $\vec{v}$ can be written uniquely as a linear combination of $(\vec{v}_1,\ldots,\vec{v}_n)$. Define the transformation $T:V\to W$ via $T(\vec{v})=\sum_{i=1}^n a_i\vec{w}_i$ where $\vec{v}=\sum_{i=1}^n a_i\vec{v}_i$. This is a well-defined function because of the fact that $(\vec{v}_1,\ldots,\vec{v}_n)$ is a basis. We want to show that $T(\vec{v}_i)=\vec{w}_i$ for each $i\in\{1,\ldots, n\}$ and that $T$ is linear. Consider $T(\vec{v}_1)$. Since $\vec{v}_1=1\cdot\vec{v}_1+0\cdot\vec{v}_2+\ldots+0\cdot\vec{v}_n$, we know that $a_1=1$ and $a_j=0$ for all $j\neq 1$. Thus, we have that $T(\vec{v}_1)=\sum_{i=1}^n a_i\vec{w}_i=a_1\vec{w}_1=\vec{w}_1$. You can repeat this for all $\vec{v}_i$, so $T$ satisfies $T(\vec{v}_i)=\vec{w}_i$. Now we want to show that $T$ is linear. Let $\vec{v},\vec{u}\in V$ such that $\vec{v}=\sum_{i=1}^n a_i\vec{v}_i$ and $\vec{u}=\sum_{i=1}^n b_i\vec{v}_i$.
+    \begin{align*}
+        T(\vec{v})+T(\vec{u})=\sum_{i=1}^n a_i\vec{w}_i+\sum_{i=1}^n b_i\vec{w}_i=\sum_{i=1}^n (a_i+b_i)\vec{w}_i=T(\vec{v}+\vec{u})\\
+        \alpha T(\vec{v})=\alpha\sum_{i=1}^n a_i\vec{w}_i=\sum_{i=1}^n \alpha a_i\vec{w}_i=T(\alpha\vec{v})
+    \end{align*}
+    Now we want to show uniqueness of $T$. Let $S: V\to W$ be a linear transformation that satisfies $S(\vec{v}_i)=\vec{w}_i$. We will show that $S=T$. Let $\vec{v}\in V$ such that $\vec{v}=\sum_{i=1}^n a_i\vec{v}_i$.
+    \begin{align*}
+        S(\vec{v})=S(\sum_{i=1}^n a_i\vec{v}_i)=\sum_{i=1}^n a_iS(\vec{v}_i)=\sum_{i=1}^n a_i\vec{w}_i=\sum_{i=1}^n a_iT(\vec{v}_i)=T(\sum_{i=1}^n a_i\vec{v}_i)=T(\vec{v})
+    \end{align*}
+\end{proof}
+\begin{remark}
+    Let $\vec{v}\in V$ for some $\mathbb{F}$-vector space $V$ and let $(\vec{v}_1,\ldots,\vec{v}_n)$ be a basis of $V$. We know that $\vec{v}$ can be written as a linear combination of the basis. Let this be $\vec{v}=\sum_{i=1}^n a_i\vec{v}_i$. Consider a linear transformation $T:V\to W$ for some $\mathbb{F}$-vector space $W$. We want to show that it suffices to know how a linear transformation acts on the basis vectors to know how it acts on any vector.
+    \begin{align*}
+        \vec{v}&=\sum_{i=1}^n a_i\vec{v}_i\\
+        T(\vec{v})&=T(\sum_{i=1}^n a_i\vec{v}_i)\\
+        T(\vec{v})&=\sum_{i=1}^n T(a_i\vec{v}_i)\tag{use property (1)}\\
+        T(\vec{v})&=\sum_{i=1}^n a_iT(\vec{v}_i)\tag{use property (2)}
+    \end{align*}
+    We use the properties of a linear transformation to show that $T(\vec{v})$ is actually a linear combination of the $T$ applied to each of the basis vectors. Additionally, it has the exact same coefficients as $\vec{v}$ had in terms of the original basis. This shows that $T$ applied to any vector in $V$ is a linear combination of $T$ applied to the basis vectors. This implies that it suffices to know only what $T$ does to a set of basis vectors.
+\end{remark}
+\begin{theorem}
+    Let $V$ and $W$ be $\mathbb{F}$-vector spaces. The set of linear transformations from $V\to W$ is a vector space over $\mathbb{F}$.
+\end{theorem}
+\begin{proof}
+    We need to define a notion of vector addition and scalar multiplication in our vector space of linear transformations. Let $E$ be our vector space of linear transformations. Let $a\in\mathbb{F}$ and $T, S\in E$. Define vector addition via $(T+S)(\vec{x})=T(\vec{x})+S(\vec{x})$ for all $\vec{x}\in V$. Define scalar multiplication via $(aT)(\vec{x})=aT(\vec{x})$ for all $\vec{x}\in V$. Checking the axioms is left as an exercise.
+\end{proof}
+Since we now understand how linear transformations work, we want to introduce a notion of "undoing" a linear transformation. This is not always possible but it can be useful to know if it is.
+\begin{definition}
+    Let $V$ be a $\mathbb{F}$-vector space. We define the identity linear transformation on $V$ as $id: V\to V$ via $id(\vec{x})=\vec{x}$ for all $\vec{x}\in V$.
+\end{definition}
+\begin{definition}
+    Let $V$ and $W$ be $\mathbb{F}$-vector spaces. Let $T: V\to W$ and $S: W\to V$ be linear transformations.
+    \begin{enumerate}
+        \item $S$ is a left inverse of $T$ if $S\circ T=id_V$
+        \item $S$ is a right inverse of $T$ if $T\circ S=id_W$
+        \item $S$ is a two sided inverse of $T$ if $T\circ S=id_W$ and $S\circ T=id_V$
+    \end{enumerate}
+\end{definition}
+\begin{theorem}
+    Let $T:V\to W$, $R: W\to V$, $L: W\to V$ be linear transformations such that $R$ is a right inverse of $T$ and $L$ is a left inverse of $T$. Prove that $R=L$.
+\end{theorem}
+\begin{theorem}
+    Let $U$, $V$, $W$ be $\mathbb{F}$-vector spaces and $S:U\to V$ and $T:V\to W$ be invertible linear transformations. Then $T\circ S$ is invertible and its inverse is $S^{-1}\circ T^{-1}$.
+\end{theorem}
+\begin{proof}
+    We want to show that $S^{-1}\circ T^{-1}$ is a left inverse of $T\circ S$ and a right inverse of $T\circ S$.
+    \begin{align*}
+        (T\circ S)\circ(S^{-1}\circ T^{-1})&=T\circ S\circ S^{-1}\circ T^{-1}\\
+        &=T\circ id_V\circ T^{-1}\\
+        &=T\circ T^{-1}\\
+        &=id_W
+    \end{align*}
+    You can do the same to show that it is a right inverse of $T\circ S$.
+\end{proof}
+\section{Exercises 3}
+\begin{exercise}
+    Let $V$ be a finite dimensional vector space and $L$ be a list that spans $V$. Prove that you can always reduce $L$ into a basis of $V$.
+\end{exercise}
+\begin{proof}
+    If $L$ is linearly independent, by definition you already have a basis. If $L$ is linearly dependent, there exists a vector in the list that can be written as a linear combination of the other vectors in the list. Remove this vector. Notice that removing this vector does not change the span of the list since you can simply replace the vector with its linear combination. Continue this process until the list is linearly independent. The span will remain the same at each step and now your list is linearly independent thus you have a basis.
+\end{proof}
+\begin{exercise}
+    Let $V$ be a vector space with $dim(V)=n$. All sets that span $V$ must have size greater than or equal to $n$.
+\end{exercise}
+\begin{proof}
+    Assume, for sake of contradiction, you have a spanning set of size strictly less than $n$. Since the $dim(V)=n$, consider any basis $B$ which by definition is linearly independent and has size $n$. This means we have found a linearly independent list that has size greater than a spanning set which is a contradiction.
+\end{proof}
+\begin{exercise}
+    Let $V$ and $W$ be vector spaces. Prove that for any linear transformation $T:V\to W$ we have that $T(\vec{0}_V)=\vec{0}_W$.
+\end{exercise}
+\begin{proof}
+    We use additivity of linear transformations to get that:
+    \begin{align*}
+        T(\vec{0}_V)+T(\vec{0}_V)&=T(\vec{0}_V+\vec{0}_V)\\
+        T(\vec{0}_V)+T(\vec{0}_V)&=T(\vec{0}_V)\\
+        T(\vec{0}_V)&=\vec{0}_W
+    \end{align*}
+    We subtract $T(\vec{0}_V)$ from both sides to get $\vec{0}_W$ since $T$ has codomain $W$ so its outputs are vectors in $W$.
+\end{proof}
+\begin{exercise}
+    Consider the vector space $\mathbb{R}$ over $\mathbb{R}$. Prove that $T:\mathbb{R}\to \mathbb{R}$ via $T(x)=x^2$ is not a linear transformation.
+\end{exercise}
+\begin{proof}
+    We will prove that $\alpha T(x)\neq T(\alpha x)$. Clearly, $\alpha T(x)=\alpha x^2$. However, $T(\alpha x)=\alpha^2x^2$. Since these two are not always equal, this is not a linear transformation.
+\end{proof}
+\begin{exercise}
+    Let $T:V\to W$, $R: W\to V$, $L: W\to V$ be linear transformations such that $R$ is a right inverse of $T$ and $L$ is a left inverse of $T$. Prove that $R=L$.
+\end{exercise}
+\begin{proof}
+    By definition of left inverse, we know that $L\circ T=id_V$.
+    \begin{align*}
+        L\circ T&=id_V\\
+        L\circ T\circ R&=id_V\circ R\\
+        L\circ id_V&=R\\
+        L&=R
+    \end{align*}
+\end{proof}
+\section{Linear Transformations as Matrices}
+This section is going to be different from the other ones. Instead of definitions, theorems, and corollarys, we are going to cover how to construct matrices and then prove that matrices are indeed the construction we want them to be. 
+
+First, we should start with some motivation about why its important to have another representation of linear transformations. Let's say I asked you to define the linear transformation rotate counterclockwise by $90$ degrees about the origin in the vector space $\mathbb{R}^2$. I think you'd have a pretty hard time trying to define some sort of $T(\vec{x})$ equals something for all of $\mathbb{R}^2$. However, this has a very simple representation when using matrices. It is simply $\left[\begin{smallmatrix}
+    0 & 1 \\ -1 & 0
+\end{smallmatrix}\right]$. This is just a simple example and motivation. Matrices also have properties which make understanding what abstract linear transformations do way easier such as determinants and eigenvalues. Overall, matrices help us understand, represent, and compute linear transformations much easier.
+
+We’ve covered how linear transformations can be fully defined by a basis. Moreover, they are
+fully defined by a basis in the domain and an arbitrary same sized list in the codomain of the linear
+transformation. Let $V$ and $W$ be $\mathbb{F}$-vector spaces, $\vec{v}\in V$, and $B=(\vec{v}_1,\ldots,\vec{v}_n)$ be a basis of $V$. Let $T:V\to W$ be a linear transformation. We showed that the following is true:
+$$T(\vec{v})=\sum_{i=1}^n a_iT(\vec{v}_i)$$
+This actually shows that the image of $T$, the set of all vectors in the codomain that $T$ maps to, is spanned by the linear transformation applied to the vectors of $B$.
+
+Now, if you recall, we discussed coordinate vectors some time ago and mentioned that it would be important for matrices and linear transformations. We noted that the standard way we write vectors is as the coordinate vector of the elementary basis. This is also true when we write $T(\vec{v})=\sum_{i=1}^n a_iT(\vec{v}_i)$. $T(\vec{v})$ is written with respect to the elementary basis since the $T(\vec{v}_i)$'s are also written with respect to the elementary basis. 
+
+What if we wanted to consider the transformed vectors with respect to a different basis? The elementary basis is the most common basis to work in, but there are certain scenarios where having a different basis can actually make representing vectors much easier. One of these that we will cover later is Diagonalization which makes computing large powers of matrices substantially easier. Let $C$ be a basis of $W$. From the properties of coordinate vectors, we can observe that:
+$$[T(\vec{v})]_C=\sum_{i=1}^n a_i[T(\vec{v}_i)]_C$$
+We still have this same property that the coordinate vector representation for each basis vector of the domain still spans the image. Let's try putting these together. What this means is consider lining up the coordinate vector representation for the basis $B$ in a line.
+$$\begin{bmatrix}
+    \vert & \vert & \ldots & \vert \\
+    [T(\vec{v}_1)]_C & [T(\vec{v}_2)]_C & \ldots & [T(\vec{v}_n)]_C \\
+    \vert & \vert & \ldots & \vert
+\end{bmatrix}_{B\to C}$$
+You might notice that this is actually a matrix! First, let's talk about the size of this matrix. It will have $n$ columns where $n$ is the size of $B$ since there is one column per vector in the basis $B$. This is also just the dimension of the domain. It will have $m$ rows where $m$ is the size of the basis $C$. This is also just the dimension of the codomain. The number of rows is the size of $C$ since the coordinate vector with respect to $C$ has one entry per vector in $C$. This means that the linear transformation $T$ from a $n$-dimensional vector space to an $m$-dimensional vector space can be contained in a $m\times n$ matrix.
+
+We now want to show that this matrix does actually fully capture our linear transformation. That is, we want to show that in the same sense that we can apply a $T$ to a vector in our domain, we can "apply" the matrix to a vector in our domain to get the same output. This means that we have to define a notion of "applying" a matrix so that it gives the same output as applying a linear transformation. This brings us back to the coordinate vectors we were working with earlier. Specifically, the equation:
+$$[T(\vec{v})]_C=\sum_{i=1}^n a_i[T(\vec{v}_i)]_C$$
+We can see that $[T(\vec{v})]_C$ can be expressed as a linear combination of the $[T(\vec{v}_i)]_C$'s. So all we have to do is figure out what the coefficients are. Now, we want to consider the vector of coefficients. This is simply $\left[\begin{smallmatrix}
+    a_1 \\ a_2 \\ \vdots \\ a_n
+\end{smallmatrix}\right]_B$. Now it is important to discuss size again. We previously noted that our matrix is size $m\times n$. This vector is $n\times 1$. So what should we expect our output to be? If we want our matrix to be the same as our linear transformation, our output vector should be a coordinate vector in the vector space $W$. Since $W$ has dimension $m$, our output should be $m\times 1$.
+
+If you are already familiar with matrices and matrix multiplication then you already know that you can only multiply two matrices if the number of columns of the first matrix is equal to the number of rows of the second matrix. We can see here that our matrix is $m\times n$ and our vector is $n\times 1$ so it upholds this rule. Some intuition for why this rule makes sense is that the number of columns of the first matrix corresponds to the size of the domain vector space. Since we want to input a vector from the domain, if it has a different size then it isn't actually from our domain.
+
+Let's consider "applying" our matrix to the vector we defined above. Quickly, we should discuss what is conceptually going on. The $B\to C$ subscript that you may have noticed tells us that we are transforming from one basis to another. This is why we need to input a coordinate vector with respect to $B$ since the way our matrix is set up is the transformation of the basis $B$ written with respect to $C$. This yields:
+\begin{align*}
+    \begin{bmatrix}
+    \vert & \vert & \ldots & \vert \\
+    [T(\vec{v}_1)]_C & [T(\vec{v}_2)]_C & \ldots & [T(\vec{v}_n)]_C \\
+    \vert & \vert & \ldots & \vert
+\end{bmatrix}_{B\to C}\begin{bmatrix}
+    a_1 \\ a_2 \\ \vdots \\ a_n
+\end{bmatrix}_B
+\end{align*}
+We know that $[T(\vec{v})]_C=\sum_{i=1}^n a_i[T(\vec{v}_i)]_C$ so one way we can define matrix multiplication is by taking the $i$th column of the matrix and scaling it by the $i$th row of the vector and then taking the sum across all the columns. This is commonly known as the column by coordinate method. 
+
+If you've learned how matrix multiplication works before, this is likely not the way you learned. You likely learned the row by column method. First, we will introduce some notation. Let our matrix be called $A$ and our vector be called $\vec{x}$. We let $A_{ij}$ denote the entry in the $i$th row and $j$th column of $A$ and $x_i$ denote the $i$th entry of $\vec{x}$. Row by column matrix multiplication is defined as follows:
+$$(A\vec{x})_{i}=\sum_{j=1}^n A_{ij}x_j$$
+In English, this tells us that the $i$th entry of the product is equal to the sum of the product of corresponding entries in the $i$th row of $A$.
+
+Now let's think about why this is correct. We consider the following:
+\begin{align*}
+    (A\vec{x})_1&=A_{11}x_1+A_{12}x_2+\ldots+A_{1n}x_n\\
+    (A\vec{x})_2&=A_{21}x_1+A_{22}x_2+\ldots+A_{2n}x_n\\
+    &\,\,\,\vdots\\
+    (A\vec{x})_m&=A_{m1}x_1+A_{m2}x_2+\ldots+A_{mn}x_n
+\end{align*}
+This part is especially important so really take some time to make sure you understand what is being said here. $A_{ij}$ represents the $j$th coordinate of the vector $[T(\vec{v}_i)]_C$. This is the coefficient of the $j$th vector in $C$ for the linear combination of $T(\vec{v}_i)$. $x_j$ is the $j$th coordinate of the linear combination of $\vec{x}$ with respect to the basis $B$. You may notice that we are actually doing the exact same thing as the column by coordinate method. Notice that for each term in the equations above, if we simply consider the whole column of terms, it is literally just one of the $[T(\vec{v}_i)]_C$'s being scaled which is the exact same as the column by coordinate method. 
+
+Another way to think about this is to go back to the equation $[T(\vec{x})]_C=\sum_{i=1}^n a_i[T(\vec{v}_i]_C$. In this case, our $a_i$'s have been denoted differently as $x_i$'s. Take some time to convince yourself of this. The rest of the equation is the same. The row by column method simply deals with each entry of the output separately while the column by coordinate method deals with the output as a whole.
+
+\begin{example}
+    Let's now work through a huge example with the derivative operator. Let $T:\mathbb{P}^2\to \mathbb{P}^1$ be the derivative operator where $\mathbb{P}^n$ is the vector space of real coefficients polynomials of at most degree $n$. We consider the basis $B=(1,x,x^2)$ of $\mathbb{P}^2$ and the basis $C=(1,x)$ of $\mathbb{P}^1$. We want to find the matrix corresponding to $T$ with respect to these two bases.
+
+    Let's start by determining the size of our matrix. We can see that we want a $2\times 3$ matrix since $dim(\mathbb{P}^2)=3$ and $dim(\mathbb{P}^1)=2$. We now want to fill in our matrix with the coordinate vectors with respect to $C$ of our basis $B$.
+    \begin{align*}
+        [T(1)]_C&=\begin{bmatrix}
+            0 \\ 0
+        \end{bmatrix}\\
+        [T(x)]_C&=\begin{bmatrix}
+            1 \\ 0
+        \end{bmatrix}\\
+        [T(x^2)]_C&=\begin{bmatrix}
+            0 \\ 2
+        \end{bmatrix}
+    \end{align*}
+    So now let's combine these vectors to form our matrix $A$.
+    $$A=\begin{bmatrix}
+        0 & 1 & 0\\
+        0 & 0 & 2
+    \end{bmatrix}_{B\to C}$$
+    We want to show that this is indeed the same as $T$. Let's consider $7x^2+5x+3$. This can be represented as $\begin{bmatrix}
+        3 \\ 5 \\ 7
+    \end{bmatrix}_B$. We can clearly see that the derivative $7x^2+5x+3$ is $14x+5$ which has coordinate vector $\begin{bmatrix}
+        5 \\ 14
+    \end{bmatrix}_C$. Let's see if our matrix gives us the same thing.
+    $$\begin{bmatrix}
+        0 & 1 & 0\\
+        0 & 0 & 2
+    \end{bmatrix}_{B\to C}\begin{bmatrix}
+        3 \\ 5 \\ 7
+    \end{bmatrix}_B=\begin{bmatrix}
+        0*3+1*5+0*7\\
+        0*3+0*5+2*7
+    \end{bmatrix}_C=\begin{bmatrix}
+        5 \\ 14
+    \end{bmatrix}_C$$
+\end{example}
+\begin{example}
+    We now want to start with a matrix and try to determine the linear transformation it comes from.
+    $$A=\begin{bmatrix}
+        1 & 2 & 3 & 4\\
+        5 & 6 & 7 & 8\\
+        9 & 10 & 11 & 12
+    \end{bmatrix}_{B\to C}$$
+    Let $B=(\left[\begin{smallmatrix}
+        1 \\ 0 \\ 0 \\ 0
+    \end{smallmatrix}\right], \left[\begin{smallmatrix}
+        0 \\ 1 \\ 0 \\ 0
+    \end{smallmatrix}\right], \left[\begin{smallmatrix}
+        0 \\ 0 \\ 1 \\ 0
+    \end{smallmatrix}\right], \left[\begin{smallmatrix}
+        0 \\ 0 \\ 0 \\ 1
+    \end{smallmatrix}\right])$ and $C=(\left[\begin{smallmatrix}
+        1 \\ 2 \\ 3
+    \end{smallmatrix}\right],\left[\begin{smallmatrix}
+        4 \\ 5 \\ 6
+    \end{smallmatrix}\right],\left[\begin{smallmatrix}
+        7 \\ 8 \\ 9
+    \end{smallmatrix}\right])$. From $A$, we can determine what happens to each of the basis vectors of $B$.
+    \begin{align*}
+        [T(\left[\begin{smallmatrix}
+        1 \\ 0 \\ 0 \\ 0
+    \end{smallmatrix}\right])]_C&=\left[\begin{smallmatrix}
+        1 \\ 5 \\ 9
+    \end{smallmatrix}\right]_C\\
+    [T(\left[\begin{smallmatrix}
+        0 \\ 1 \\ 0 \\ 0
+    \end{smallmatrix}\right])]_C&=\left[\begin{smallmatrix}
+        2 \\ 6 \\ 10
+    \end{smallmatrix}\right]_C\\
+    [T(\left[\begin{smallmatrix}
+        0 \\ 0 \\ 1 \\ 0
+    \end{smallmatrix}\right])]_C&=\left[\begin{smallmatrix}
+        3 \\ 7 \\ 11
+    \end{smallmatrix}\right]_C\\
+    [T(\left[\begin{smallmatrix}
+        0 \\ 0 \\ 0 \\ 1
+    \end{smallmatrix}\right])]_C&=\left[\begin{smallmatrix}
+        4 \\ 8 \\ 12
+    \end{smallmatrix}\right]_C
+    \end{align*}
+    These are simply the columns of the matrix A. Let's say I wanted to use the elementary basis instead of $C$. How would I use these coordinate vectors in terms of $C$ to get coordinate vectors for the elementary basis? We recall that the definition of a coordinate vector is that its coordinates and the coefficients in the linear combination representing that vector with respect to a basis. This means that $\left[\begin{smallmatrix}
+        x \\ y \\ z
+    \end{smallmatrix}\right]_C$ represents $x$ times the first basis vector of $C$ plus $y$ times the second basis vector of $C$ plus $z$ times the third basis vector of $C$. Using this fact, we can determine what vectors each of the columns represent with respect to the elementary basis.
+    \begin{align*}
+        \left[\begin{smallmatrix}
+        1 \\ 5 \\ 9
+    \end{smallmatrix}\right]_C&=1*\left[\begin{smallmatrix}
+        1 \\ 2 \\ 3
+    \end{smallmatrix}\right]+5*\left[\begin{smallmatrix}
+        4 \\ 5 \\ 6
+    \end{smallmatrix}\right]+9*\left[\begin{smallmatrix}
+        7 \\ 8 \\ 9
+    \end{smallmatrix}\right]=\left[\begin{smallmatrix}
+        84 \\ 99 \\ 114
+    \end{smallmatrix}\right]\\
+    \left[\begin{smallmatrix}
+        2 \\ 6 \\ 10
+    \end{smallmatrix}\right]_C&=2*\left[\begin{smallmatrix}
+        1 \\ 2 \\ 3
+    \end{smallmatrix}\right]+6*\left[\begin{smallmatrix}
+        4 \\ 5 \\ 6
+    \end{smallmatrix}\right]+10*\left[\begin{smallmatrix}
+        7 \\ 8 \\ 9
+    \end{smallmatrix}\right]=\left[\begin{smallmatrix}
+        96 \\ 114 \\ 132
+    \end{smallmatrix}\right]\\
+    \left[\begin{smallmatrix}
+        3 \\ 7 \\ 11
+    \end{smallmatrix}\right]_C&=3*\left[\begin{smallmatrix}
+        1 \\ 2 \\ 3
+    \end{smallmatrix}\right]+7*\left[\begin{smallmatrix}
+        4 \\ 5 \\ 6
+    \end{smallmatrix}\right]+11*\left[\begin{smallmatrix}
+        7 \\ 8 \\ 9
+    \end{smallmatrix}\right]=\left[\begin{smallmatrix}
+        108 \\ 129 \\ 150
+    \end{smallmatrix}\right]\\
+    \left[\begin{smallmatrix}
+        4 \\ 8 \\ 12
+    \end{smallmatrix}\right]_C&=4*\left[\begin{smallmatrix}
+        1 \\ 2 \\ 3
+    \end{smallmatrix}\right]+8*\left[\begin{smallmatrix}
+        4 \\ 5 \\ 6
+    \end{smallmatrix}\right]+12*\left[\begin{smallmatrix}
+        7 \\ 8 \\ 9
+    \end{smallmatrix}\right]=\left[\begin{smallmatrix}
+        120 \\ 144 \\ 168
+    \end{smallmatrix}\right]
+    \end{align*}
+    Now, I want to consider the linear transformation represented by $A$ but instead of from $B\to C$, I want $B\to D$ where $D$ is the elementary basis. Let this new matrix be $A'$. All I have to do now is swap the columns of $A$ with the new coordinate vectors I computed in the previous step.
+    $$A'=\begin{bmatrix}
+        84 & 96 & 108 & 120\\
+        99 & 114 & 129 & 144\\
+        114 & 132 & 150 & 168
+    \end{bmatrix}_{B\to D}$$
+    Notice that $A$ and $A'$ capture the exact same linear transformation just between different bases. In general, when I want to switch between bases, I need to replace each of the columns with the coordinate vector for that column vector with respect to the new basis. 
+\end{example}
+Now we have discussed how linear transformations can be represented as matrices. This means that every matrix is a linear transformation and vice versa. This means that we expect matrices to be able to capture all aspects of linear transformations. So far we have shown that $T(\vec{v})=A\vec{v}$ where $A$ is the matrix representing $T$. From this definition, we can derive how we should define scalar multiplication and vector addition for matrices. The proof is not shown here, but you should think about why these definitions make sense. When we scale a linear transformation/matrix, we simply scale each of the entries of the matrix. When we add linear transformations/matrices, we add the entries pointwise. An example is shown below:
+\begin{align*}
+    c\begin{bmatrix}
+      a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23}
+    \end{bmatrix}&=\begin{bmatrix}
+      ca_{11} & ca_{12} & ca_{13} \\ ca_{21} & ca_{22} & ca_{23}
+    \end{bmatrix}\\
+    \begin{bmatrix}
+      a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23}
+    \end{bmatrix}+\begin{bmatrix}
+      b_{11} & b_{12} & b_{13} \\ b_{21} & b_{22} & b_{23}
+    \end{bmatrix}&=\begin{bmatrix}
+      a_{11}+b_{11} & a_{12}+b_{12} & a_{13}+b_{13} \\ a_{21}+b_{21} & a_{22}+b_{22} & a_{23}+b_{23}
+    \end{bmatrix}
+\end{align*}
+\begin{remark}
+    The set of all $m\times n$ matrices is actually a vector space. Typically denoted $\mathbb{M}_{m\times n}$. We define scalar multiplication and vector addition as above. You can check that it satisfies the axioms.
+This should make sense since we have already seen that the set of all linear transformations between two vector spaces is a vector space.
+\end{remark}
+
+Now there remains one more aspect of linear transformations that we need to show that our matrices capture: composition. We need to somehow show that we can represent $T_A\circ T_B$ as some operation of the matrices $A$ and $B$ representing their respective transformations. Here, we will define matrix to matrix multiplication in almost the exact same manner as we did matrix to vector multiplication. This means that we will show $(T_A\circ T_B)(\vec{v})=AB\vec{v}$.
+
+Let $A$ be an $m\times n$ and $B$ be a $n\times r$ matrix. Note that we still require the number of columns in the first matrix to be equal to the number of columns in the second matrix (why?). We define the matrix product $AB$ to be the $m\times r$ matrix satisfying:
+\begin{align}
+    AB_{ij}=\sum_{k=1}^nA_{ik}B_{kj}
+\end{align}
+Reminder that $A_{ik}$ denotes the entry in the $i$th row and $k$th column of $A$. Let's take a second to understand the above formula. As we increment $k$, we notice that $A_{ik}$ is moving along the $i$th row. If $k$ increases by one, it moves right one column. Similarly, $B_{kj}$ is moving along the $j$th column. If $k$ increases by one, it moves down one row.
+
+Hopefully, this looks at least a little familiar. As mentioned previously, this is almost the exact same formula as the row by column matrix-vector multiplication we described previously. That formula is reproduced down below for an $m\times n$ matrix $A$ and $n\times 1$ vector $\vec{x}$:
+$$(A\vec{x})_i=\sum_{j=1}^nA_{ij}x_j$$
+
+Let's think about why this might be the case. Remember that our goal is to show that multiplying two matrices is the same as composing their corresponding linear transformations. The way that you should think about this new formula is that we are performing matrix-vector multiplication on each of the column vectors. Take some time to convince yourself that this is indeed what $(1)$ is doing.
+\begin{remark}
+    Some intuition behind performing matrix-vector multiplication on each of the column vectors is that we are finding out where the original basis vectors end up. Recall that the columns tell us where each of the respective basis vectors end up. If we are composing linear transformations, we first see what the first linear transformation does to the basis vectors and then see what the second linear transformation does to that result.
+\end{remark}
+Let $A$ be a $m\times n$ matrix and $B$ be a $n\times r$ matrix. We will say that $A$ maps from a basis $\mathcal{B}$ to a basis $\mathcal{C}$ and that $B$ maps from $\mathcal{A}$ to a basis $\mathcal{B}$. When we consider $AB\vec{x}$, we will consider the transformations one by one. First, $B\vec{x}$ will output a coordinate vector with respect to $\mathcal{B}$. Next, we do $A(B\vec{x})$ and since $B\vec{x}$ is a coordinate vector with respect to $\mathcal{B}$, we can simply apply $A$ to it. Notice that this is actually equivalent to $(T_A\circ T_B)(\vec{x})=T_A(T_B(\vec{x}))$.
+
+When composing linear transformations, we have to be very careful that the codomain of the first transformation aligns with the domain of the second linear transformation. If we had previously had that $A$ maps from a basis $\mathcal{D}$ to a basis $\mathcal{C}$, composing $A$ and $B$ would make no sense. $B\vec{x}$ outputs a coordinate vector with respect to $\mathcal{B}$. Trying to apply a linear transformation which only understands $\mathcal{D}$ coordinate vectors to a $\mathcal{B}$ coordinate vector wouldn't make any sense.
+\begin{remark}
+    When we say "wouldn't make any sense", it doesn't mean that the math will magically break down and stop working. It actually means that you are composing a different linear transformation than the one you intended. If we did end up applying the $\mathcal{D}$ input $A$ to $B\vec{x}$, all of the formulas would still work as long as the dimensions lined up. It's just that $A$ would interpret the coordinates of $B\vec{x}$ with respect to $\mathcal{D}$. This is an issue because this would almost surely represent a different vector than when interpreted with $\mathcal{B}$.
+\end{remark}
+\begin{example}
+        All that Remark 11.4 is saying is that if we had $\mathcal{D}=(\begin{pmatrix}
+        1 \\ 2
+    \end{pmatrix}, \begin{pmatrix}
+        3 \\ 4
+    \end{pmatrix})$ and $\mathcal{B}=(\begin{pmatrix}
+        1 \\ 0
+    \end{pmatrix}, \begin{pmatrix}
+        0 \\ 1
+    \end{pmatrix})$, they would interpret the coordinate vector $\begin{bmatrix}
+        5 \\ 6
+    \end{bmatrix}$ differently. We would get that $\begin{bmatrix}
+        5 \\ 6
+    \end{bmatrix}_\mathcal{D}=5\begin{bmatrix}
+        1 \\ 2
+    \end{bmatrix}+6\begin{bmatrix}
+        3 \\ 4
+    \end{bmatrix}=\begin{bmatrix}
+        23 \\ 34
+    \end{bmatrix}$ and $\begin{bmatrix}
+        5 \\ 6
+    \end{bmatrix}_\mathcal{B}=5\begin{bmatrix}
+        1 \\ 0
+    \end{bmatrix}+6\begin{bmatrix}
+        0 \\ 1
+    \end{bmatrix}=\begin{bmatrix}
+        5 \\ 6
+    \end{bmatrix}$
+\end{example}
+Now let's consider an example of composing linear transformations. This example is a followup to Example 11.2. We're going to talk about how we can do that exact same process but now in the context of composing linear transformations.
+\begin{example}
+    We will now find a way to generalize switching a vector between bases. Let $V$ be a $\mathbb{F}$-vector space and $\vec{v}\in V$ with $B$, $C$, and $D$ as bases. We want to find a matrix that when applied to $[\vec{v}]_B$ gives us $[\vec{v}]_C$. Since we are looking for a matrix, we know that this must be a linear transformation. One important thing to notice is that $[\vec{v}]_B$ and $[\vec{v}]_C$ actually encode the same vector for all $\vec{v}\in V$. This means that our linear transformation must be the identity transformation.
+
+    This gives us the linear transformation $Id:V\to V$ via $Id(\vec{v})=\vec{v}$ for all $\vec{v}\in V$. We let $A_{B\to C}$ be the corresponding matrix for this linear transformation. Like before, let's say we wanted $A_{B\to D}$ when we already know what $A_{B\to C}$ is.
+
+    We are actually going to find $Id_{C\to D}$ and compose it with $A_{B\to C}$ to get $Id_{C\to D}\circ A_{B\to C}$. There are a few things to notice about this composition. Firstly, if we just follow the arrows we get that $B\to C\to D$ so at the very least it seems like we are getting the bases correctly. Secondly, since $Id_{C\to D}$ is the identity transformation, this composition is still the same linear transformation as $A$.
+
+    $Id_{C\to D}$ is known as the change of basis matrix from $C$ to $D$. You would compute it in the same way that you would the matrix for any linear transformation.
+\end{example}
+\begin{definition}
+    Let $A$ be a $m\times n$ matrix. We define the transpose of $A$, denoted $A^T$ to be the $n\times m$ matrix satisfying $A_{ij}=A^T_{ji}$.
+\end{definition}
+\begin{remark}
+    The transpose simply takes the rows of $A$ and makes them the columns of $A^T$.
+\end{remark}
+\section{Exercises 4}
+\begin{exercise}
+    Let $T_{\theta}:\mathbb{R}^2\to\mathbb{R}^2$ be the linear transformation of counterclockwise rotation about the origin by $\theta$ radians. Let $\vec{v}_1=\begin{pmatrix}
+        1 \\ 0
+    \end{pmatrix}$ and $\vec{v}_2=\begin{pmatrix}
+        0 \\ 1
+    \end{pmatrix}$
+    \begin{enumerate}[label=(\alph*)]
+        \item Let $T_{\theta}(\vec{v}_1)=\vec{w}_1=\begin{pmatrix}
+            x_1 \\ y_1
+        \end{pmatrix}$. Determine the numerical length of $\vec{w}_1$.
+        \item Compute $\cos(\theta)$ and $\sin(\theta)$.
+        \item Using part (b), determine $\vec{w}_1$.
+        \item Let $T_{\theta}(\vec{v}_2)=\vec{w}_2=\begin{pmatrix}
+            x_2 \\ y_2
+        \end{pmatrix}$. Determine the numerical length of $\vec{w}_2$.
+        \item In trigonometry, we compute our $\sin$ and $\cos$ values with respect to angles starting from the positive $x$-axis which is not what we currently have as $\theta$. What is the angle formed by $\vec{w}_2$ and the positive $x$-axis?
+        \item Using part (e), find the $\cos$ and $\sin$ values of the angle formed by $\vec{w}_2$ and the $x$-axis.
+        \item Use the following two identities to simplify your expression: $\cos(\frac{\pi}{2}+\theta)=-\sin(\theta)$ and $\sin(\frac{\pi}{2}+\theta)=\cos(\theta)$
+        \item Determine $\vec{w}_2$.
+        \item What is the matrix corresponding to $T_{\theta}$ from the elementary basis to the elementary basis?
+    \end{enumerate}
+\end{exercise}
+\begin{exercise}
+    Let $T:\mathbb{R}^2\to\mathbb{R}^2$ be the linear transformation that represents reflection across the line $y=x$.
+    \begin{enumerate}[label=(\alph*)]
+        \item Compute the matrix representing $T$ from the standard basis to the standard basis.
+        \item Prove $B=\left(\begin{pmatrix}
+            1 \\ 1
+        \end{pmatrix}, \begin{pmatrix}
+            1 \\ -1
+        \end{pmatrix}\right)$ is a basis of $\mathbb{R}^2$
+        \item  Compute the matrix representing $T$ from $B$ to $B$
+    \end{enumerate}
+\end{exercise}
+\begin{exercise}
+        Let $B=\left(\begin{pmatrix}
+            1 \\ 1 \\ 0
+        \end{pmatrix}, \begin{pmatrix}
+            0 \\ 0 \\ 1
+        \end{pmatrix}, \begin{pmatrix}
+            0 \\ 1 \\ 0
+        \end{pmatrix}\right)$ and $C=\left(\begin{pmatrix}
+            0 \\ 1 \\ 0
+        \end{pmatrix}, \begin{pmatrix}
+            0 \\ 1 \\ 1
+        \end{pmatrix}, \begin{pmatrix}
+            1 \\ 1 \\ 0
+        \end{pmatrix}\right)$ be bases. Find the change of basis matrix from $B$ to $C$ and use it to compute $[\vec{v}]_C$ where $\vec{v}=\begin{bmatrix}
+            1 \\ 2 \\ 4
+        \end{bmatrix}_B$.
+\end{exercise}
+\begin{exercise}
+    Let $A$ be an $m\times n$ matrix. We define the column space of $A$ to be the span of the columns of $A$. Prove that the column space of $A$ is the same as the image of $T_A$.
+\end{exercise}
+\begin{exercise}
+    Let $A$ be a $m\times n$ matrix and $B$ be a $n\times r$ matrix.
+    \begin{enumerate}[label=(\alph*)]
+        \item Prove that matrix multiplication is not commutative. This means that, in general, $AB\neq BA$
+        \item Give an example of an $A$ and $B$ which commute.
+    \end{enumerate}
+\end{exercise}
+\begin{exercise}
+    Let $A=\left(\begin{pmatrix}
+        -1 \\ 1 \\ -1
+    \end{pmatrix}, \begin{pmatrix}
+        1 \\ 0 \\ 2
+    \end{pmatrix}, \begin{pmatrix}
+        -2 \\ 5 \\ 0
+    \end{pmatrix}\right)$ and $B=\left(\begin{pmatrix}
+        -2 \\ 1 \\ 3
+    \end{pmatrix}, \begin{pmatrix}
+        2 \\ 0 \\ 1
+    \end{pmatrix}, \begin{pmatrix}
+        4 \\ 1 \\ -1
+    \end{pmatrix}\right)$. Note that these are both bases of $\mathbb{R}^3$. Find the change of basis matrix from $B\to A$.
+\end{exercise}
+\begin{proof}
+    $\begin{bmatrix}
+        31 & -15 & -49 \\
+        17 & -7 & -25 \\
+        -6 & 3 & 10
+    \end{bmatrix}$
+\end{proof}
+\begin{exercise}
+    Let $A$ be an $m\times n$ matrix and $B$ be an $n\times r$ matrix. Prove that $(AB)^T=B^TA^T$.
+\end{exercise}
+\section{Fundamental Theorem of Linear Algebra}
+We will now state the Fundamental Theorem of Linear Algebra (technically three theorems but they're all really similar). One thing to keep in mind before we state the theorem is that you will not understand parts of the theorem. By the end of Chapter 15, you should understand and know how to prove the Fundamental Theorem of Linear Algebra.
+\begin{theorem}
+    Given an $m\times n$ matrix $A$ and the corresponding linear transformation $T_A:\mathbb{F}^n\to\mathbb{F}^m$ via $T_A(\vec{x})=A\vec{x}$, the following are equivalent:
+    \begin{enumerate}
+        \item $T_A$ is injective
+        \item $A\vec{x}=\vec{b}$ has at most one solution for all $\vec{b}\in\mathbb{F}^m$
+        \item $ker(T_A)=\{\vec{0}_{\mathbb{F}^n}\}$
+        \item The columns of $A$ are linearly independent in $\mathbb{F}^n$
+        \item $A$ has a left inverse
+        \item $rank(A)=n$
+    \end{enumerate}
+    Moreover, these imply that $m\geq n$.
+\end{theorem}
+\begin{theorem}
+    Given an $m\times n$ matrix $A$ and the corresponding linear transformation $T_A:\mathbb{F}^n\to\mathbb{F}^m$ via $T_A(\vec{x})=A\vec{x}$, the following are equivalent:
+    \begin{enumerate}
+        \item $T_A$ is surjective
+        \item $A\vec{x}=\vec{b}$ has at least one solution for all $\vec{b}\in\mathbb{F}^m$
+        \item $Im(T_A)=\mathbb{F}^m$
+        \item The columns of $A$ span $\mathbb{F}^m$
+        \item $A$ has a right inverse
+        \item $rank(A)=m$
+    \end{enumerate}
+    Moreover, these imply that $n\geq m$.
+\end{theorem}
+\begin{theorem}
+    Given an $m\times n$ matrix $A$ and the corresponding linear transformation $T_A:\mathbb{F}^n\to\mathbb{F}^m$ via $T_A(\vec{x})=A\vec{x}$, the following are equivalent:
+    \begin{enumerate}
+        \item $T_A$ is bijective
+        \item $A\vec{x}=\vec{b}$ has exactly one solution for all $\vec{b}\in\mathbb{F}^m$
+        \item $ker(T_A)=\{\vec{0}_{\mathbb{F}^n}\}$ and $Im(T_A)=\mathbb{F}^m$
+        \item The columns of $A$ form a basis for $\mathbb{F}^m$
+        \item $A$ is invertible
+        \item $rank(A)=m=n$
+    \end{enumerate}
+    Moreover, these imply that $m=n$.
+\end{theorem}
+Hopefully, some of these are believable. Specifically, $(1)$, $(2)$, and $(4)$ for each of the three theorems. Additionally, you should believe that Theorem 13.1 and Theorem 13.2 imply Theorem 13.3. Take the time to convince yourself that you, at least to some degree, believe the last two sentences. We will spend the rest of this section proving that $(1)$, $(2)$, and $(4)$ imply each other.
+
+We will only prove Theorem 13.1. Theorem 13.2 will be left as an exercise to test your understanding of the proofs used in Theorem 13.1.
+\begin{lemma}
+    $T_A$ is injective if and only if $A\vec{x}=\vec{b}$ has at most one solution for all $\vec{b}\in\mathbb{F}^m$.
+\end{lemma}
+\begin{proof}
+    We will prove the forward direction via the contrapositive. Assume that $A\vec{x}=\vec{b}$ has more than one solution for a $\vec{b}\in Im(T_A)$. Note that it must be in the image of $T_A$ otherwise $A\vec{x}=\vec{b}$ simply has no solution. There exists $\vec{x}_1,\vec{x}_2\in\mathbb{F}^m$ where $\vec{x}_1\neq\vec{x}_2$ and $A\vec{x}_1=A\vec{x}_2=\vec{b}$. This shows that $T_A$ is not injective.
+
+    We will also prove the reverse direction via the contrapositive. Assume that $T_A$ is not injective and fix a $\vec{b}\in\mathbb{F}^m$. This means that there exists some $\vec{x}_1,\vec{x}_2\in\mathbb{F}^n$ with $\vec{x}_1\neq\vec{x}_2$ such that $T_A(\vec{x}_1)=T_A(\vec{x}_2)=\vec{b}$. By definition, $T_A(\vec{x})=A\vec{x}$ so we have that $T_A(\vec{x}_1)=A\vec{x}_1=\vec{b}=A\vec{x}_2=T_A(\vec{x}_2)$. This shows that $A\vec{x}=\vec{b}$ there exists a $\vec{b}\in\mathbb{F}^m$ where $A\vec{x}=\vec{b}$ has more than one solution.
+\end{proof}
+\begin{lemma}
+    $T_A$ is injective if and only if the columns of $A$ are linearly independent.
+\end{lemma}
+\begin{proof}
+    We will prove the forward direction via the contrapositive. We assume that the columns of $A$ are not linearly independent. Recall the column by coordinate definition of matrix-vector multiplication. We notice that if we have $A\vec{x}=\vec{b}$, $\vec{b}$ is a linear combination of the columns of $A$. Thus, if the columns of $A$ are linearly dependent, there are multiple linear combinations which make $\vec{b}$. This also means that there are multiple $\vec{x}$'s which cause $A\vec{x}=\vec{b}$. Since, $T_A=A\vec{x}$, we have that $T_A$ is not injective.
+
+    The reverse direction follows the exact same logic as the forward direction. We proceed by contrapositive. Assume that $T_A$ is not injective and fix $\vec{b}\in\mathbb{F}^m$. This means that there exists $\vec{x}_1,\vec{x}_2\in\mathbb{F}^n$ with $\vec{x}_1=\vec{x}_2$ such that $T_A(\vec{x}_1)=T_A(\vec{x}_2)=\vec{b}$. Since $T_A(\vec{x})=A\vec{x}$, we have that $A\vec{x}_1=A\vec{x}_2=\vec{b}$ which shows that there exists a $\vec{b}\in\mathbb{F}^m$ such that $A\vec{x}=\vec{b}$ has more than one solution.
+\end{proof}
+\section{Systems of Linear Equations}
+We're going to take a step back from all the linear transformation stuff and transition into talking about systems of equations. If you have taken a linear algebra course before, this is likely something you are familiar with. 
+
+Let's consider the following system of equations:
+\begin{align*}
+    5x-2y+9z&=-7\\
+    -2x+y-4z&=5\\
+    3x-10y-8z&=0
+\end{align*}
+We can actually model this system using a $3\times 4$ matrix shown below:
+\begin{align*}
+    \left[\begin{array}{ccc|c}
+        5 & -2 & 9 & -7 \\
+        -2 & 1 & -4 & 5 \\
+        3 & -10 & -8 & 0
+    \end{array}\right]
+\end{align*}
+Notice that the first column corresponds to the coefficients of $x$, the second column for $y$, and the third for $z$. The last column holds the solutions. Moreover, the first row represents the first equation and so on.
+
+When working with systems of linear equations in matrices, we have three elementary operations we can perform: scaling a row by a nonzero constant, swapping two rows, and adding one row to another row.
+\begin{definition}
+    We define a elementary matrix to be a matrix that is exactly one elementary operation away from the identity matrix.
+\end{definition}
+\begin{example}
+    \begin{align*}
+        \begin{bmatrix}
+            1 & 0 & 1 \\
+            0 & 1 & 0 \\
+            0 & 0 & 1
+        \end{bmatrix}\tag{1}\\
+        \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & -5 & 0 \\
+            0 & 0 & 1
+        \end{bmatrix}\tag{2}\\
+        \begin{bmatrix}
+            0 & 0 & 1\\
+            0 & 1 & 0\\
+            1 & 0 & 0
+        \end{bmatrix}\tag{3}
+    \end{align*}
+    (1) represents adding the third row to the first row. Notice that it simply adds the third row of the identity to the first row of the identity. (2) is the elementary matrix that represents scaling the second row by $-5$. Again, notice that it simply scales the second row of the identity by $-5$. (3) is the elementary matrix representing swapping the first and third row. Once again, it simply swaps the first and third rows of the identity matrix. Hopefully, you can see that to find the elementary matrix representing an operation, you simply perform that operation on the identity.
+\end{example}
+\section{Matrix Inverses}
+One way to think about Gaussian/Gauss Jordan Elimination is that we are simply chaining together elementary matrices. In other words, we are finding $E_1, E_2,\ldots, E_k$ such that $E_kE_{k-1}E_{k-2}\ldots E_2E_1A=RREF(A)$. It might help to think about this as each $E_i$ is a step that we are using to unwind the system of equations. This type of thinking will help when we discuss finding inverses.
+\begin{definition}
+    Let $A$ be a $n\times n$ matrix. The inverse of $A$ is defined to be the matrix $A^{-1}$ such that $A^{-1}A=AA^{-1}=I_n$
+\end{definition}
+Let's say we had a $n\times n$ matrix $A$ such that $RREF(A)=I_n$. When determining what $RREF(A)$ is using Gaussian/Gauss Jordan Elimination, we found a sequence of elementary matrices that when applied to $A$, leads to $I_n$. This means that we have some elementary matrices such that $E_kE_{k-1}E_{k-2}\ldots E_2E_1A=RREF(A)=I_n$. We define $A^{-1}=E_kE_{k-1}E_{k-2}\ldots E_2E_1$. This definition should be believable since clearly $A^{-1}A=I_n$. Furthermore, this reveals something else about $A$, but first we should discuss the inverse of elementary matrices.
+
+Elementary matrix inverses are actually really easy to find. If I wanted to find the matrix inverse of the elementary matrix corresponding to swapping row one and row five, what would I do? Well, I would simply swap them back. Thus, the inverse of swapping row one and five is to swap row one and five again. This same logic can be applied to the other elementary matrices. This actually also tells us that all elementary matrices are invertible and that their inverses are also elementary matrices.
+
+Now, let's uncover what new information we have gained about $A$. Briefly, when we have an equation say $7x=5$, we can "move" the $7$ to the other side by multiplying both sides by $\frac{1}{7}$ which is the multiplicative inverse of $7$. We can do the same with matrices.
+\begin{theorem}
+    Let $A$ be a $n\times n$ matrix. $A$ is invertible if and only if $A$ is a product of elementary matrices.
+\end{theorem}
+\begin{proof}
+For the forward direction, we assume that $A$ is invertible and use the $A^{-1}=E_kE_{k-1}\ldots E_2E_1$ definition where $E_i$ is the $i$th step of Gaussian Elimination.
+\begin{align*}
+    E_kE_{k-1}E_{k-2}\ldots E_2E_1A&=I_n\\
+    E_k^{-1}E_kE_{k-1}E_{k-2}\ldots E_2E_1A&=E_k^{-1}I_n\\
+    E_{k-1}E_{k-2}\ldots E_2E_1A&=E_k^{-1}\\
+    E_{k-1}^{-1}E_{k-1}E_{k-2}\ldots E_2E_1A&=E_{k-1}^{-1}E_k^{-1}\\
+    E_{k-2}\ldots E_2E_1A&=E_{k-1}^{-1}E_k^{-1}\\
+    &\vdots\\
+    A&=E_{1}^{-1}E_{2}^{-1}\ldots E_{k-1}^{-1}E_k^{-1}
+\end{align*}
+To do the reverse direction, we actually just follow the above equations but backwards.
+\end{proof}
+The way that we actually get all these $E_i$'s is by performing Gaussian Elimination. So far, we have only examined what happens if $RREF(A)=I_n$, but what if it doesn't?
+\begin{theorem}
+    Let $A$ be a $n\times n$ matrix. $A$ is invertible if and only if $RREF(A)=I_n$.
+\end{theorem}
+\begin{proof}
+    This follows from the previous theorem.
+\end{proof}
+Based on this theorem, we can deduce that one way to check if $A$ is invertible, is to perform Gaussian Elimination and see if you get $RREF(A)=I_n$. While doing Gaussian Elimination, each step you do is also one of the $E_i$'s.
+
+After all this talk about products of elementary matrices, you may have thought about the fact that this definition is quite impractical. We can get the $E_i$'s simply from performing Gaussian Elimination, but to get a singular matrix $A^{-1}$, I would have to actually perform all the matrix multiplications. Even if these are elementary matrices, it can still be a pain since as matrices get larger you will have many more elementary matrices from your Gaussian Elimination.
+
+To get around this, we notice that, no matter what, we are performing Gaussian Elimination. We need to perform Gaussian Elimination to check if $A$ is invertible and, if it is, along the way we have also found all of the $E_i$'s. One way to make this more efficient is to simply also multiply the $E_i$'s as you are performing Gaussian Elimination.
+\begin{example}
+    Let's prove that $A=\begin{bmatrix}
+        0 & 1 & 2 \\
+        1 & 0 & 3 \\
+        4 & -3 & 8
+    \end{bmatrix}$ is invertible and find its inverse. We will do this by considering the augmented matrix $[A|I_3]$
+    \begin{align*}
+        [A|I_3]&=\left[\begin{array}{ccc|ccc}
+            0 & 1 & 2 & 1 & 0 & 0\\
+            1 & 0 & 3 & 0 & 1 & 0\\
+            4 & -3 & 8 & 0 & 0 & 1
+        \end{array}\right]\\
+        &=\left[\begin{array}{ccc|ccc}
+            1 & 0 & 3 & 0 & 1 & 0\\
+            0 & 1 & 2 & 1 & 0 & 0\\
+            4 & -3 & 8 & 0 & 0 & 1
+        \end{array}\right]\tag{swap rows 1 and 2}\\
+        &=\left[\begin{array}{ccc|ccc}
+            1 & 0 & 3 & 0 & 1 & 0\\
+            0 & 1 & 2 & 1 & 0 & 0\\
+            0 & -3 & -4 & 0 & -4 & 1
+        \end{array}\right]\tag{add -4 times row 1 to row 3}\\
+        &=\left[\begin{array}{ccc|ccc}
+            1 & 0 & 3 & 0 & 1 & 0\\
+            0 & 1 & 2 & 1 & 0 & 0\\
+            0 & 0 & 2 & 3 & -4 & 1
+        \end{array}\right]\tag{add 3 times row 2 to row 3}\\
+        &=\left[\begin{array}{ccc|ccc}
+            1 & 0 & 3 & 0 & 1 & 0\\
+            0 & 1 & 0 & -2 & 4 & -1\\
+            0 & 0 & 2 & 3 & -4 & 1
+        \end{array}\right]\tag{add -1 times row 3 to row 2}\\
+        &=\left[\begin{array}{ccc|ccc}
+            1 & 0 & 3 & 0 & 1 & 0\\
+            0 & 1 & 0 & -2 & 4 & -1\\
+            0 & 0 & 1 & \frac{3}{2} & -2 & \frac{1}{2}
+        \end{array}\right]\tag{scale row 3 by $\frac{1}{2}$}\\
+        &=\left[\begin{array}{ccc|ccc}
+            1 & 0 & 0 & -\frac{9}{2} & 7 & -\frac{3}{2}\\
+            0 & 1 & 0 & -2 & 4 & -1\\
+            0 & 0 & 1 & \frac{3}{2} & -2 & \frac{1}{2}
+        \end{array}\right]\tag{add -3 times row 3 to row 1}
+    \end{align*}
+    Clearly, $RREF(A)=I_n$ so $A$ is invertible. The right half of this augmented matrix is now actually $A^{-1}$. Let's discuss why.
+
+    We start with $[A|I_3]$. Since $A$ is invertible, we can rewrite this as $[E_kE_{k-1}\ldots E_1I_3|I_3]$. Every step we did in Gaussian Elimination, undoes one of these $E_i$'s until we eventually got to $E_1$. Undoing one of the $E_i$'s is equivalent to multiplying by $E_i^{-1}$. So, after the first step we get $[E_k^{-1}E_kE_{k-1}\ldots E_1I_3|E_k^{-1}I_3]=[E_{k-1}\ldots E_1I_3|E_k^{-1}I_3]$. Then the second step gives $[E_{k-1}^{-1}E_{k-1}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]=[E_{k-2}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]$. This should look familiar. It's the exact same process as we did in proving Theorem 15.2.
+\end{example}
+\begin{remark}
+    Let $A$ be an invertible $n\times n$ matrix. If I want to solve $A\vec{x}=\vec{b}$, I can simply do $A^{-1}A\vec{x}=A^{-1}\vec{b}$ to get $\vec{x}=A^{-1}\vec{b}$.
+\end{remark}
+To recap, now you know how to check invertibility of square matrices and how to find their inverses. We use Gaussian Elimination to both check invertibility and compute the inverse. This is actually a really nice and simple way of understanding and computing inverses. Sadly, it is actually much more involved to find and prove left/right inverses for non-square matrices. Now let's find out how.
+
+Let $A$ be a $m\times n$ matrix and $T_A:\mathbb{F}^n\to \mathbb{F}^m$ be a linear transformation via $T_A(\vec{x})=A\vec{x}$. We will assume that $T_A$ is surjective and thus that $n\geq m$. We will first attempt to construct a right inverse in an example and then use some algebra to show that this is indeed the right inverse.
+\begin{example}
+    Assume $A$ is $3\times 4$. Let $A_r=RREF(A)$. We don't actually care what the values in $A$ are, but assume that $A_r$ is shown below. Moreover, $A_r=GA$ for some $3\times 3$ matrix $G$. Note that $G$ represents the sequence of row operations we performed in Gaussian Elimination to get $RREF(A)$.
+    $$A_r=\begin{bmatrix}
+        1 & 3 & 0 & 0\\
+        0 & 0 & 1 & 0\\
+        0 & 0 & 0 &1
+    \end{bmatrix}$$
+    We are going to first find a right inverse for $A_r$ and then show that from this right inverse, we can get the right inverse of $A$. Some motivation for why we are doing this is that when we found the inverse for $A$, we analyzed how $RREF(A)$ which was the identity matrix. We are hoping that we can do something kind of similar here. Additionally, finding an inverse for something in reduced row-echelon form is substantially easier than any arbitrary matrix since most of the entries are zero.
+    
+    By definition of right inverse, we know that we want $A_rA_r^{-1}=I_3$. If $A_r$ is $3\times 4$ and $I_3$ is $3\times 3$, what are the dimensions of $A_r^{-1}$? $A_r^{-1}$ must be $4\times 3$. This is because the dimension of the codomain of $A_r^{-1}$ must match the dimension of the domain of $A_r$ and the dimension of the domain of $A_r^{-1}$ must match the dimensions of the domain of $I_3$.
+
+    Now let's consider what we have so far.
+    \begin{align*}
+        A_rA_r^{-1}&=I_3\\
+        \begin{bmatrix}
+        1 & 3 & 0 & 0\\
+        0 & 0 & 1 & 0\\
+        0 & 0 & 0 &1
+    \end{bmatrix}\begin{bmatrix}
+        a_1 & b_1 & c_1\\
+        a_2 & b_2 & c_2\\
+        a_3 & b_3 & c_3\\
+        a_4 & b_4 & c_4
+    \end{bmatrix}&=\begin{bmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1
+    \end{bmatrix}
+    \end{align*}
+    Our goal will be to "copy" the leading $1$'s from $A_r$ into the $1$'s on the main diagonal of $I_3$. The way we will do this is by considering something similar to the transpose of $A_r$. Consider the $4\times 3$ matrix given by $B_{ji}=1$ if $A_{ij}$ is a leading one/pivot and $0$ otherwise.
+    
+    This gives us the following matrix:
+        \begin{align*}
+        A_rA_r^{-1}&=I_3\\
+        \begin{bmatrix}
+        1 & 3 & 0 & 0\\
+        0 & 0 & 1 & 0\\
+        0 & 0 & 0 &1
+    \end{bmatrix}\begin{bmatrix}
+        1 & 0 & 0\\
+        0 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1
+    \end{bmatrix}&=\begin{bmatrix}
+        1 & 0 & 0\\
+        0 & 1 & 0\\
+        0 & 0 & 1
+    \end{bmatrix}
+    \end{align*}
+    Note that we do not copy over the $3$ because it is not a leading one. If you perform the matrix multiplication, you can see that this is clearly a right inverse for $A_r$. We will algebraically prove that this method of constructing the right inverse for $A_r$ will always work.
+
+    Now that we have a right inverse of $A_r$, let's see if we can construct a right inverse of $A$. We want to exploit the fact that we know $A_r=GA$. Additionally, we actually know that $G$ is invertible because it is a product of elementary matrices.
+    \begin{align*}
+        A_r&=GA\\
+        G^{-1}A_r&=A\\
+        G^{-1}A_rA_r^{-1}&=AA_r^{-1}\\
+        G^{-1}&=AA_r^{-1}\\
+        G^{-1}G&=AA_r^{-1}G\\
+        I_3&=AA_r^{-1}G
+    \end{align*}
+    Thus, we have that $A_r^{-1}G$ is a right inverse of $A$.
+\end{example}
+We have now conjectured that a right inverse of $A_r$ is this transpose like construct we defined earlier. Let's prove it algebraically. Let the "transpose like construct" be denoted $B_r$. Let $A_r$ be a $m\times n$ matrix. We know that $A_{r_{(ij)}}=B_{r_{(ji)}}$. Let's consider what $A_rB$ is.
+\begin{align*}
+    (A_rB_r)_{ij}&=\sum_{k=1}^n A_{r_{(ik)}}B_{r_{(kj)}}
+\end{align*}
+We know that the desired product, $I_m$, has $1$'s along the main diagonal and zeros everywhere else. Thus, we know that $I_{m_{ij}}=(A_rB_r)_{ij}$. Moreover, if $i=j$ (on the main diagonal), then $I_{m_{ij}}=(A_rB_r)_{ij}=1$. Otherwise, $I_{m_{ij}}=(A_rB_r)_{ij}=0$. Let's consider the $i=j$ case first.
+\begin{align*}
+    (A_rB_r)_{ij}&=\sum_{k=1}^n A_{r_{(ik)}}B_{r_{(kj)}}\\
+    (A_rB_r)_{ii}&=\sum_{k=1}^n A_{r_{(ik)}}B_{r_{(ki)}}
+\end{align*}
+We know that $B_{r_{ki}}=1$ if and only if $A_{r_{ik}}$ is a leading one and $B_{r_{ki}}=0$ otherwise. As we increment $k$, we are moving across the $i$th row of $A_r$. Since $A_r$ is in reduced row echelon form and $A_r$ is surjective, it has exactly one leading one per row. If we didn't have the fact that $A$ is surjective, then we don't know that $A_r$ has exactly one leading one per row. It could have a row of zeros.
+
+From the definition of $B_r$, we know that $B_r$ is zero in the $i$th column except for the corresponding leading one in row $i$ of $A_r$. This means that all terms in the above summations are $0$ except for the $A_{r_{(ik)}}B_{r_{(ki)}}$ where $A_{r_{(ik)}}$ is a leading one. Thus:
+$$(A_rB_r)_{ii}=\sum_{k=1}^n A_{r_{(ik)}}B_{r_{(ki)}}=1$$
+Now let's consider what happens if we are off the main diagonal of $I_m$ so $i\neq j$.
+\section{Exercises 5}
+\begin{exercise}
+    Consider an $m\times n$ matrix $A$ and the corresponding linear transformation $T_A:\mathbb{F}^n\to\mathbb{F}^m$ via $T_A(\vec{x})=A\vec{x}$. Prove the following:
+    \begin{enumerate}[label=(\alph*)]
+        \item $T_A$ is surjective if and only if $A\vec{x}=\vec{b}$ has at least one solution for all $\vec{b}\in\mathbb{F}^m$
+        \item $T_A$ is surjective if and only if the columns of $A$ span $\mathbb{F}^m$
+        \item Why would it follow that $n\geq m$? Moreover, why is this statement made separate from the "The following are equivalent" statements (why would it be false to place this as one of the "The following are equivalent" statements)?
+    \end{enumerate}
+\end{exercise}
+\begin{exercise}
+    Let $E_1$ be the elementary matrix representing a row swap, $E_2$ be the elementary matrix representing scaling a row, and $E_3$ be the elementary matrix representing adding two rows. We now know what $E_1A$, $E_2A$, and $E_3A$ do, but what do $AE_1$, $AE_2$, and $AE_3$ do?
+\end{exercise}
+\begin{exercise}
+    Find the inverse of $\begin{bmatrix}
+        2 & 1 & 1 \\
+        3 & 2 & 1 \\
+        2 & 1 & 2
+    \end{bmatrix}$.
+\end{exercise}
+\begin{exercise}
+    Prove that the definition of $A^{-1}$ as $E_kE_{k-1}\ldots E_2E_1$ is actually a two sided inverse. Note that we have already shown that it is a left inverse so you only need to show that it is a right inverse.
+\end{exercise}
+\begin{exercise}
+    Let $A$ be a $n\times n$ matrix. Prove that $A^{-1}$ is unique.
+\end{exercise}
+\begin{exercise}
+    Let $A$ be a $m\times n$ matrix and $T_A:\mathbb{F}^n\to \mathbb{F}^m$ be a linear transformation via $T_A(\vec{x})=A\vec{x}$. Prove that if $T_A$ is injective then $A$ has a left inverse.
+\end{exercise}
+\section{Subspaces: Image and Kernel}
+\begin{definition}
+    Let $T:V\to W$ be a linear transformation. The image of $T$, denoted $Im(T)$, is the set of all vectors $\vec{w}\in W$ such that there exists a $\vec{v}\in V$ where $T(\vec{v})=\vec{w}$.
+\end{definition}
+\begin{definition}
+    Let $T:V\to W$ be a linear transformation. The kernel of $T$, denoted $ker(T)$, is the set of all vectors $\vec{v}\in V$ such that $T(\vec{v})=\vec{0}_W$.
+\end{definition}
+\begin{theorem}
+    Let $T:V\to W$ be a linear transformation. Then $\vec{0}_V\in ker(T)$.
+\end{theorem}
+\begin{proof}
+    We previously proved that for any vector spaces $V, W$ and linear transformation $T:V\to W$, $T(\vec{0}_V)=\vec{0}_W$
+\end{proof}
+Consider $A\vec{x}=\vec{b}$. The image of $T_A$ is the set of all $\vec{b}$'s such that $A\vec{x}=\vec{b}$ has a solution. Consider $A\vec{x}=\vec{0}$. Notice that the solution space, the set of all $\vec{x}$'s which satisfy $A\vec{x}=\vec{0}$, is actually just the kernel of $T_A$.
+\begin{definition}
+    Let $A$ be a matrix. We define the rank of $A$, denoted $rank(A)$, to be the dimension of the image of $T_A$.
+\end{definition}
+\begin{definition}
+    Let $A$ be a matrix. We define the nullity of $A$, denoted $null(A)$, to be the dimension of the kernel of $T_A$. If $ker(T_A)=\{\vec{0}\}$, we say that $null(A)=0$.
+\end{definition}
+\begin{example}
+    Let $A=\begin{bmatrix}
+        0 & 0 & 1\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+    \end{bmatrix}$. We will consider the equation $A\vec{x}=\vec{b}$. We are looking for all the $\vec{b}$'s such that the above equation has a solution since that it is the image.
+    \begin{align*}
+        A\vec{x}&=\vec{b}\\
+        \begin{bmatrix}
+        0 & 0 & 1\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+    \end{bmatrix}\begin{bmatrix}
+        x_1 \\ x_2 \\ x_3
+    \end{bmatrix}&=\begin{bmatrix}
+        b_1 \\ b_2 \\ b_3
+    \end{bmatrix}\\
+    \begin{bmatrix}
+        x_3 \\ 0 \\ 0
+    \end{bmatrix}&=\begin{bmatrix}
+        b_1 \\ b_2 \\ b_3
+    \end{bmatrix}
+    \end{align*}
+    This tells us $Im(T_A)=\{\vec{b}:\vec{b}=\begin{bmatrix}
+        a \\ 0 \\ 0
+    \end{bmatrix}, a\in\mathbb{F}\}$. Additionally, $rank(A)=1$ since $\begin{bmatrix}
+        1 \\ 0 \\ 0
+    \end{bmatrix}$ forms a basis for $Im(T_A)$. We can now do something similar to find the kernel and nullity by looking at solutions to $A\vec{x}=\vec{0}$.
+    \begin{align*}
+        A\vec{x}&=\vec{b}\\
+        \begin{bmatrix}
+        0 & 0 & 1\\
+        0 & 0 & 0\\
+        0 & 0 & 0
+    \end{bmatrix}\begin{bmatrix}
+        x_1 \\ x_2 \\ x_3
+    \end{bmatrix}&=\begin{bmatrix}
+        0 \\ 0 \\ 0
+    \end{bmatrix}\\
+    \begin{bmatrix}
+        x_3 \\ 0 \\ 0
+    \end{bmatrix}&=\begin{bmatrix}
+        0 \\ 0 \\ 0
+    \end{bmatrix}
+    \end{align*}
+    We notice that we must have $x_3=0$, but $x_1$ and $x_2$ can be any value. Thus, the $ker(T_A)=\{\vec{x}:\vec{x}=\begin{bmatrix}
+        a \\ b \\ 0
+    \end{bmatrix}, a,b\in\mathbb{F}\}$. Moreover, we have that $null(A)=2$ because $(\begin{bmatrix}
+        1 \\ 0 \\ 0
+    \end{bmatrix},\begin{bmatrix}
+        0 \\ 1 \\ 0
+    \end{bmatrix})$ form a basis.
+\end{example}
+\begin{example}
+    Let $A=\begin{bmatrix}
+        1 & 1 & 2 & 2 & 1\\
+        2 & 2 & 1 & 1 & 1\\
+        3 & 3 & 3 & 3 & 2\\
+        1 & 1 & -1 & -1 & 0
+    \end{bmatrix}$. We can compute the row echelon form of $A$ to be $\begin{bmatrix}
+        1 & 1 & 2 & 2 & 1\\
+        0 & 0 & -3 & -3 & -1\\
+        0 & 0 & 0 & 0 & 0\\
+        0 & 0 & 0 & 0 & 0
+    \end{bmatrix}$. This is actually enough to tell us a basis of the image. A basis of the image is the columns containing the leading numbers in the original matrix $A$. A basis of the image is simply $\left(\begin{pmatrix}
+        1 \\ 2 \\ 3 \\ 1
+    \end{pmatrix}, \begin{pmatrix}
+        2 \\ 1 \\ 3 \\ -1
+    \end{pmatrix}\right)$
+    
+\end{example}

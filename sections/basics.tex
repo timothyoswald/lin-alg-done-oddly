@@ -1,0 +1,428 @@
+\chapter{Basics}
+
+\oldsection{Fields}
+\begin{definition}
+    A field $\mathbb{F}$ is a set endowed with operations addition and multiplication satisfying:
+    \begin{enumerate}
+        \item Associativity: $\forall a,b,c\in\mathbb{F},\ a+(b+c)=(a+b)+c,\,(ab)c=a(bc)$
+        \item Commutativity: $\forall a,b\in\mathbb{F},\ a+b=b+a,\, ab=ba$
+        \item Additive Identity: $\forall a\in\mathbb{F}, a+0=a$
+        \item Multiplicative Identity: $\forall a\in\mathbb{F},\ a\times 1=a$
+        \item Additive Inverse: $\forall a,\exists b, a+b=0$
+        \item Multiplicative Inverse: $\forall a\neq 0,\exists b, a\times b=1$
+        \item Distributive: $a(b+c)=ab+ac$
+    \end{enumerate}
+\end{definition}
+You should notice that there isn't really much that's special about fields. It is essentially just a fancy name for the number systems we are used to and the rules we've been using since elementary school.
+\begin{example} The following are examples of fields:
+    \begin{enumerate}
+        \item Real Numbers
+        \item Complex Numbers
+        \item $\mathbb{F}_2$ (this is the set of all integers modulo $2$)
+    \end{enumerate}
+\end{example}
+Importantly, the naturals and integers are not fields. The naturals lack an additive inverse and both lack a multiplicative inverse. It should also be noted that $\mathbb{F}_p$ for some prime $p$ is a vector field since you are guaranteed to have a multiplicative inverse when you are mod a prime.
+\section{Vector Spaces}
+\begin{definition}
+    A vector space $V$ over some field $\mathbb{F}$ is a set $V$ endowed with the operations of vector addition and scalar multiplication and satisfies the following axioms:
+    \begin{enumerate}
+        \item Associativity: $(\vec{u}+\vec{v})+\vec{w}=\vec{u}+(\vec{v}+\vec{w})$
+        \item Commutativity: $\vec{u}+\vec{v}=\vec{v}+\vec{u}$
+        \item Additive Identity: $\exists\vec{0}\in V, \vec{0}+\vec{u}=\vec{u}$
+        \item Additive Inverse:
+        $\forall\vec{u},\exists\vec{v},\vec{u}+\vec{v}=0$, we denote $\vec{v}$ as $-\vec{u}$
+        \item Multiplicative Associativity: $\alpha,\beta\in\mathbb{F}, \alpha(\beta\vec{v})=(\alpha\beta)\vec{v}$
+        \item Identity Multiplication: $1\times\vec{v}=\vec{v}$
+        \item Vector Over Scalar Distributivity: $\alpha,\beta\in\mathbb{F},(\alpha+\beta)\vec{v}=\alpha\vec{v}+\beta\vec{v}$
+        \item Scalar Over Vector Distributivity:
+        $\alpha\in\mathbb{F},\alpha(\vec{u}+\vec{v})=\alpha\vec{u}+\alpha\vec{v}$
+        \item Closure Under Scalar Multiplication:
+        $\forall\alpha\in\mathbb{F},\vec{v}\in V, \alpha\vec{v}\in V$
+        \item Closure Under Vector Addition: $\forall\vec{v},\vec{u}\in V, \vec{u}+\vec{v}\in V$
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+    What it means for a vector space to be over some field $\mathbb{F}$ means that the scalars are elements from $\mathbb{F}$
+\end{remark}
+\begin{example}
+    These are examples of vector spaces:
+    \begin{enumerate}
+        \item $\mathbb{R}^2=\left\{\begin{pmatrix}
+            x \\ y
+        \end{pmatrix}: x,y\in\mathbb{F}\right\}$
+        \item The set of all continuous functions $f:[0,1]\to\mathbb{R}$ over $\mathbb{R}$
+        \item The set of all polynomials of degree $5$ over $\mathbb{R}$
+    \end{enumerate}
+\end{example}
+This example should make it clear that not all vector spaces contain what we normally think of as vectors. The set of all continuous functions is very strange to think of as a vector space since you can't really represent a function in our typical $\begin{pmatrix}
+    \cdot \\ \cdot
+\end{pmatrix}$ format. There are also many other abstract vector spaces so when you are given an arbitrary vector space $V$ over an arbitrary field $\mathbb{F}$ you can't make any assumptions outside of the axioms. Now sometimes you can still represent abstract vector spaces in our standard vector format as the below remark shows.
+\begin{remark}
+    Take the polynomial $4x^5+x^4-x^3+2x^2+7x+15$. We can encode this as a vector via $(4, 1, -1, 2, 7, 15)$ where each component represents the coefficient of the respective degrees in the polynomial.
+\end{remark}
+Vector space axioms do not explicitly contain everything about vectors. However, they are written in such a way that any standard rule of vectors can be derived from them. Below is an example:
+\begin{theorem}
+    Let $V$ be a vector space. For all $\vec{v}\in V$, we have that $0\cdot\vec{v}=\vec{0}$
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        0\cdot\vec{v}&=0\cdot\vec{v}\\
+        0\cdot\vec{v}&=(0+0)\cdot\vec{v}\tag{from Additive Identity}\\
+        0\cdot\vec{v}&=0\cdot\vec{v}+0\cdot\vec{v}\tag{from Vector Over Scalar Distributivity}\\
+        0\cdot\vec{v}-0\cdot\vec{v}&=0\cdot\vec{v}\\
+        \vec{0}&=0\cdot\vec{v}\tag{from Additive Inverse}
+    \end{align*}
+\end{proof}
+\begin{remark}
+    If a problem says a vector space $V$ over a field $\mathbb{F}$, you can make no assumptions about the vector space and field outside of the axioms. However, in general, it is safe to assume that if a vector space and field are not specifically listed, you are in $\mathbb{R}^n$ over $\mathbb{R}$
+\end{remark}
+Vector spaces are often contain other vector spaces. For example, if we consider the $\R^2$ over $\R$, it contains the smaller vector space of all vectors which have the same first and second coordinate. One can check that the vector space axioms hold for this. This leads us to the definition of a subspace.
+\begin{definition}
+    Let $V$ be a vector space. $U$ is a subspace of $V$ if and only if $U\subseteq V$ and $U$ satisfies all the vector space axioms.
+\end{definition}
+\begin{remark}
+    When proving something is a subspace, you don't actually need to go through and check all the axioms again. We already know that axioms like commutativity and associativity hold because $U$ is a subset of $V$. Thus, you don't need to check all of the axioms when proving that $U$ is a subspace.
+\end{remark}
+In general, to prove that $U\subseteq V$ is a subspace, you need to check that $\vec{0}\in U$, $U$ contains inverses, and $U$ is closed under operations. You should convince yourself that, as mentioned in the previous remark, the other axioms follow from the fact that $U\subseteq V$.
+\begin{remark}
+    Every vector space $V$ has two "canonical" subspaces: $\{\vec{0}_V\}$ and $V$ itself.
+\end{remark}
+\begin{example}
+    Let $V=\mathbb{R}$. Is $U=\mathbb{N}$ a subspace of $V$? No, since $1\in U$ does not have an additive inverse.
+\end{example}
+\section{Linear Combinations and Span}
+It's important for vector spaces to have some notion of relationships between vectors. Generally, this is captured via the idea of linear combinations.
+\begin{definition}
+    Given a list of vectors $L=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_n)$ for some vector space $V$ over some field $\mathbb{F}$. A linear combination of $L$ is defined as $\alpha_1\vec{v}_1+\alpha_2\vec{v}_2+\ldots+\alpha_n\vec{v}_n$ where $\alpha_i\in\mathbb{F}$
+\end{definition}
+\begin{example}
+    Consider $L=((2,1,0), (1,1,0),(0,1,0))$ over the field $\mathbb{R}$. Is $(0,0,1)$ a linear combination of $L$?
+    \begin{proof}
+        Let $\alpha_1,\alpha_2,\alpha_3\in\mathbb{R}$. Consider $\alpha_1(2,1,0)+\alpha_2(1,1,0)+\alpha_3(0,1,0)$. We can see that this equals $(2\alpha_1+\alpha_2,\alpha_1+\alpha_2,0)$. Now you set up a system of equations with $(2\alpha_1+\alpha_2,\alpha_1+\alpha_2,0)$ and $(0,0,1)$ component wise. This gives the following equations:
+        \begin{align*}
+            2\alpha_1+\alpha_2=0\\
+            \alpha_1+\alpha_2=0\\
+            0=1
+        \end{align*}
+        We get that $0=1$ which is impossible so we know that $(0,0,1)$ cannot be a linear combination of $L$.
+    \end{proof}
+\end{example}
+We also want to consider the idea of all possible linear combinations since this tells us, in some sense, all vectors related to the vectors in our list.
+\begin{definition}
+    Let $L$ be a list of vectors. We define the span of $L$ to be the set of all vectors that can be represented as a linear combination of $L$. We denote this as $span(L)$.
+\end{definition}
+\begin{theorem}
+    Let $L=((1,0),(0,1))$. Then we have that $span(L)=\mathbb{R}^2$ over $\mathbb{R}$
+\end{theorem}
+\begin{proof}
+    Note that we are trying to prove equality between two sets namely $span(L)$ and $\mathbb{R}^2$. Thus, we will use double containment.
+    First, we will show that $\mathbb{R}^2\subseteq span(L)$. Given an arbitrary vector $(x,y)\in\mathbb{R}^2$. Let $a_1,a_2\in\mathbb{R}$. Consider $a_1(1,0)+a_2(0,1)$ which equals $(a_1,a_2)$. This gives $(a_1,a_2)=(x,y)$. Thus, taking $a_1=x$ and $a_2=y$ will show that $(x,y)\in span(L)$. Next, we want to show $span(L)\subseteq\mathbb{R}^2$. We know this is true by Closure Under Scalar Multiplication and Vector Addition.
+\end{proof}
+\begin{remark}
+    We define the span of the empty list to be $\{\vec{0}\}$.
+\end{remark}
+
+\section{Exercises 1}
+\begin{exercise}
+    Let $\vec{v}\in V$ for some vector space $V$ for a field $\mathbb{F}$. Prove that $-1\cdot\vec{v}=-\vec{v}$
+\end{exercise}
+\begin{proof}
+We will begin using the fact that $0\cdot\vec{v}=\vec{0}$
+    \begin{align*}
+        0\cdot\vec{v}=\vec{0}\\
+        (-1+1)\cdot\vec{v}=\vec{0}\\
+        -1\cdot\vec{v}+1\cdot\vec{v}=\vec{0}\tag{by Vector over Scalar Distributivity}\\
+        -1\cdot\vec{v}+\vec{v}=\vec{0}\tag{by Identity Multiplication}\\
+        -1\cdot\vec{v}=-\vec{v}\tag{by Additive Inverse}
+    \end{align*}
+\end{proof}
+\begin{exercise}
+    Let $V$ be a vector space over a field $\mathbb{F}$. Prove that for any $\vec{v}\in V$ and $c\in\mathbb{F}$, if $c\vec{v}=\vec{0}$ then either $c=0$ or $\vec{v}=\vec{0}$.
+\end{exercise}
+\begin{proof}
+    We will assume that $c\vec{v}=\vec{0}$ and prove that if $c\neq 0$ then we must have $\vec{v}=\vec{0}$. Otherwise, we have that $c=0$ which satisfies our claim. Since $c\in\mathbb{F}$ and $c\neq 0$, we know that $c$ must have a multiplicative inverse. Denote $c$'s multiplicative inverse as $c^{-1}$.
+    \begin{align*}
+        c\vec{v}&=\vec{0}\\
+        c^{-1}c\vec{v}&=c^{-1}\vec{0}\\
+        \vec{v}&=\vec{0}\tag{1}
+    \end{align*}
+    We note that there is no vector space axiom telling us that a scalar times the zero vector is the zero vector so we need a proof to justify (1).
+    \begin{align*}
+        c\vec{0}&=c\vec{0}\\
+        c(\vec{0}+\vec{0})&=c\vec{0}\tag{Additive Identity}\\
+        c\vec{0}+c\vec{0}&=c\vec{0}\tag{Scalar Over Vector Distributivity}\\
+        c\vec{0}&=\vec{0}\tag{Additive Inverse}
+    \end{align*}
+\end{proof}
+\begin{exercise}
+    Let $L=((1,-1),(-\sqrt{2},\sqrt{2}))$ from $\mathbb{R}^2$ over $\mathbb{R}$. Find, with proof, $span(L)$
+\end{exercise}
+\begin{proof}
+    First, one may note that both vectors are in the form $(a,-a)$. This should hopefully give you an inkling as to what the span may be. We start by letting $a_1,a_2\in\mathbb{R}$. Consider $a_1(1,-1)+a_2(-\sqrt{2},\sqrt{2})$. Computing the sum of these two vectors we get $(a_1-a_2\sqrt{2},-a_1+a_2\sqrt{2})$. By letting $b=a_1-a_2\sqrt{2}$, we can see that all vectors in the span of $L$ have the form $(b,-b)$. We now make the claim that $span(L)=S=\{(x,-x)\in\mathbb{R}^2\}$. We recall that since we are showing set equality we must use double containment and the above shows that $span(L)\subseteq S$. We now want to show that $S\subseteq span(L)$. Consider some arbitrary vector $(x,-x)\in S$. We want to show that this is a linear combination of $L$. We note that $(x,-x)=x(1,-1)$ thus we have what we want. So by double containment, $span(L)=S$
+\end{proof}
+\begin{exercise}
+    Let $L=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_n)$ be a list of vectors from a vector space $V$ over a field $\mathbb{F}$. Show that $span(L)$ is a vector space.
+\end{exercise}
+\begin{proof}
+    We first observe that since all the vectors are already in $V$ which is a vector space, they must follow all the axioms like commutativity, associativity, and distributivity. It remains to check axioms like additive identity, additive inverse, and closure. For the additive inverse, for any vector in $span(L)$, we simply consider the negative of all the coefficients in the linear combination to get the additive inverse. For additive identity, we observe that $\vec{0}\in span(L)$ for any list $L$. This is because we can consider the linear combination where all coefficients are zero.
+
+    It remains to check closure. Clearly, closure under scalar multiplication holds since all it does it scale the coefficients in the linear combination which is still a linear combination. Closure over vector addition also holds since we are simply adding the coefficients of the linear combination of the vectors we are adding.
+\end{proof}
+\section{Linear Independence}
+We want an idea that tells us in a sense how redundant our list. This is describing a list which contains multiple vectors that contribute the same vectors to the span.
+\begin{definition}
+    A list $L$ of vectors is linearly independent if for each $\vec{w}\in span(L)$, $\vec{w}$ is a unique linear combination of $L$. Lists that do not have this property are called linearly dependent.
+\end{definition}
+\begin{example}
+    Let $L=((1,0),(2,0))$. We observe that $(2,0)=2*(1,0)=1*(2,0)$ which are two different linear combination of $L$. Thus, $L$ cannot be linearly independent.
+\end{example}
+The idea in this example is that $(1,0)$ and $(2,0)$ contribute the same vectors to the span. Consider $\vec{v}=a_1(1,0)+a_2(2,0)$. We can simply rewrite this as $\vec{v}=a_1(1,0)+a_2(2,0)=a_1(1,0)+2a_2(1,0)=(a_1+2a_2)(1,0)$. This shows us that including the vector $(2,0)$ in the list does not change the span at all.
+\begin{example}
+    Let $L=((1,0,0), (0,1,0), (1,1,0))$. Consider the vector $(2,2,0)$. We observe that $(2,2,0)=2*(1,0,0)+2*(0,1,0)$ and that $(2,2,0)=2*(1,1,0)$. Since we have two different linear combination that produce $(2,2,0)\in span(L)$, this list is not linearly independent.
+\end{example}
+Similarly, we have here that $(1,1,0)=(1,0,0)+(0,1,0)$ so having $(1,1,0)$ in the list does not affect the span at all. It should be noted though that having the list $((1,0,0),(0,1,0))$ and the list $((1,1,0))$ would not have the same span despite the fact that combining them produces a linearly dependent list.
+
+We will now consider some definitions that are equivalent to our definition of linearly independent but often much more useful for proving linear independence/dependence.
+\begin{theorem}
+    Let $L=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_n)$ be a list of vectors. The following are equivalent:
+    \begin{enumerate}
+        \item $L$ is linearly independent
+        \item $\vec{0}$ has only the trivial representation
+        \item No $\vec{v}_j\in L$ can be written as a linear combination of $L\setminus\{\vec{v}_j\}$
+    \end{enumerate}
+\end{theorem}
+\begin{remark}
+    The following are equivalent means that if you have any one of the statements then you immediately have all of the statements.
+\end{remark}
+\begin{remark}
+    The trivial representation means that all the coefficients in the linear combination are zero.
+\end{remark}
+\begin{proof}
+    We will first prove that (1) and (2) imply each other.
+
+    We want to show (1) implies (2). We assume that $L$ is linearly independent. Note that $\vec{0}\in span(L)$ and that setting all coefficients to zero gives a linear combination of $L$ which equals $\vec{0}$. Since the linear combinations of $L$ are unique and we have found one linear combination of $L$ that equals $\vec{0}$, it must be the only linear combination that equals $\vec{0}$.
+
+    We now want to show (2) implies (1). We assume that $\vec{0}$ only has the trivial representation. Let $\vec{w}\in span(L)$. Suppose that we have $\vec{w}=a_1\vec{v}_1+a_2\vec{v}_2+\ldots+a_n\vec{v}_n$ and $\vec{w}=b_1\vec{v}_1+b_2\vec{v}_2+\ldots+b_n\vec{v}_n$.
+    \begin{align*}
+        \vec{w}-\vec{w}=\vec{0}\\
+        a_1\vec{v}_1+a_2\vec{v}_2+\ldots+a_n\vec{v}_n-(b_1\vec{v}_1+b_2\vec{v}_2+\ldots+b_n\vec{v}_n)=\vec{0}\\
+        (a_1-b_1)\vec{v}_1+(a_2-b_2)\vec{v}_2+\ldots+(a_n-b_n)\vec{v}_n=\vec{0}
+    \end{align*}
+    Now we use our assumption which tells that $\vec{0}$ only has the trivial representation. This means that $a_i-b_i=0$ for all $i\in\{1,\ldots, n\}$. Thus, $a_i=b_i$ for all $i\in\{1,\ldots, n\}$ and so the linear combinations must be unique.
+
+    We will now show that (2) and (3) imply each other.
+
+    First, we will show that (2) implies (3) via the contrapositive. So we will assume that (3) does not hold. This means that there exists a $\vec{v}_j\in L$ that can be written as a linear combination of $L\setminus\{\vec{v}_j\}$. We will say that $\vec{v}_j=\sum_{i =1,i\neq j}^n a_i\vec{v}_i$. 
+    \begin{align*}
+        \vec{v}_j&=\sum_{i =1,i\neq j}^n a_i\vec{v}_i\\
+        \vec{0}&=\sum_{i =1,i\neq j}^n a_i\vec{v}_i-\vec{v}_j
+    \end{align*}
+    We observe that the above equation represents $\vec{0}$ as a linear combination of $L$. Importantly, the coefficient of $\vec{v}_j=-1\neq 0$ thus $\vec{0}$ can be written as not the trivial representation.
+
+    Next, we will show that (3) implies (2) again via the contrapositive. Assume that $\vec{0}$ has a nontrivial representation. This means that we have $\vec{0}=\sum_{i=1}^n a_i\vec{v}_i$ such that there exists an $a_j\neq 0$.
+    \begin{align*}
+        \vec{0}&=a_1\vec{v}_1+a_2\vec{v}_2+\ldots+a_n\vec{v}_n\\
+        -a_j\vec{v}_j&=a_1\vec{v}_1+\ldots+a_{j-1}\vec{v}_{j-1}+a_{j+1}\vec{v}_{j+1}+\ldots+a_n\vec{v}_n\\
+        \vec{v}_j&=\frac{a_1}{a_j}\vec{v}_1+\ldots+\frac{a_{j-1}}{a_j}\vec{v}_{j-1}+\frac{a_{j+1}}{a_j}\vec{v}_{j+1}+\ldots+\frac{a_n}{a_j}\vec{v}_n\tag{we can divide since $a_j\neq 0$}
+    \end{align*}
+    The above equation shows that $\vec{v}_j$ can be written as a linear combination of $L\setminus\{\vec{v}_j\}$. Thus, we have shown that (3) does not hold.
+
+    The proof that (1) and (3) imply each other is left as an exercise.
+\end{proof}
+\begin{remark}
+    To prove linear independence, it suffices to show any of the three conditions. Often the easiest to prove is (2). Since you consider the equation $\vec{0}=\sum_{i=1}^n a_i\vec{v}_i$ and solve the system given by each coordinate to see if there are nontrivial solutions. (3) is often most useful for proving linear dependence. 
+\end{remark}
+\begin{corollary}
+    A result of (2) is this slightly stronger statement about linear dependence. If a list $L$ is linearly dependent, then there exists $\vec{v}_j\in L$ such that $\vec{v}_j$ can be written as a linear combination of $(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_{j-1})$. In other words, there exists a vector $\vec{v}_j\in L$ which can be written as a linear combination of the vectors that come before it in the list.
+\end{corollary}
+\begin{proof}
+    We know that there exists a nontrivial linear combination that equals $\vec{0}$. Let this be $\sum_{i=1}^n a_i\vec{v}_i$. Since it is nontrivial, let $a_j$ be the last nonzero coefficient.
+    \begin{align*}
+        \vec{0}&=\sum_{i=1}^n a_i\vec{v}_i\\
+        \vec{0}&=\sum_{i=1}^j a_i\vec{v}_i\tag{since $a_j$ is the last nonzero coefficient}\\
+        -a_j\vec{v}_j&=\sum_{i=1}^{j-1}a_i\vec{v}_i\\
+        \vec{v}_j&=\sum_{i=1}^{j-1}-\frac{a_i}{a_j}\vec{v}_j
+    \end{align*}
+\end{proof}
+\begin{theorem}
+    For any list of vectors $L$, there exists a sublist $L'$ such that $L'$ is linearly independent and $span(L)=span(L')$.
+\end{theorem}
+\begin{proof}
+    Let $n$ be the size of the list $L$. We will prove this statement via induction on $n$.
+
+    Base Case: When $n=0$, our list is empty so our statement is vacuously true.
+
+    Induction Step: Let $n\in\mathbb{N}$. Assume that the statement holds for lists of size $n$. We want to show that the statement holds for all lists of size $n+1$. Let $L=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_{n+1})$. If $L$ is linearly independent, we're done. Now assume that $L$ linearly dependent. We will use (3) to get that $\vec{v}_j=\sum_{i=1,i\neq j}^{n+1}a_i\vec{v}_i$. Consider the list $L'=L\setminus\{\vec{v}_j\}$. Note that $|L'|=n$ so we can apply the Induction Hypothesis. This gives a list $L''$ which is linearly independent and $span(L')=span(L'')$.
+
+    We want to show that the $span(L)=span(L')=span(L'')$. Let $\vec{w}\in span(L)$. By definition, we know that $\vec{w}=\sum_{i=1}^{n+1} b_i\vec{v}_i$. We use the fact that $\vec{v}_j=\sum_{i=1,i\neq j}^{n+1}a_i\vec{v}_i$ to get that: $$\vec{w}=\sum_{i=1}^{n+1} b_i\vec{v}_i=\sum_{i=1, i\neq j}^{n+1} b_i\vec{v}_i+b_j\vec{v}_j=\sum_{i=1, i\neq j}^{n+1} b_i\vec{v}_i+b_j\sum_{i=1,i\neq j}^{n+1}a_i\vec{v}_i$$
+    We have shown that $\vec{w}$ can be written as a linear combination of $L\setminus\{\vec{v}_j\}$ so $\vec{w}\in span(L')$ and $span(L)\subseteq span(L')$. We know that $span(L')\subseteq span(L)$ because $L'$ is a sublist of $L$. So by double containment $span(L)=span(L')$ and thus $span(L)=span(L'')$ so we have found a sublist $L''$ which satisfies the desired conditions.
+\end{proof}
+\section{Exercises 2}
+\begin{exercise}
+    Prove that (1) and (3) imply each other in Theorem 5.4.
+\end{exercise}
+\begin{proof}
+    For (1) implies (3), we observe that $\vec{v}_j\in L$ means that $\vec{v}_j\in span(L)$. This means that it has a unique linear combination and since $1\vec{v}_j$ is a linear combination is must be the only one. Thus, $L\setminus\{\vec{v}_j\}$ cannot form $\vec{v}_j$ as a linear combination.
+
+    We will prove that (3) implies (1) via the contrapositive. We assume that $L$ is not linearly independent. This means that there exists a vector $\vec{w}\in span(L)$ such that $\vec{w}$ can be represented as at least two different linear combinations. Let these two linear combinations be $\vec{w}=\sum_{i=1}^n a_i\vec{v}_i$ and $\vec{w}=\sum_{i=1}^n b_i\vec{v}_i$.
+    \begin{align*}
+        \vec{w}-\vec{w}&=\vec{0}\\
+        \sum_{i=1}^n a_i\vec{v}_i-\sum_{i=1}^n b_i\vec{v}_i&=\vec{0}\\
+        \sum_{i=1}^n (a_i-b_i)\vec{v}_i&=\vec{0}
+    \end{align*}
+    Technically it suffices to stop here. Since we have shown that not (1) implies not (2) which we have already proved to imply not (3), but we will complete the direct proof anyway. Since the two linear combinations are different, we know that there exists some $j$ such that $a_j\neq b_j$.
+    \begin{align*}
+        \sum_{i=1}^n (a_i-b_i)\vec{v}_i&=\vec{0}\\
+        \sum_{i=1, i\neq j}^n (a_i-b_i)\vec{v}_i&=-(a_j-b_j)\vec{v}_j\\
+        \sum_{i=1, i\neq j}^n \frac{a_i-b_i}{b_j-a_j}\vec{v}_i&=\vec{v}_j
+    \end{align*}
+    Thus, we have shown that $\vec{v}_j$ can be written as a linear combination of the other vectors.
+\end{proof}
+\begin{exercise}
+    Prove that in the vector space $\mathbb{R}$ over $\mathbb{R}$, any list of two vectors is linearly dependent.
+\end{exercise}
+\begin{proof}
+    Let $\vec{v},\vec{u}\in\mathbb{R}$. We note that if either of the vectors are $\vec{0}$ then we immediately have that they are linearly dependent since you can multiply the other vector by zero to get $\vec{0}$ which violates $(3)$. Now we assume that neither of the vectors are $\vec{0}$. Let $|\vec{v}|$ denote the real number contained in $\vec{v}$. We note that $\vec{u}=\frac{|\vec{u}|}{|\vec{v}|}\vec{v}$. Thus, we have shown that $\vec{u}$ can be written as a linear combination of $\vec{v}$ which violates (3). Thus, the list is linearly dependent.
+\end{proof}
+\begin{exercise}
+    In the vector space $\mathbb{R}$ over $\mathbb{Q}$, find a list of two vectors that are linearly independent.
+\end{exercise}
+\begin{proof}
+    Since we are over $\mathbb{Q}$, we will want to consider an irrational number in our list. Consider the list $L=(\vec{1},\vec{\sqrt{2}})$. We will show that (3) holds. Clearly, we cannot write $\vec{1}$ as a linear combination of $\vec{\sqrt{2}}$ since $1=\frac{1}{\sqrt{2}}\sqrt{2}$ and $\frac{1}{\sqrt{2}}$ is irrational so it is not in our field. Similarly, we cannot write $\vec{\sqrt{2}}$ as a linear combination of $\vec{1}$ since $\sqrt{2}=\sqrt{2}\cdot 1$ but $\sqrt{2}$ is also irrational. Thus, since (3) holds this list must be linearly independent.
+\end{proof}
+\begin{exercise}
+    Is the list $L=(\begin{pmatrix}
+        1 \\ 2 \\ 3
+    \end{pmatrix},\begin{pmatrix}
+        4 \\ 5 \\ 6
+    \end{pmatrix},\begin{pmatrix}
+        7 \\ 8 \\ 9
+    \end{pmatrix})$ linearly independent or dependent?
+\end{exercise}
+\begin{proof}
+    We note that $2*\begin{pmatrix}
+        4 \\ 5 \\ 6
+    \end{pmatrix}-\begin{pmatrix}
+        1 \\ 2 \\ 3
+    \end{pmatrix}=\begin{pmatrix}
+        7 \\ 8 \\ 9
+    \end{pmatrix}$. This violates (3). Thus, this list is linearly dependent.
+\end{proof}
+\section{Basis and Dimension}
+Since there are so many possible vector spaces, we want to introduce a concept to ground the idea of a vector space.
+\begin{definition}
+    Let $V$ be a vector space. A basis of $V$ is a list $L$ which satisfies the following two properties:
+    \begin{enumerate}
+        \item $L$ is linearly independent
+        \item $span(L)=V$
+    \end{enumerate}
+\end{definition}
+\begin{example}
+    Let's find a basis for $\mathbb{R}^3$ over $\mathbb{R}$. Consider $L=((1,0,0),(0,1,0),(0,0,1))$. You may notice that you can generalize this type of basis over $\mathbb{R}^n$
+\end{example}
+\begin{remark}
+    In general, $\mathbb{R}^n$ has a basis called the elementary basis. This is the basis where each vector has a $1$ at exactly one coordinate and $0$ everywhere else.
+\end{remark}
+\begin{definition}
+    Let $V$ be a vector space. The dimension of $V$, denoted $dim(V)$, is the number of vectors in its basis.
+\end{definition}
+There are infinite dimensional vector space, but those are much more complicated than finite-dimensional ones so we will only focus on finite dimensional vector spaces. We now want to prove a very important theorem, or rather lemma, known as the Exchange Lemma. It gives us a relationship between linearly independent lists and spanning lists which is immensely useful for finding properties of bases.
+\begin{theorem}
+    Let $V$ be a finite dimensional vector space. All linearly independent sets must have size less than or equal to all spanning sets.
+\end{theorem}
+\begin{proof}
+    Let $(\vec{v}_1,\ldots,\vec{v}_n)$ be a linearly independent set of vectors and let $(\vec{w}_1,\ldots,\vec{w}_m)$ be a spanning set of vectors. We want to show that $n\leq m$.
+
+    Step 1: Consider the list $(\vec{v}_1,\vec{w}_1,\ldots,\vec{w}_m)$. We know that this list is linearly dependent because $(\vec{w}_1,\ldots,\vec{w}_m)$ is a spanning list so $\vec{v}_1$ can be written as a linear combination of the other vectors. We will use the fact that now there must exist a vector in the list that can be written as a linear combination of the vectors which come before it in the list. We know that this vector cannot be $\vec{v}_1$ since $span(\emptyset)=\vec{0}$ and $\vec{v}_1\neq\vec{0}$ since $(\vec{v}_1,\ldots,\vec{v}_n)$ is linearly independent. This means that there exists some $\vec{w}_j$ that can be written as a linear combination of $(\vec{v}_1,\vec{w}_1,\ldots,\vec{w}_{j-1})$. Remove $\vec{w}_j$ from the list so we are now left with $(\vec{v}_1,\vec{w}_1,\ldots,\vec{w}_{j-1},\vec{w}_{j+1},\ldots,\vec{w}_m)$. We note that this new list still spans $V$ since any linear combination of $(\vec{w}_1,\ldots,\vec{w}_m)$ we can simply replace the $\vec{w}_j$ with the linear combination of $(\vec{v}_1,\vec{w}_1,\ldots,\vec{w}_{j-1})$ which makes $\vec{w}_j$.
+
+    Step $k$: Consider the list $(\vec{v}_1,\ldots,\vec{v}_k,\ldots)$ which is the first $k$ $\vec{v}$'s followed by the remaining $\vec{w}$'s. We know that this list is linearly dependent by the same logic as Step $1$. We also know that none of the $\vec{v}$'s can be written as a linear combination of what comes before them since $(\vec{v}_1,\ldots,\vec{v}_n)$ is linearly independent. Thus, there exists some $\vec{w}_j$ that can be written as a linear combination of what comes before it in the list. Remove this $\vec{w}_j$ from the list. The span of the list is still $V$ by, again, the same logic as Step $1$.
+
+    We've shown that we can slowly replace the $\vec{w}$'s with $\vec{v}$'s and the list must always be spanning. Now, we skip forward to the final step where we add $\vec{v}_n$. We claim that there still remains at least one $\vec{w}$ in the list. We know that this list must be linearly dependent since the list $(\vec{v}_1,\ldots,\vec{v}_{n-1},\ldots)$ without $\vec{v}_n$ is spanning. If there was not a $\vec{w}$ in the list, we would have that $\vec{v}_n$ can be written as a linear combination of $(\vec{v}_1,\ldots,\vec{v}_{n-1})$ which contradicts the linear independence of $(\vec{v}_1,\ldots,\vec{v}_{n})$. Thus, we have shown that when we add the final $\vec{v}_n$ there is at least one $\vec{w}$ still in the list, so $n\leq m$.
+\end{proof}
+We will now explore how one can apply the Exchange Lemma to get some standard facts about bases and dimension. It should be noted that there is another way to reach these conclusions via matrices and the "Fundamental Theorems of Linear Algebra." However, it seems like there is a lack of intuition without knowing the Exchange Lemma for why these facts are true.
+\begin{corollary}
+    Let $V$ be a vector space with $dim(V)=n$. All sets in $V$ with size greater than $n$ must be linearly dependent.
+\end{corollary}
+\begin{proof}
+    From Theorem $8.5$, we showed that linearly independent sets are at most the size of any spanning set. Since a basis is a spanning set and it has size $n$, all linearly independent lists must be at most size $n$. So any list larger than size $n$ must be linearly dependent.
+\end{proof}
+There exists a similar statement to Corollary 8.6 regarding span which is left as an exercise. You should realize that these statements are immensely powerful. You need not know a single thing about any of the vectors than the list other than there are "too many" or "too few" vectors in a list and you immediately know facts about span and linear independence.
+\begin{theorem}
+    Let $V$ be a vector space such that $dim(V)=n$. Every basis of $V$ has the same size.
+\end{theorem}
+\begin{proof}
+    Let $B_1, B_2$ be bases of $V$. We know that $B_1$ is linearly independent and $B_2$ is spanning. This means that $|B_1|\leq |B_2|$. We also know that $B_2$ is linearly independent and $B_1$ is spanning. This means that $|B_2|\leq |B_1|$. Thus, we must have that $|B_1|=|B_2|$.
+\end{proof}
+We have had all this discussion about bases but have yet to discuss how to actually find them. We will now show that you can always find a basis starting from any arbitrary list. Note that this is only theory and in most practical applications the elementary basis will suffice.
+\begin{theorem}
+    Let $V$ be a vector space with $dim(V)=n$. Let $L$ be a linearly independent list of vectors in $V$. You can always extend $L$ into a basis of $V$.
+\end{theorem}
+\begin{proof}
+    Let $L=(\vec{v}_1,\ldots,\vec{v}_k)$ be a linearly independent list. If it already spans $V$, then we have a basis are we are done. Assume $span(L)\neq V$. Since $span(L)\neq V$, there exists some $\vec{v}_{k+1}\in V$ and $\vec{v}_{k+1}\notin span(L)$. Consider the list $(\vec{v}_1,\ldots,\vec{v}_k,\vec{v}_{k+1})$. We want to show that this list is linearly independent. Consider a linear combination of the above list which equals $\vec{0}$.
+    \begin{align*}
+        a_1\vec{v}_1+\ldots+a_k\vec{v}_k+a_{k+1}\vec{v}_{k+1}&=\vec{0}
+    \end{align*}
+    We split into two cases. The first case is when $a_{k+1}=0$. This would reduce our equation to $a_1\vec{v}_1+\ldots+a_k\vec{v}_k=\vec{0}$ which by linear independence of $L$ has only the trivial combination. So if $a_{k+1}=0$ then all the coefficients must be $0$.
+
+    The second case is when $a_{k+1}\neq 0$. We want to show this case is impossible.
+    \begin{align*}
+        a_1\vec{v}_1+\ldots+a_k\vec{v}_k+a_{k+1}\vec{v}_{k+1}&=\vec{0}\\
+        a_1\vec{v}_1+\ldots+a_k\vec{v}_k&=-a_{k+1}\vec{v}_{k+1}\\
+        \frac{a_1}{-a_{k+1}}\vec{v}_1+\ldots+\frac{a_k}{-a_{k+1}}\vec{v}_k&=\vec{v}_{k+1}
+    \end{align*}
+    This is a contradiction since we have shown that $\vec{v}_{k+1}\in span(L)$. Thus, the second case is not possible and we must have $a_{k+1}=0$ which we showed implies all the coefficients are zero. This proves linear independence.
+
+    You can repeat this process until the $span(L)=V$. We've shown that at every step the new list is still linearly independent. Now we must show that it stops when $k=n$ and that the $span(L)=V$ at that point. If the process did not stop at $k=n$, then we would add another vector and the list would still be linearly dependent. However, this is impossible since we would then have a list of $n+1$ linearly independent vectors. The only way for the process to stop is if there are no more vectors in $V$ that are not in $span(L)$. Thus, the process stops when $k=n$ and $span(L)=V$.
+\end{proof}
+This theorem is also immensely powerful. It tells you that any linearly independent list is a component of a basis. In fact, it is a component of infinitely many bases and you can build a basis by slowly adding vectors that are not in the span of your list so far. We leave the theorem regarding shrinking spanning lists as an exercise.
+
+Next, we will explore what this notion of dimension tells us outside of the size of a basis. This can make checking if a list is spanning/linearly independent easier as if its size is too small/too big you won't have to do any work.
+\begin{corollary}
+    Let $V$ be a vector space with $dim(V)=n$. Any linearly independent list of size $n$ must be a basis.
+\end{corollary}
+\begin{proof}
+    If the list is not a basis, we know that we can extend it to a basis. However, if we add any vectors to the list, it becomes linearly dependent since its size is greater than the dimension. Thus, the list must already be a basis.
+\end{proof}
+\begin{corollary}
+    Let $V$ be a vector space with $dim(V)=n$. Any spanning list of size $n$ must be a basis.
+\end{corollary}
+\begin{proof}
+    If the list is not a basis, we know that we can reduce it to a basis. However, if we remove any vectors from the list, it is no longer spanning since its size is less than the dimension. Thus, the list must already be a basis.
+\end{proof}
+We will now go over a notation that will become much more useful when we discuss linear transformations and matrices. 
+\begin{definition}
+    Let $V$ be a finite dimensional vector space and $B=(\vec{v}_1,\ldots,\vec{v}_n)$ be a basis of $V$. The coordinate vector of a vector $\vec{v}\in V$ is $\left[\begin{smallmatrix}
+        a_1 \\ a_2 \\ \vdots \\ a_n
+    \end{smallmatrix}\right]_B$ where $\vec{v}=\sum_{i=1}^n a_i\vec{v}_i$. We denote the coordinate vector of $\vec{v}$ with respect to a basis $B$ as $[\vec{v}]_B$.
+\end{definition}
+\begin{remark}
+    The coordinate vector essentially describes the vector $\vec{v}$ as a vector of its coefficients with respect to a basis $B$.
+\end{remark}
+\begin{remark}
+    Consider $(1,2,3)\in\mathbb{R}^3$. This is actually also a coordinate vector with respect to the elementary basis. The way we write vectors that we are used to is as the coordinate vectors of the elementary basis. So if no subscript basis is written, you are safe to assume that it is using the elementary basis.
+\end{remark}
+Coordinate vectors possess certain properties that you will recognize when we discuss linear transformations in the next section. This makes them very useful representations when you're moving between vector spaces and different bases.
+\begin{theorem}
+    Let $V$ be an $\mathbb{F}$-vector space and $B$ be a basis of $V$. The following two properties hold:
+    \begin{enumerate}
+        \item $\forall\vec{v},\vec{w}\in V,\,[\vec{v}]_B+[\vec{w}]_B=[\vec{v}+\vec{w}]_B$
+        \item $\forall\vec{v}\in V,\forall\alpha\in\mathbb{F}, \alpha[\vec{v}]_B=[\alpha\vec{v}]_B$
+    \end{enumerate}
+\end{theorem}
+\begin{proof}
+    First, we will prove (1). Let $B=(\vec{u}_1,\ldots,\vec{u}_n)$ and let $[\vec{v}]_B=\left[\begin{smallmatrix}
+        a_1 \\ a_2 \\ \vdots \\ a_n
+    \end{smallmatrix}\right]_B$ and $[\vec{w}]_B=\left[\begin{smallmatrix}
+        b_1 \\ b_2 \\ \vdots \\ b_n
+    \end{smallmatrix}\right]_B$. Clearly, $[\vec{v}]_B+[\vec{w}]_B=\left[\begin{smallmatrix}
+        a_1 + b_1 \\ a_2 + b_2 \\ \vdots \\ a_n + b_n
+    \end{smallmatrix}\right]_B$. We know $\vec{v}=\sum_{i=1}^n a_i\vec{u}_i$ and $\vec{w}=\sum_{i=1}^n b_i\vec{u}_i$. So $\vec{v}+\vec{w}=\sum_{i=1}^n a_i\vec{u}_i+\sum_{i=1}^n b_i\vec{u}_i=\sum_{i=1}^n (a_i+b_i)\vec{u}_i$. Thus, $[\vec{v}+\vec{w}]_B=\left[\begin{smallmatrix}
+        a_1 + b_1 \\ a_2 + b_2 \\ \vdots \\ a_n + b_n
+    \end{smallmatrix}\right]_B$.
+
+    Next, we show (2). Let $B=(\vec{u}_1,\ldots,\vec{u}_n)$ and $[\vec{v}]_B=\left[\begin{smallmatrix}
+        a_1 \\ a_2 \\ \vdots \\ a_n
+    \end{smallmatrix}\right]_B$. We can see that $\alpha[\vec{v}]_B=\left[\begin{smallmatrix}
+        \alpha a_1 \\ \alpha a_2 \\ \vdots \\ \alpha a_n
+    \end{smallmatrix}\right]_B$. We know that $\alpha[\vec{v}]_B=\sum_{i=1}^n\alpha a_i\vec{u}_i=\sum_{i=1}^n (\alpha a_i)\vec{u}_i=[\alpha\vec{v}]_B$.
+\end{proof}

@@ -1,0 +1,89 @@
+\chapter{Inner Products}
+
+\oldsection{Inner Products}
+Let $V$ be a vector space over $\mathbb{R}$. A valid inner product of $V$ satisfies the following four properties:
+\begin{enumerate}
+    \item $\langle\vec{u},\vec{v}\rangle=\langle\vec{v},\vec{u}\rangle$ for all $\vec{v},\vec{u}\in V$ (Symmetry)
+    \item $\langle a\vec{x}+b\vec{y},\vec{z}\rangle=a\langle\vec{x},\vec{z}\rangle+b\langle\vec{y},\vec{z}\rangle$ for all $a,b\in\mathbb{R}$ and $\vec{x},\vec{y},\vec{z}\in V$ (Linearity)
+    \item $\langle\vec{v},\vec{v}\rangle\geq 0$ for all $\vec{v}\in V$ (Non-negativity)
+    \item $\langle\vec{v},\vec{v}\rangle=0$ if and only if $\vec{v}=\vec{0}$ (Non-degeneracy)
+\end{enumerate}
+\begin{definition}
+    An inner product space is a vector space $V$ along with an inner product that satisfies the aforementioned conditions.
+\end{definition}
+\begin{example}
+    Consider $\mathbb{R}^n$. Let $\vec{x}=(x_1, x_2,\ldots, x_n)$ and $\vec{y}=(y_1,y_2,\ldots,y_n)$. One example of an inner product is the dot product. This is often notated and defined as $\langle\vec{x},\vec{y}\rangle=\vec{x}\cdot\vec{y}=\sum_{i=1}^n x_iy_i$.
+
+    Let $\vec{v}=\vec{0}$. We have that $\vec{v}\cdot\vec{v}=\sum_{i=1}^n v_iv_i=\sum_{i=1}^n v_i^2$. Since $\vec{v}=\vec{0}$, each $v_i=0$ so the whole summation equals $0$. Assume $\langle\vec{v},\vec{v}\rangle=\vec{v}\cdot\vec{v}=\sum_{i=1}^n v_i^2=0$. Since $v_i^2\geq 0$, we must have that $v_i=0$ for all $i$ since otherwise we would have a positive sum.
+\end{example}
+\begin{definition}
+    Let $V$ be an inner product space and $\vec{v}\in V$. We define the norm of $\vec{v}$ to be $||\vec{v}||=\sqrt{\langle\vec{v},\vec{v}\rangle}$.
+\end{definition}
+\begin{example}
+    Consider $\mathbb{R}^n$ with the dot product. Let $\vec{v}\in\mathbb{R}^n$. We have that $||\vec{v}||=\sqrt{\vec{v}\cdot\vec{v}}=\sqrt{\sum_{i=1}^n v_i^2}=\sqrt{v_1^2+v_2^2+\ldots+v_n^2}$.
+\end{example}
+\begin{theorem}
+    Let $V$ be an inner product space and $\vec{v},\vec{w}\in V$. The following inequality always holds:
+    $$|\langle\vec{v},\vec{w}\rangle|\leq||\vec{v}||||\vec{w}||$$
+    This is known as the Cauchy-Schwartz Inequality.
+\end{theorem}
+\begin{theorem}
+    Let $V$ be an inner product space and $\vec{v},\vec{w}\in V$. The following inequality always holds:
+    $$||\vec{v}+\vec{w}||\leq||\vec{v}||+||\vec{w}||$$
+    This is known as the Triangle Inequality.
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        ||\vec{v}+\vec{w}||^2&=(\sqrt{\langle\vec{v}+\vec{w},\vec{v}+\vec{w}\rangle})^2\\
+        &=\langle\vec{v}+\vec{w},\vec{v}+\vec{w}\rangle\\
+        &=\langle\vec{v},\vec{v}\rangle+\langle\vec{v},\vec{w}\rangle+\langle\vec{w},\vec{v}\rangle+\langle\vec{w},\vec{w}\rangle\tag{by Linearity of Inner Product}\\
+        &=||\vec{v}||^2+\langle\vec{v},\vec{w}\rangle+\langle\vec{w},\vec{v}\rangle+||\vec{w}||^2\\
+        &=||\vec{v}||^2+\langle\vec{v},\vec{w}\rangle+\langle\vec{v},\vec{w}\rangle+||\vec{w}||^2\tag{by Symmetry of Inner Product}\\
+        &\leq||\vec{v}||^2+|\langle\vec{v},\vec{w}\rangle+\langle\vec{v},\vec{w}\rangle|+||\vec{w}||^2\\
+        &\leq||\vec{v}||^2+|\langle\vec{v},\vec{w}\rangle|+|\langle\vec{v},\vec{w}\rangle|+||\vec{w}||^2\\
+        &\leq||\vec{v}||^2+||\vec{v}||||\vec{w}||+||\vec{v}||||\vec{w}||+||\vec{w}||^2\tag{by Cauchy Schwartz Inequality}\\
+        &\leq||\vec{v}||^2+2||\vec{v}||||\vec{w}||+||\vec{w}||^2
+    \end{align*}
+    Take the square root of both sides to get the Triangle Inequality.
+\end{proof}
+\begin{definition}
+    Let $V$ be an inner product space and $\vec{v},\vec{w}\in V$. We say that $\vec{v}$ and $\vec{w}$ are orthogonal, denoted $\vec{v}\perp\vec{w}$, if $\langle\vec{v},\vec{w}\rangle=0$.
+\end{definition}
+\begin{definition}
+    Let $\mathcal{L}=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_n)$ be a list of vectors. We say that $\mathcal{L}$ is an orthogonal list if $\vec{v}_i\perp\vec{v}_j$ for all $i,j\in [n]$.
+\end{definition}
+\begin{theorem}
+    Let $\mathcal{L}$ be an orthogonal list such that $\vec{0}\notin \mathcal{L}$. Then $\mathcal{L}$ is linearly independent.
+\end{theorem}
+\begin{definition}
+    Let $\mathcal{L}=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_n)$ be a list of vectors. We say that $\mathcal{L}$ is an orthonormal list if $\mathcal{L}$ is an orthogonal list and $||\vec{v}_i||=1$ for $1\leq i\leq n$.
+\end{definition}
+\begin{definition}
+    Let $\mathcal{L}=(\vec{v}_1,\ldots,\vec{v}_k)$ be an orthonormal list. We define the projection of a $\vec{u}$ onto $\mathcal{L}$ as $proj_\mathcal{L}(\vec{u})=\sum_{i=1}^k\langle\vec{u},\vec{v}_i\rangle\vec{v}_i$
+\end{definition}
+\begin{theorem}
+    Let $\mathcal{L}=(\vec{v}_1,\ldots,\vec{v}_k)$ be an orthonormal list. Then $\vec{x}-proj_\mathcal{L}(\vec{x})\perp \vec{v}_i$ for all $1\leq i\leq k$.
+\end{theorem}
+\begin{proof}
+    \begin{align*}
+        \langle \vec{x}-proj_\mathcal{L}(\vec{x}), \vec{v}_i\rangle&=\langle\vec{x},\vec{v}_i\rangle-\langle proj_\mathcal{L}(\vec{x}),\vec{v}_i\rangle\tag{by Linearity}\\
+        &=\langle\vec{x},\vec{v}_i\rangle-\langle\sum_{j=1}^k\langle\vec{x},\vec{v}_j\rangle\vec{v}_j,\vec{v}_i\rangle\\
+        &=\langle\vec{x},\vec{v}_i\rangle-\sum_{j=1}^k\langle\vec{x},\vec{v}_j\rangle\langle\vec{v}_j,\vec{v}_i\rangle\tag{by Linearity}
+    \end{align*}
+    First, consider the case when $j=i$. We observe that $\langle\vec{v}_i,\vec{v}_i\rangle=||\vec{v}_i||^2$ and since $\mathcal{L}$ is orthonormal we know that $||\vec{v}_i||=1$. Thus, $\langle\vec{v}_i,\vec{v}_i\rangle=1$. When $i\neq j$, then $\langle\vec{v}_j,\vec{v}_i\rangle=0$ since $\mathcal{L}$ is orthogonal.
+    \begin{align*}
+        \langle\vec{x},\vec{v}_i\rangle-\sum_{j=1}^k\langle\vec{x},\vec{v}_j\rangle\langle\vec{v}_j,\vec{v}_i\rangle=\langle\vec{x},\vec{v}_i\rangle-\langle\vec{x},\vec{v}_i\rangle=0
+    \end{align*}
+\end{proof}
+\begin{definition}
+    The Gram-Schmidt Process is a way of finding an orthonormal list $\mathcal{O}$ given a list of vectors $\mathcal{L}$ such that $span(\mathcal{O})=span(\mathcal{L})$.
+
+    Let $\mathcal{O}_i$ denote the list $\mathcal{O}$ at step $i$. Let $\mathcal{L}_i$ denote the list of the first $i$ vectors of $\mathcal{L}$. We initialize $\mathcal{O}_0=\emptyset$. Note that initially, $span(\mathcal{O}_0)=span(\mathcal{L}_0)$ and $\mathcal{O}_{i-1}$ is orthonormal.
+
+    At step $i$, look at the $i$th vector in $\mathcal{L}$ denoted $\vec{v}_i$. We assume that up to this point, we have constructed $\mathcal{O}_{i-1}$ such that $span(\mathcal{O}_{i-1})=span(\mathcal{L}_{i-1})$.
+
+    Case 1: If $\vec{v}_i\in span(\mathcal{O}_{i-1})$, do nothing and move on to the $i+1$th vector.
+
+    Case 2: If $\vec{v}_i\notin span(\mathcal{O}_{i-1})$, then we want to add it to make $\mathcal{O}_{i-1}$ into an orthonormal list with a larger span. To ensure the new vector is orthogonal to $\mathcal{O}_{i-1}$, we will use the projection. We will add $\frac{\vec{v}_i-proj_{\mathcal{O}_{i-1}}(\vec{v}_i)}{||\vec{v}_i-proj_{\mathcal{O}_{i-1}}(\vec{v}_i)||}$. The numerator is simply a vector that is orthogonal to $\mathcal{O}_{i-1}$ as we proved with projections. We divide by its norm to make this vector into a unit vector.
+\end{definition}
+\section{Exercises 7}
