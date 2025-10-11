@@ -1,35 +1,8 @@
 \chapter{Determinants}
 
 \oldsection{Determinants}
-\begin{definition}
-    The main diagonal of a square matrix $A$ are the entries $a_{ij}$ such that $i=j$.
-\end{definition}
-\begin{definition}
-    A diagonal matrix is a matrix where the only nonzero entries are on the main diagonal.
-\end{definition}
-\begin{definition}
-    An upper triangular matrix is zero below the main diagonal. A lower triangular matrix is zero above the main diagonal.
-\end{definition}
-\begin{example}
-    \begin{align*}
-        \begin{bmatrix}
-            1 & 0 & 0 \\
-            0 & 2 & 0 \\
-            0 & 0 & 3
-        \end{bmatrix}\tag{1}\\
-        \begin{bmatrix}
-            1 & 3 & 5 \\
-            0 & 2 & 6 \\
-            0 & 0 & 3
-        \end{bmatrix}\tag{2}\\
-        \begin{bmatrix}
-            1 & 0 & 0 \\
-            4 & 2 & 0 \\
-            6 & 8 & 3
-        \end{bmatrix}\tag{3}\\
-    \end{align*}
-    $(1)$ is diagonal, lower triangular, and upper triangular. $(2)$ is upper triangular. $(3)$ is lower triangular.
-\end{example}
+We know that matrices are a nice way to represent abstract linear transformation. In fact, they are so nice that they give rise to another way to understand linear transformations in the sense of determinants. By default, we can draw a coordinate plane over $\R^2$ by letting our elementary basis vectors $(1,0)$ and $(0,1)$ form grid lines. Consider an arbitrary linear transformation $T$ over $\R^2$. This linear transformation moves $(1,0)$ and $(0,1)$ somewhere and at the same time, shifts how our grid lines look. We can draw a new grid with $T(1,0)$ and $T(0,1)$ as the lines. Determinants give us a way to capture how the "area" of the squares in this grid line changed.
+
 Let $A$ be a $n\times n$ matrix where $A=[\vec{c}_1,\ldots,\vec{c}_n]$.
 \begin{enumerate}
     \item $det(I_n)=1$ (Normalization)
@@ -153,7 +126,7 @@ Let $A$ be a $n\times n$ matrix where $A=[\vec{c}_1,\ldots,\vec{c}_n]$.
     Let $A$ and $B$ be $n\times n$ matrices then $det(AB)=det(A)det(B)$.
 \end{theorem}
 \begin{proof}
-    If either $A$ is not invertible or $B$ is not invertible then by Lemma 18.8, $AB$ is not invertible. Thus, by Theorem 18.7, $det(AB)=det(A)det(B)=0$.
+    If either $A$ is not invertible or $B$ is not invertible then by Lemma 3.1.8, $AB$ is not invertible. Thus, by Theorem 3.1.7, $det(AB)=det(A)det(B)=0$.
 
     Otherwise, $A$ and $B$ are both invertible. Let $A=E_k\ldots E_1I$ and $B=F_j\ldots F_1I$ where $E$ and $F$ are elementary matrices.
     \begin{align*}

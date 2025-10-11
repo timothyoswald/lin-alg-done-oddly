@@ -74,7 +74,7 @@ Vector space axioms do not explicitly contain everything about vectors. However,
     \end{align*}
 \end{proof}
 \begin{remark}
-    If a problem says a vector space $V$ over a field $\mathbb{F}$, you can make no assumptions about the vector space and field outside of the axioms. However, in general, it is safe to assume that if a vector space and field are not specifically listed, you are in $\mathbb{R}^n$ over $\mathbb{R}$
+    If a problem says a vector space $V$ over a field $\mathbb{F}$, you can make no assumptions about the vector space and field outside of the axioms. However, in general, it is safe to assume that if a vector space and field are not specifically listed, you are in $\R^N$ over $\mathbb{R}$
 \end{remark}
 Vector spaces are often contain other vector spaces. For example, if we consider the $\R^2$ over $\R$, it contains the smaller vector space of all vectors which have the same first and second coordinate. One can check that the vector space axioms hold for this. This leads us to the definition of a subspace.
 \begin{definition}
@@ -96,31 +96,53 @@ It's important for vector spaces to have some notion of relationships between ve
     Given a list of vectors $L=(\vec{v}_1,\vec{v}_2,\ldots,\vec{v}_n)$ for some vector space $V$ over some field $\mathbb{F}$. A linear combination of $L$ is defined as $\alpha_1\vec{v}_1+\alpha_2\vec{v}_2+\ldots+\alpha_n\vec{v}_n$ where $\alpha_i\in\mathbb{F}$
 \end{definition}
 \begin{example}
-    Consider $L=((2,1,0), (1,1,0),(0,1,0))$ over the field $\mathbb{R}$. Is $(0,0,1)$ a linear combination of $L$?
+    Consider $L=\left(\begin{pmatrix}
+        2 \\ 1 \\ 0
+    \end{pmatrix}, \begin{pmatrix}
+        1 \\ 1 \\ 0
+    \end{pmatrix},\begin{pmatrix}
+        0 \\ 1 \\ 0
+    \end{pmatrix}\right)$ over the field $\mathbb{R}$. Can $\begin{pmatrix}
+        0 \\ 0 \\ 1
+    \end{pmatrix}$ be written as a linear combination of $L$?
     \begin{proof}
-        Let $\alpha_1,\alpha_2,\alpha_3\in\mathbb{R}$. Consider $\alpha_1(2,1,0)+\alpha_2(1,1,0)+\alpha_3(0,1,0)$. We can see that this equals $(2\alpha_1+\alpha_2,\alpha_1+\alpha_2,0)$. Now you set up a system of equations with $(2\alpha_1+\alpha_2,\alpha_1+\alpha_2,0)$ and $(0,0,1)$ component wise. This gives the following equations:
+        Let $\alpha_1,\alpha_2,\alpha_3\in\mathbb{R}$. Consider $\alpha_1\begin{pmatrix}
+        2 \\ 1 \\ 0
+    \end{pmatrix}+\alpha_2 \begin{pmatrix}
+        1 \\ 1 \\ 0
+    \end{pmatrix}+\alpha_3\begin{pmatrix}
+        0 \\ 1 \\ 0
+    \end{pmatrix}$. We can see that this equals $\begin{pmatrix}
+        2\alpha_1+\alpha_2 \\ \alpha_1+\alpha_2 \\ 0
+    \end{pmatrix}$. Now you set up a system of equations with $\begin{pmatrix}
+        2\alpha_1+\alpha_2 \\ \alpha_1+\alpha_2 \\ 0
+    \end{pmatrix}$ and $\begin{pmatrix}
+        0 \\ 0 \\ 1
+    \end{pmatrix}$ component wise. This gives the following equations:
         \begin{align*}
             2\alpha_1+\alpha_2=0\\
-            \alpha_1+\alpha_2=0\\
-            0=1
+            \alpha_1+\alpha_2=0
         \end{align*}
-        We get that $0=1$ which is impossible so we know that $(0,0,1)$ cannot be a linear combination of $L$.
+        Solving this system yields that $0=1$ which is impossible so we know that $\begin{pmatrix}
+        0 \\ 0 \\ 1
+    \end{pmatrix}$ cannot be a linear combination of $L$.
     \end{proof}
 \end{example}
 We also want to consider the idea of all possible linear combinations since this tells us, in some sense, all vectors related to the vectors in our list.
 \begin{definition}
-    Let $L$ be a list of vectors. We define the span of $L$ to be the set of all vectors that can be represented as a linear combination of $L$. We denote this as $span(L)$.
+    Let $L$ be a list of vectors. We define the span of $L$ to be the set of all vectors that can be represented as a linear combination of $L$. We denote this as $span(L)$. We define the span of the empty list to be $\{\vec{0}\}$.
 \end{definition}
 \begin{theorem}
-    Let $L=((1,0),(0,1))$. Then we have that $span(L)=\mathbb{R}^2$ over $\mathbb{R}$
+    Let $L=\left(\begin{pmatrix}
+        1 \\ 0
+    \end{pmatrix},\begin{pmatrix}
+        0 \\ 1
+    \end{pmatrix}\right)$. Then we have that $span(L)=\mathbb{R}^2$ over $\mathbb{R}$
 \end{theorem}
 \begin{proof}
     Note that we are trying to prove equality between two sets namely $span(L)$ and $\mathbb{R}^2$. Thus, we will use double containment.
     First, we will show that $\mathbb{R}^2\subseteq span(L)$. Given an arbitrary vector $(x,y)\in\mathbb{R}^2$. Let $a_1,a_2\in\mathbb{R}$. Consider $a_1(1,0)+a_2(0,1)$ which equals $(a_1,a_2)$. This gives $(a_1,a_2)=(x,y)$. Thus, taking $a_1=x$ and $a_2=y$ will show that $(x,y)\in span(L)$. Next, we want to show $span(L)\subseteq\mathbb{R}^2$. We know this is true by Closure Under Scalar Multiplication and Vector Addition.
 \end{proof}
-\begin{remark}
-    We define the span of the empty list to be $\{\vec{0}\}$.
-\end{remark}
 
 \section{Exercises 1}
 \begin{exercise}
@@ -257,57 +279,6 @@ We will now consider some definitions that are equivalent to our definition of l
     We want to show that the $span(L)=span(L')=span(L'')$. Let $\vec{w}\in span(L)$. By definition, we know that $\vec{w}=\sum_{i=1}^{n+1} b_i\vec{v}_i$. We use the fact that $\vec{v}_j=\sum_{i=1,i\neq j}^{n+1}a_i\vec{v}_i$ to get that: $$\vec{w}=\sum_{i=1}^{n+1} b_i\vec{v}_i=\sum_{i=1, i\neq j}^{n+1} b_i\vec{v}_i+b_j\vec{v}_j=\sum_{i=1, i\neq j}^{n+1} b_i\vec{v}_i+b_j\sum_{i=1,i\neq j}^{n+1}a_i\vec{v}_i$$
     We have shown that $\vec{w}$ can be written as a linear combination of $L\setminus\{\vec{v}_j\}$ so $\vec{w}\in span(L')$ and $span(L)\subseteq span(L')$. We know that $span(L')\subseteq span(L)$ because $L'$ is a sublist of $L$. So by double containment $span(L)=span(L')$ and thus $span(L)=span(L'')$ so we have found a sublist $L''$ which satisfies the desired conditions.
 \end{proof}
-\section{Exercises 2}
-\begin{exercise}
-    Prove that (1) and (3) imply each other in Theorem 5.4.
-\end{exercise}
-\begin{proof}
-    For (1) implies (3), we observe that $\vec{v}_j\in L$ means that $\vec{v}_j\in span(L)$. This means that it has a unique linear combination and since $1\vec{v}_j$ is a linear combination is must be the only one. Thus, $L\setminus\{\vec{v}_j\}$ cannot form $\vec{v}_j$ as a linear combination.
-
-    We will prove that (3) implies (1) via the contrapositive. We assume that $L$ is not linearly independent. This means that there exists a vector $\vec{w}\in span(L)$ such that $\vec{w}$ can be represented as at least two different linear combinations. Let these two linear combinations be $\vec{w}=\sum_{i=1}^n a_i\vec{v}_i$ and $\vec{w}=\sum_{i=1}^n b_i\vec{v}_i$.
-    \begin{align*}
-        \vec{w}-\vec{w}&=\vec{0}\\
-        \sum_{i=1}^n a_i\vec{v}_i-\sum_{i=1}^n b_i\vec{v}_i&=\vec{0}\\
-        \sum_{i=1}^n (a_i-b_i)\vec{v}_i&=\vec{0}
-    \end{align*}
-    Technically it suffices to stop here. Since we have shown that not (1) implies not (2) which we have already proved to imply not (3), but we will complete the direct proof anyway. Since the two linear combinations are different, we know that there exists some $j$ such that $a_j\neq b_j$.
-    \begin{align*}
-        \sum_{i=1}^n (a_i-b_i)\vec{v}_i&=\vec{0}\\
-        \sum_{i=1, i\neq j}^n (a_i-b_i)\vec{v}_i&=-(a_j-b_j)\vec{v}_j\\
-        \sum_{i=1, i\neq j}^n \frac{a_i-b_i}{b_j-a_j}\vec{v}_i&=\vec{v}_j
-    \end{align*}
-    Thus, we have shown that $\vec{v}_j$ can be written as a linear combination of the other vectors.
-\end{proof}
-\begin{exercise}
-    Prove that in the vector space $\mathbb{R}$ over $\mathbb{R}$, any list of two vectors is linearly dependent.
-\end{exercise}
-\begin{proof}
-    Let $\vec{v},\vec{u}\in\mathbb{R}$. We note that if either of the vectors are $\vec{0}$ then we immediately have that they are linearly dependent since you can multiply the other vector by zero to get $\vec{0}$ which violates $(3)$. Now we assume that neither of the vectors are $\vec{0}$. Let $|\vec{v}|$ denote the real number contained in $\vec{v}$. We note that $\vec{u}=\frac{|\vec{u}|}{|\vec{v}|}\vec{v}$. Thus, we have shown that $\vec{u}$ can be written as a linear combination of $\vec{v}$ which violates (3). Thus, the list is linearly dependent.
-\end{proof}
-\begin{exercise}
-    In the vector space $\mathbb{R}$ over $\mathbb{Q}$, find a list of two vectors that are linearly independent.
-\end{exercise}
-\begin{proof}
-    Since we are over $\mathbb{Q}$, we will want to consider an irrational number in our list. Consider the list $L=(\vec{1},\vec{\sqrt{2}})$. We will show that (3) holds. Clearly, we cannot write $\vec{1}$ as a linear combination of $\vec{\sqrt{2}}$ since $1=\frac{1}{\sqrt{2}}\sqrt{2}$ and $\frac{1}{\sqrt{2}}$ is irrational so it is not in our field. Similarly, we cannot write $\vec{\sqrt{2}}$ as a linear combination of $\vec{1}$ since $\sqrt{2}=\sqrt{2}\cdot 1$ but $\sqrt{2}$ is also irrational. Thus, since (3) holds this list must be linearly independent.
-\end{proof}
-\begin{exercise}
-    Is the list $L=(\begin{pmatrix}
-        1 \\ 2 \\ 3
-    \end{pmatrix},\begin{pmatrix}
-        4 \\ 5 \\ 6
-    \end{pmatrix},\begin{pmatrix}
-        7 \\ 8 \\ 9
-    \end{pmatrix})$ linearly independent or dependent?
-\end{exercise}
-\begin{proof}
-    We note that $2*\begin{pmatrix}
-        4 \\ 5 \\ 6
-    \end{pmatrix}-\begin{pmatrix}
-        1 \\ 2 \\ 3
-    \end{pmatrix}=\begin{pmatrix}
-        7 \\ 8 \\ 9
-    \end{pmatrix}$. This violates (3). Thus, this list is linearly dependent.
-\end{proof}
 \section{Basis and Dimension}
 Since there are so many possible vector spaces, we want to introduce a concept to ground the idea of a vector space.
 \begin{definition}
@@ -318,10 +289,10 @@ Since there are so many possible vector spaces, we want to introduce a concept t
     \end{enumerate}
 \end{definition}
 \begin{example}
-    Let's find a basis for $\mathbb{R}^3$ over $\mathbb{R}$. Consider $L=((1,0,0),(0,1,0),(0,0,1))$. You may notice that you can generalize this type of basis over $\mathbb{R}^n$
+    Let's find a basis for $\mathbb{R}^3$ over $\mathbb{R}$. Consider $L=((1,0,0),(0,1,0),(0,0,1))$. You may notice that you can generalize this type of basis over $\R^N$
 \end{example}
 \begin{remark}
-    In general, $\mathbb{R}^n$ has a basis called the elementary basis. This is the basis where each vector has a $1$ at exactly one coordinate and $0$ everywhere else.
+    In general, $\R^N$ has a basis called the elementary basis. This is the basis where each vector has a $1$ at exactly one coordinate and $0$ everywhere else.
 \end{remark}
 \begin{definition}
     Let $V$ be a vector space. The dimension of $V$, denoted $dim(V)$, is the number of vectors in its basis.
@@ -425,4 +396,67 @@ Coordinate vectors possess certain properties that you will recognize when we di
     \end{smallmatrix}\right]_B$. We can see that $\alpha[\vec{v}]_B=\left[\begin{smallmatrix}
         \alpha a_1 \\ \alpha a_2 \\ \vdots \\ \alpha a_n
     \end{smallmatrix}\right]_B$. We know that $\alpha[\vec{v}]_B=\sum_{i=1}^n\alpha a_i\vec{u}_i=\sum_{i=1}^n (\alpha a_i)\vec{u}_i=[\alpha\vec{v}]_B$.
+\end{proof}
+\section{Exercises 2}
+\begin{exercise}
+    Prove that (1) and (3) imply each other in Theorem 5.4.
+\end{exercise}
+\begin{proof}
+    For (1) implies (3), we observe that $\vec{v}_j\in L$ means that $\vec{v}_j\in span(L)$. This means that it has a unique linear combination and since $1\vec{v}_j$ is a linear combination is must be the only one. Thus, $L\setminus\{\vec{v}_j\}$ cannot form $\vec{v}_j$ as a linear combination.
+
+    We will prove that (3) implies (1) via the contrapositive. We assume that $L$ is not linearly independent. This means that there exists a vector $\vec{w}\in span(L)$ such that $\vec{w}$ can be represented as at least two different linear combinations. Let these two linear combinations be $\vec{w}=\sum_{i=1}^n a_i\vec{v}_i$ and $\vec{w}=\sum_{i=1}^n b_i\vec{v}_i$.
+    \begin{align*}
+        \vec{w}-\vec{w}&=\vec{0}\\
+        \sum_{i=1}^n a_i\vec{v}_i-\sum_{i=1}^n b_i\vec{v}_i&=\vec{0}\\
+        \sum_{i=1}^n (a_i-b_i)\vec{v}_i&=\vec{0}
+    \end{align*}
+    Technically it suffices to stop here. Since we have shown that not (1) implies not (2) which we have already proved to imply not (3), but we will complete the direct proof anyway. Since the two linear combinations are different, we know that there exists some $j$ such that $a_j\neq b_j$.
+    \begin{align*}
+        \sum_{i=1}^n (a_i-b_i)\vec{v}_i&=\vec{0}\\
+        \sum_{i=1, i\neq j}^n (a_i-b_i)\vec{v}_i&=-(a_j-b_j)\vec{v}_j\\
+        \sum_{i=1, i\neq j}^n \frac{a_i-b_i}{b_j-a_j}\vec{v}_i&=\vec{v}_j
+    \end{align*}
+    Thus, we have shown that $\vec{v}_j$ can be written as a linear combination of the other vectors.
+\end{proof}
+\begin{exercise}
+    Prove that in the vector space $\mathbb{R}$ over $\mathbb{R}$, any list of two vectors is linearly dependent.
+\end{exercise}
+\begin{proof}
+    Let $\vec{v},\vec{u}\in\mathbb{R}$. We note that if either of the vectors are $\vec{0}$ then we immediately have that they are linearly dependent since you can multiply the other vector by zero to get $\vec{0}$ which violates $(3)$. Now we assume that neither of the vectors are $\vec{0}$. Let $|\vec{v}|$ denote the real number contained in $\vec{v}$. We note that $\vec{u}=\frac{|\vec{u}|}{|\vec{v}|}\vec{v}$. Thus, we have shown that $\vec{u}$ can be written as a linear combination of $\vec{v}$ which violates (3). Thus, the list is linearly dependent.
+\end{proof}
+\begin{exercise}
+    In the vector space $\mathbb{R}$ over $\mathbb{Q}$, find a list of two vectors that are linearly independent.
+\end{exercise}
+\begin{proof}
+    Since we are over $\mathbb{Q}$, we will want to consider an irrational number in our list. Consider the list $L=(\vec{1},\vec{\sqrt{2}})$. We will show that (3) holds. Clearly, we cannot write $\vec{1}$ as a linear combination of $\vec{\sqrt{2}}$ since $1=\frac{1}{\sqrt{2}}\sqrt{2}$ and $\frac{1}{\sqrt{2}}$ is irrational so it is not in our field. Similarly, we cannot write $\vec{\sqrt{2}}$ as a linear combination of $\vec{1}$ since $\sqrt{2}=\sqrt{2}\cdot 1$ but $\sqrt{2}$ is also irrational. Thus, since (3) holds this list must be linearly independent.
+\end{proof}
+\begin{exercise}
+    Is the list $L=\left(\begin{pmatrix}
+        1 \\ 2 \\ 3
+    \end{pmatrix},\begin{pmatrix}
+        4 \\ 5 \\ 6
+    \end{pmatrix},\begin{pmatrix}
+        7 \\ 8 \\ 9
+    \end{pmatrix}\right)$ linearly independent or dependent?
+\end{exercise}
+\begin{proof}
+    We note that $2*\begin{pmatrix}
+        4 \\ 5 \\ 6
+    \end{pmatrix}-\begin{pmatrix}
+        1 \\ 2 \\ 3
+    \end{pmatrix}=\begin{pmatrix}
+        7 \\ 8 \\ 9
+    \end{pmatrix}$. This violates (3). Thus, this list is linearly dependent.
+\end{proof}
+\begin{exercise}
+    Let $V$ be a finite dimensional vector space and $L$ be a list that spans $V$. Prove that you can always reduce $L$ into a basis of $V$.
+\end{exercise}
+\begin{proof}
+    If $L$ is linearly independent, by definition you already have a basis. If $L$ is linearly dependent, there exists a vector in the list that can be written as a linear combination of the other vectors in the list. Remove this vector. Notice that removing this vector does not change the span of the list since you can simply replace the vector with its linear combination. Continue this process until the list is linearly independent. The span will remain the same at each step and now your list is linearly independent thus you have a basis.
+\end{proof}
+\begin{exercise}
+    Let $V$ be a vector space with $dim(V)=n$. All sets that span $V$ must have size greater than or equal to $n$.
+\end{exercise}
+\begin{proof}
+    Assume, for sake of contradiction, you have a spanning set of size strictly less than $n$. Since the $dim(V)=n$, consider any basis $B$ which by definition is linearly independent and has size $n$. This means we have found a linearly independent list that has size greater than a spanning set which is a contradiction.
 \end{proof}
