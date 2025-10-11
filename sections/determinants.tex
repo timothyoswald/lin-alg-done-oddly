@@ -16,7 +16,7 @@ Let $A$ be a $n\times n$ matrix where $A=[\vec{c}_1,\ldots,\vec{c}_n]$.
     Let $A=\begin{bmatrix}
         a & b \\
         c & d
-    \end{bmatrix}$.
+    \end{bmatrix}$. You may already know that the determinant of a $2\times 2$ matrix is $ad-bc$, but let's actually prove it using these properties.
     \begin{align*}
         det(A)&=det(\begin{bmatrix}
         a & b \\
@@ -92,10 +92,13 @@ Let $A$ be a $n\times n$ matrix where $A=[\vec{c}_1,\ldots,\vec{c}_n]$.
     For the first matrix, we start by scaling the second column of the identity by $0$. We now have the matrix $\begin{bmatrix}
         1 & 0\\
         0 & 0
-    \end{bmatrix}$ which has determinant equal to $0$. Then we scale the first column by $a$ to get $\begin{bmatrix}
+    \end{bmatrix}$ which has determinant equal to $0$. Add $b$ times the first column to the second column to get $\begin{bmatrix}
+        1 & b\\
+        0 & 0
+    \end{bmatrix}$. Then we scale the first column by $a$ to get $\begin{bmatrix}
         a & 0\\
         0 & 0
-    \end{bmatrix}$ which still has determinant $0$. blah blah blah. the determirnant is 0.
+    \end{bmatrix}$ which still has determinant $0$.
 
     Now, let's find the determinant of the second matrix. its determinant is $ad$.
 
@@ -144,7 +147,7 @@ Let $A$ be a $n\times n$ matrix where $A=[\vec{c}_1,\ldots,\vec{c}_n]$.
     Prove that the determinant of a lower/upper triangular matrix is the product of the entries along its main diagonal.
 \end{exercise}
 \begin{exercise}
-    Let $A$ be a $n\times n$ matrix. Prove that $det(A)=0$ in all of the following cases:
+    Let $A$ be a $n\times n$ matrix. Prove that $\det(A)=0$ in all of the following cases:
     \begin{enumerate}
         \item $A$ has a column of $0$'s
         \item $A$ has two equal columns
@@ -152,5 +155,16 @@ Let $A$ be a $n\times n$ matrix where $A=[\vec{c}_1,\ldots,\vec{c}_n]$.
     \end{enumerate}
 \end{exercise}
 \begin{exercise}
-    Let $A$ be a $n\times n$ invertible matrix. Prove that $det(A)=\frac{1}{det(A^{-1})}$
+    Let $A$ be a $n\times n$ invertible matrix. Prove that $\det(A)=\frac{1}{\det(A^{-1})}$
+\end{exercise}
+\begin{exercise}
+    Let $A$ be an $n\times n$ matrix with real valued entries and $k\in\R$. Prove that $\det(kA)=k^n\det(A)$.
+\end{exercise}
+\begin{exercise}
+    Compute the determinant of
+    $\begin{bmatrix}
+        1 & 2 & 3\\
+        4 & 5 & 6\\
+        7 & 8 & 9
+    \end{bmatrix}$
 \end{exercise}

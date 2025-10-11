@@ -1,13 +1,15 @@
 \chapter{Inner Products}
 
 \oldsection{Inner Products}
-Let $V$ be a vector space over $\mathbb{R}$. A valid inner product of $V$ satisfies the following four properties:
+\begin{definition}
+    Let $V$ be a vector space over $\mathbb{R}$. A valid inner product of $V$ satisfies the following four properties:
 \begin{enumerate}
     \item $\langle\vec{u},\vec{v}\rangle=\langle\vec{v},\vec{u}\rangle$ for all $\vec{v},\vec{u}\in V$ (Symmetry)
     \item $\langle a\vec{x}+b\vec{y},\vec{z}\rangle=a\langle\vec{x},\vec{z}\rangle+b\langle\vec{y},\vec{z}\rangle$ for all $a,b\in\mathbb{R}$ and $\vec{x},\vec{y},\vec{z}\in V$ (Linearity)
     \item $\langle\vec{v},\vec{v}\rangle\geq 0$ for all $\vec{v}\in V$ (Non-negativity)
     \item $\langle\vec{v},\vec{v}\rangle=0$ if and only if $\vec{v}=\vec{0}$ (Non-degeneracy)
 \end{enumerate}
+\end{definition}
 \begin{definition}
     An inner product space is a vector space $V$ along with an inner product that satisfies the aforementioned conditions.
 \end{definition}
@@ -87,3 +89,27 @@ Let $V$ be a vector space over $\mathbb{R}$. A valid inner product of $V$ satisf
     Case 2: If $\vec{v}_i\notin span(\mathcal{O}_{i-1})$, then we want to add it to make $\mathcal{O}_{i-1}$ into an orthonormal list with a larger span. To ensure the new vector is orthogonal to $\mathcal{O}_{i-1}$, we will use the projection. We will add $\frac{\vec{v}_i-proj_{\mathcal{O}_{i-1}}(\vec{v}_i)}{||\vec{v}_i-proj_{\mathcal{O}_{i-1}}(\vec{v}_i)||}$. The numerator is simply a vector that is orthogonal to $\mathcal{O}_{i-1}$ as we proved with projections. We divide by its norm to make this vector into a unit vector.
 \end{definition}
 \section{Exercises 7}
+\begin{exercise}
+    Let $\vec{x},\vec{y}\in\R^3$. Prove or disprove that $\langle\vec{x},\vec{y}\rangle=2x_1y_1+3x_2y_2+5x_3y_3$ where $\vec{x}=(x_1, x_2,x_3)$ and $\vec{y}=(y_1,y_2,y_3)$ is an inner product
+\end{exercise}
+\begin{exercise}
+    Prove that the Cauchy-Schwartz Inequality has equality if and only if one of the vectors is a scalar of the other.
+\end{exercise}
+\begin{exercise}
+    Perform the Gram-Schmidt Process on the following vectors:
+    $$\vec{v}_1=\begin{pmatrix}
+        1 \\ 1
+    \end{pmatrix}\quad\quad\vec{v}_2=\begin{pmatrix}
+        1 \\ -1
+    \end{pmatrix}$$
+\end{exercise}
+\begin{exercise}
+    Perform the Gram-Schmidt Process on the following vectors:
+    $$\vec{v}_1=\begin{pmatrix}
+        1 \\ 1 \\ 0
+    \end{pmatrix}\quad\quad\vec{v}_2=\begin{pmatrix}
+        1 \\ 0 \\ 1
+    \end{pmatrix}\quad\quad\vec{v}_3=\begin{pmatrix}
+        0 \\ 1 \\ 1
+    \end{pmatrix}$$
+\end{exercise}
