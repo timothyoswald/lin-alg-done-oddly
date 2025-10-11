@@ -1,4 +1,4 @@
-\chapter{Spectral Theory}
+\chapter{Elementary Spectral Theory}
 
 \oldsection{Eigenvalues and Eigenvectors}
 Here we will only consider linear transformations $T_A:V\to V$ via $T_A(\vec{x})=A\vec{x}$. The motivation behind this chapter is the fact that often times we need to repeatedly apply linear transformations. This means that we need to compute $A^n\vec{x}$, but this is an expensive computation since matrix multiplication is not trivial to compute. In this chapter, we will analyze when we have "nicer" ways to compute $A^n\vec{x}$ and to what extent we can determine
@@ -40,10 +40,28 @@ If $A-\lambda I$ is invertible, then this equation has exactly one solution: the
             x_1 \\ x_2
         \end{bmatrix}
     \end{align*}
-    This gives us the equations $2x_1+x_2=x_1$ and $x_1+2x_2=x_2$. These tell us that $x_1=-x_2$. Moreover, any vector that satisfies $\begin{bmatrix}
+    This gives us the equations $2x_1+x_2=x_1$ and $x_1+2x_2=x_2$. These tell us that $x_1=-x_2$. Moreover, any vector that satisfies $\begin{pmatrix}
         a \\ -a
-    \end{bmatrix}$ is an eigenvector of $A$ with eigenvalue $1$.
+    \end{pmatrix}$ is an eigenvector of $A$ with eigenvalue $1$.
+
+    Now let $\lambda=3$. We perform a similar analysis.
+    \begin{align*}
+        A\vec{x}&=\lambda\vec{x}\\
+        A\vec{x}&=3\vec{x}\\
+        \begin{bmatrix}
+            2 & 1\\
+            1 & 2
+        \end{bmatrix}\begin{bmatrix}
+            x_1 \\ x_2
+        \end{bmatrix}&=\begin{bmatrix}
+            3x_1 \\ 3x_2
+        \end{bmatrix}
+    \end{align*}
+    This gives us the equations $2x_1+x_2=3x_1$ and $x_1+2x_2=3x_2$. Solving this system gives us that $x_1=x_2$. So the eigenvectors with eigenvalue $3$ are any vector that satisfy $\begin{pmatrix}
+        a \\ a
+    \end{pmatrix}$.
 \end{example}
+The previous example actually tells us something more about eigenvectors. We notice that when we solved the system, we got eigenvectors of a certain form not just one specific vector. In fact, once you have one eigenvector, you can generate many more by scaling.
 \begin{definition}
     When finding eigenvalues, we call the equation $det(A-\lambda I)$ the characteristic polynomial.
 \end{definition}
@@ -81,7 +99,7 @@ $$\begin{bmatrix}
 \end{bmatrix}$$
 \begin{definition}
     $T:V\to V$ is diagonalizable if there exists a basis $B$ for $V$ consisting of eigenvectors of $T$. Let $B=(\vec{v}_1,\ldots,\vec{v}_n)$ with corresponding eigenvalues $\lambda_1,\ldots,\lambda_n$ then:
-    $$[T]_{B\to B}=\begin{bmatrix}
+    $$[T]_{BB}=\begin{bmatrix}
         \lambda_1 & 0 & 0 & 0\\
         0 & \lambda_2 & 0 & 0\\
         \vdots & \vdots & \vdots & \vdots\\
@@ -90,24 +108,24 @@ $$\begin{bmatrix}
 \end{definition}
 Let's consider where this matrix comes from. We know that the first column of the matrix is equal to $[T(\vec{v}_1)]_B$. We also know that since $\vec{v}_1$ is an eigenvector, that $T(\vec{v}_1)=\lambda_1\vec{v}_1$. This gives us that $T(\vec{v}_1)=\lambda_1\vec{v}_1+0\vec{v}_2+0\vec{v_3}+\ldots+0\vec{v}_n$. This gives us the coordinate vector shown in the first column of the above matrix. You can apply similar logic to the rest of the columns.
 
-Now, let's talk about how do we find this diagonal matrix. Based on the definition, we could find every single eigenvector and then check if they form a basis. If not, then $T$ is not diagonalizable. Otherwise, let's look at how we get $[T]_{B\to B}$. If we want, $[T]_{B\to B}$ we need to use change of basis matrices:
-$$[T]_{B\to B}=[I]_{E\to B}[T]_{E\to E}[I]_{B\to E}$$
-Note that $E$ represents the elementary basis. Note that initially, we only know $[T]_{E\to E}$.
+Now, let's talk about how do we find this diagonal matrix. Based on the definition, we could find every single eigenvector and then check if they form a basis. If not, then $T$ is not diagonalizable. Otherwise, let's look at how we get $[T]_{BB}$. If we want, $[T]_{BB}$ we need to use change of basis matrices:
+$$[T]_{BB}=[I]_{BE}[T]_{EE}[I]_{EB}$$
+Note that $E$ represents the elementary basis. Note that initially, we only know $[T]_{EE}$.
 \begin{align*}
-    [T]_{B\to B}&=[I]_{E\to B}[T]_{E\to E}[I]_{B\to E}\\
-    [I]_{E\to B}^{-1}[T]_{B\to B}&=[I]_{E\to B}^{-1}[I]_{E\to B}[T]_{E\to E}[I]_{B\to E}\\
-    [I]_{E\to B}^{-1}[T]_{B\to B}&=[T]_{E\to E}[I]_{B\to E}\\
-    [I]_{E\to B}^{-1}[T]_{B\to B}[I]_{B\to E}^{-1}&=[T]_{E\to E}[I]_{B\to E}[I]_{B\to E}^{-1}\\
-    [I]_{E\to B}^{-1}[T]_{B\to B}[I]_{B\to E}^{-1}&=[T]_{E\to E}\\
-    [I]_{B\to E}[T]_{B\to B}[I]_{E\to B}&=[T]_{E\to E}
+    [T]_{BB}&=[I]_{BE}[T]_{EE}[I]_{EB}\\
+    [I]_{BE}^{-1}[T]_{BB}&=[I]_{BE}^{-1}[I]_{BE}[T]_{EE}[I]_{EB}\\
+    [I]_{BE}^{-1}[T]_{BB}&=[T]_{EE}[I]_{EB}\\
+    [I]_{BE}^{-1}[T]_{BB}[I]_{EB}^{-1}&=[T]_{EE}[I]_{EB}[I]_{EB}^{-1}\\
+    [I]_{BE}^{-1}[T]_{BB}[I]_{EB}^{-1}&=[T]_{EE}\\
+    [I]_{EB}[T]_{BB}[I]_{BE}&=[T]_{EE}
 \end{align*}
 A common way this is notated is $P^{-1}DP=A$. Let's talk about why this achieves the efficient power multiplication that want.
 \begin{align*}
-    ([T]_{E\to E})^2&=([I]_{B\to E}[T]_{B\to B}[I]_{E\to B})^2\\
-    &=([I]_{B\to E}[T]_{B\to B}[I]_{E\to B})([I]_{B\to E}[T]_{B\to B}[I]_{E\to B})\\
-    &=([I]_{B\to E}[T]_{B\to B}[T]_{B\to B}[I]_{E\to B})\\
-    &=([I]_{B\to E}[T]_{B\to B}^2[I]_{E\to B})
+    ([T]_{EE})^2&=([I]_{EB}[T]_{BB}[I]_{BE})^2\\
+    &=([I]_{EB}[T]_{BB}[I]_{BE})([I]_{EB}[T]_{BB}[I]_{BE})\\
+    &=([I]_{EB}[T]_{BB}[T]_{BB}[I]_{BE})\\
+    &=([I]_{EB}[T]_{BB}^2[I]_{BE})
 \end{align*}
-This gives us that:
-$$([T]_{E\to E})^n=[I]_{B\to E}[T]_{B\to B}^n[I]_{E\to B}$$
-Since $[T]_{B\to B}$ is diagonal, this computation is simple.
+By induction, this gives us:
+$$([T]_{EE})^n=[I]_{EB}[T]_{BB}^n[I]_{BE}$$
+Since $[T]_{BB}$ is diagonal, computing $[T]_{BB}^n$ is simple. Afterwards, we only need to perform two matrix multiplications. This is way more efficient than trying to directly compute $[T]_{EE}^n$ which would require $n$ difficult matrix multiplications.

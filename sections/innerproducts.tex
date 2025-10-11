@@ -14,7 +14,7 @@ Let $V$ be a vector space over $\mathbb{R}$. A valid inner product of $V$ satisf
 \begin{example}
     Consider $\mathbb{R}^n$. Let $\vec{x}=(x_1, x_2,\ldots, x_n)$ and $\vec{y}=(y_1,y_2,\ldots,y_n)$. One example of an inner product is the dot product. This is often notated and defined as $\langle\vec{x},\vec{y}\rangle=\vec{x}\cdot\vec{y}=\sum_{i=1}^n x_iy_i$.
 
-    Let $\vec{v}=\vec{0}$. We have that $\vec{v}\cdot\vec{v}=\sum_{i=1}^n v_iv_i=\sum_{i=1}^n v_i^2$. Since $\vec{v}=\vec{0}$, each $v_i=0$ so the whole summation equals $0$. Assume $\langle\vec{v},\vec{v}\rangle=\vec{v}\cdot\vec{v}=\sum_{i=1}^n v_i^2=0$. Since $v_i^2\geq 0$, we must have that $v_i=0$ for all $i$ since otherwise we would have a positive sum.
+    Let's check the four conditions of inner products. Symmetry and Linearity follow from the fact that addition and multiplication are commutative. Let $\vec{v}\in V$. We have that $\vec{v}\cdot\vec{v}=\sum_{i=1}^n v_iv_i=\sum_{i=1}^n v_i^2$. This satisfies, non-negativity since squares are always non-negative. If $\vec{v}=\vec{0}$, each $v_i=0$ so the whole summation equals $0$. Assume $\langle\vec{v},\vec{v}\rangle=\vec{v}\cdot\vec{v}=\sum_{i=1}^n v_i^2=0$. Since $v_i^2\geq 0$, we must have that $v_i=0$ for all $i$ since otherwise we would have a positive sum. So we have non-degeneracy as well.
 \end{example}
 \begin{definition}
     Let $V$ be an inner product space and $\vec{v}\in V$. We define the norm of $\vec{v}$ to be $||\vec{v}||=\sqrt{\langle\vec{v},\vec{v}\rangle}$.

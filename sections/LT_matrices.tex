@@ -30,8 +30,7 @@ There are also many linear transformations which are not obviously linear but yo
 \begin{example}
     Consider the vector space $\mathbb{R}^2$ over $\mathbb{R}$. Define the transformation $T:\mathbb{R}^2\to\mathbb{R}^2$ via $T(x,y)=(x\cos(\theta)-y\sin(\theta),x\sin(\theta)+y\cos(\theta))$. This is a counterclockwise rotation about the origin by an angle $\theta$. This is also a linear transformation.
 \end{example}
-One of the conditions for a defined function is that is must be defined for the whole domain. This is still true of a linear transformation, however, linear transformations have a special property. Instead of needing to know what the function does to every single value, for example $f(x,y)=(x^2+y, x-y), \forall x,y\in\mathbb{R}$, we only need to know what the linear transformation does to a basis of the vector space. The remark following the theorem shows why.
-\newpage
+One of the conditions for a defined function is that is must be defined for the whole domain. This is still true of a linear transformation, however, linear transformations have a special property. Instead of needing to know what the function does to every single value, for example $f(x,y)=(x^2+y, x-y), \forall x,y\in\mathbb{R}$, we only need to know what the linear transformation does to a basis of the vector space. The following theorem shows why.
 \begin{theorem}
     Let $V$ and $W$ be $\mathbb{F}$-vector spaces. Let $(\vec{v}_1,\ldots,\vec{v}_n)$ be a basis for $V$ and let $(\vec{w}_1,\ldots,\vec{w}_n)$ be an arbitrary list of vectors in $W$. There exists a unique linear transformation $T:V\to W$ such that $T(\vec{v}_i)=\vec{w}_i$ for each $i\in\{1,\ldots, n\}$.
 \end{theorem}
@@ -94,18 +93,6 @@ Since we now understand how linear transformations work, we want to introduce a 
 \end{proof}
 \section{Exercises 3}
 \begin{exercise}
-    Let $V$ be a finite dimensional vector space and $L$ be a list that spans $V$. Prove that you can always reduce $L$ into a basis of $V$.
-\end{exercise}
-\begin{proof}
-    If $L$ is linearly independent, by definition you already have a basis. If $L$ is linearly dependent, there exists a vector in the list that can be written as a linear combination of the other vectors in the list. Remove this vector. Notice that removing this vector does not change the span of the list since you can simply replace the vector with its linear combination. Continue this process until the list is linearly independent. The span will remain the same at each step and now your list is linearly independent thus you have a basis.
-\end{proof}
-\begin{exercise}
-    Let $V$ be a vector space with $dim(V)=n$. All sets that span $V$ must have size greater than or equal to $n$.
-\end{exercise}
-\begin{proof}
-    Assume, for sake of contradiction, you have a spanning set of size strictly less than $n$. Since the $dim(V)=n$, consider any basis $B$ which by definition is linearly independent and has size $n$. This means we have found a linearly independent list that has size greater than a spanning set which is a contradiction.
-\end{proof}
-\begin{exercise}
     Let $V$ and $W$ be vector spaces. Prove that for any linear transformation $T:V\to W$ we have that $T(\vec{0}_V)=\vec{0}_W$.
 \end{exercise}
 \begin{proof}
@@ -157,7 +144,10 @@ $$\begin{bmatrix}
     \vert & \vert & \ldots & \vert \\
     [T(\vec{v}_1)]_C & [T(\vec{v}_2)]_C & \ldots & [T(\vec{v}_n)]_C \\
     \vert & \vert & \ldots & \vert
-\end{bmatrix}_{B\to C}$$
+\end{bmatrix}_{CB}$$
+\begin{remark}
+    You may notice that we are talking about a linear transformation from a basis $B$ to $C$, but the subscript is $CB$ instead of $BC$. This may seem unintuitive but we will soon see why the notation is like this in the context of composing linear transformations.
+\end{remark}
 You might notice that this is actually a matrix! First, let's talk about the size of this matrix. It will have $n$ columns where $n$ is the size of $B$ since there is one column per vector in the basis $B$. This is also just the dimension of the domain. It will have $m$ rows where $m$ is the size of the basis $C$. This is also just the dimension of the codomain. The number of rows is the size of $C$ since the coordinate vector with respect to $C$ has one entry per vector in $C$. This means that the linear transformation $T$ from a $n$-dimensional vector space to an $m$-dimensional vector space can be contained in a $m\times n$ matrix.
 
 We now want to show that this matrix does actually fully capture our linear transformation. That is, we want to show that in the same sense that we can apply a $T$ to a vector in our domain, we can "apply" the matrix to a vector in our domain to get the same output. This means that we have to define a notion of "applying" a matrix so that it gives the same output as applying a linear transformation. This brings us back to the coordinate vectors we were working with earlier. Specifically, the equation:
@@ -168,13 +158,13 @@ We can see that $[T(\vec{v})]_C$ can be expressed as a linear combination of the
 
 If you are already familiar with matrices and matrix multiplication then you already know that you can only multiply two matrices if the number of columns of the first matrix is equal to the number of rows of the second matrix. We can see here that our matrix is $m\times n$ and our vector is $n\times 1$ so it upholds this rule. Some intuition for why this rule makes sense is that the number of columns of the first matrix corresponds to the size of the domain vector space. Since we want to input a vector from the domain, if it has a different size then it isn't actually from our domain.
 
-Let's consider "applying" our matrix to the vector we defined above. Quickly, we should discuss what is conceptually going on. The $B\to C$ subscript that you may have noticed tells us that we are transforming from one basis to another. This is why we need to input a coordinate vector with respect to $B$ since the way our matrix is set up is the transformation of the basis $B$ written with respect to $C$. This yields:
+Let's consider "applying" our matrix to the vector we defined above. Quickly, we should discuss what is conceptually going on. The $CB$ subscript that you may have noticed tells us that we are transforming from one basis to another. This is why we need to input a coordinate vector with respect to $B$ since the way our matrix is set up is the transformation of the basis $B$ written with respect to $C$. This yields:
 \begin{align*}
     \begin{bmatrix}
     \vert & \vert & \ldots & \vert \\
     [T(\vec{v}_1)]_C & [T(\vec{v}_2)]_C & \ldots & [T(\vec{v}_n)]_C \\
     \vert & \vert & \ldots & \vert
-\end{bmatrix}_{B\to C}\begin{bmatrix}
+\end{bmatrix}_{CB}\begin{bmatrix}
     a_1 \\ a_2 \\ \vdots \\ a_n
 \end{bmatrix}_B
 \end{align*}
@@ -214,7 +204,7 @@ Another way to think about this is to go back to the equation $[T(\vec{x})]_C=\s
     $$A=\begin{bmatrix}
         0 & 1 & 0\\
         0 & 0 & 2
-    \end{bmatrix}_{B\to C}$$
+    \end{bmatrix}_{CB}$$
     We want to show that this is indeed the same as $T$. Let's consider $7x^2+5x+3$. This can be represented as $\begin{bmatrix}
         3 \\ 5 \\ 7
     \end{bmatrix}_B$. We can clearly see that the derivative $7x^2+5x+3$ is $14x+5$ which has coordinate vector $\begin{bmatrix}
@@ -223,7 +213,7 @@ Another way to think about this is to go back to the equation $[T(\vec{x})]_C=\s
     $$\begin{bmatrix}
         0 & 1 & 0\\
         0 & 0 & 2
-    \end{bmatrix}_{B\to C}\begin{bmatrix}
+    \end{bmatrix}_{CB}\begin{bmatrix}
         3 \\ 5 \\ 7
     \end{bmatrix}_B=\begin{bmatrix}
         0*3+1*5+0*7\\
@@ -232,13 +222,16 @@ Another way to think about this is to go back to the equation $[T(\vec{x})]_C=\s
         5 \\ 14
     \end{bmatrix}_C$$
 \end{example}
+\begin{remark}
+    Here we can already see a glimpse of why the subscript is written "backwards". We start from a vector written in a basis $B$ and then apply the matrix. The matrix goes from basis $B$ to basis $C$ so if we simply follow the letters from right to left, we can determine what basis we end up in.
+\end{remark}
 \begin{example}
     We now want to start with a matrix and try to determine the linear transformation it comes from.
     $$A=\begin{bmatrix}
         1 & 2 & 3 & 4\\
         5 & 6 & 7 & 8\\
         9 & 10 & 11 & 12
-    \end{bmatrix}_{B\to C}$$
+    \end{bmatrix}_{CB}$$
     Let $B=(\left[\begin{smallmatrix}
         1 \\ 0 \\ 0 \\ 0
     \end{smallmatrix}\right], \left[\begin{smallmatrix}
@@ -330,7 +323,7 @@ Another way to think about this is to go back to the equation $[T(\vec{x})]_C=\s
         84 & 96 & 108 & 120\\
         99 & 114 & 129 & 144\\
         114 & 132 & 150 & 168
-    \end{bmatrix}_{B\to D}$$
+    \end{bmatrix}_{DB}$$
     Notice that $A$ and $A'$ capture the exact same linear transformation just between different bases. In general, when I want to switch between bases, I need to replace each of the columns with the coordinate vector for that column vector with respect to the new basis. 
 \end{example}
 Now we have discussed how linear transformations can be represented as matrices. This means that every matrix is a linear transformation and vice versa. This means that we expect matrices to be able to capture all aspects of linear transformations. So far we have shown that $T(\vec{v})=A\vec{v}$ where $A$ is the matrix representing $T$. From this definition, we can derive how we should define scalar multiplication and vector addition for matrices. The proof is not shown here, but you should think about why these definitions make sense. When we scale a linear transformation/matrix, we simply scale each of the entries of the matrix. When we add linear transformations/matrices, we add the entries pointwise. An example is shown below:
@@ -407,18 +400,54 @@ Now let's consider an example of composing linear transformations. This example 
 \begin{example}
     We will now find a way to generalize switching a vector between bases. Let $V$ be a $\mathbb{F}$-vector space and $\vec{v}\in V$ with $B$, $C$, and $D$ as bases. We want to find a matrix that when applied to $[\vec{v}]_B$ gives us $[\vec{v}]_C$. Since we are looking for a matrix, we know that this must be a linear transformation. One important thing to notice is that $[\vec{v}]_B$ and $[\vec{v}]_C$ actually encode the same vector for all $\vec{v}\in V$. This means that our linear transformation must be the identity transformation.
 
-    This gives us the linear transformation $Id:V\to V$ via $Id(\vec{v})=\vec{v}$ for all $\vec{v}\in V$. We let $A_{B\to C}$ be the corresponding matrix for this linear transformation. Like before, let's say we wanted $A_{B\to D}$ when we already know what $A_{B\to C}$ is.
+    This gives us the linear transformation $Id:V\to V$ via $Id(\vec{v})=\vec{v}$ for all $\vec{v}\in V$. We let $A_{CB}$ be the corresponding matrix for this linear transformation. Like before, let's say we wanted $A_{DB}$ when we already know what $A_{CB}$ is.
 
-    We are actually going to find $Id_{C\to D}$ and compose it with $A_{B\to C}$ to get $Id_{C\to D}\circ A_{B\to C}$. There are a few things to notice about this composition. Firstly, if we just follow the arrows we get that $B\to C\to D$ so at the very least it seems like we are getting the bases correctly. Secondly, since $Id_{C\to D}$ is the identity transformation, this composition is still the same linear transformation as $A$.
+    We are actually going to find $Id_{DC}$ and compose it with $A_{CB}$ to get $Id_{DC}\circ A_{CB}$. There are a few things to notice about this composition. Firstly, if we just follow the letters from right to left we get that $B\to C\to D$ so at the very least it seems like we are getting the bases correctly. Secondly, since $Id_{DC}$ is the identity transformation, this composition is still the same linear transformation as $A$.
 
-    $Id_{C\to D}$ is known as the change of basis matrix from $C$ to $D$. You would compute it in the same way that you would the matrix for any linear transformation.
+    $Id_{DC}$ is known as the change of basis matrix from $C$ to $D$. You would compute it in the same way that you would the matrix for any linear transformation.
 \end{example}
+\begin{remark}
+    If we write a matrix without a subscript say $BA$ representing two bases, we automatically assume that we are mapping from the elementary basis of the domain to the elementary basis of the codomain.
+\end{remark}
+There are many types of matrices and we define them below. The names are pretty accurate descriptions of what the matrices look like so they shouldn't be hard to remember.
+\begin{definition}
+    We say that a matrix $A$ is square if it is $n\times n$.
+\end{definition}
 \begin{definition}
     Let $A$ be a $m\times n$ matrix. We define the transpose of $A$, denoted $A^T$ to be the $n\times m$ matrix satisfying $A_{ij}=A^T_{ji}$.
 \end{definition}
 \begin{remark}
     The transpose simply takes the rows of $A$ and makes them the columns of $A^T$.
 \end{remark}
+\begin{definition}
+    Let $A$ be a square matrix. The main diagonal of $A$ are the entries $a_{ij}$ such that $i=j$.
+\end{definition}
+\begin{definition}
+    A diagonal matrix is a matrix where the only nonzero entries are on the main diagonal.
+\end{definition}
+\begin{definition}
+    An upper triangular matrix is zero below the main diagonal. A lower triangular matrix is zero above the main diagonal.
+\end{definition}
+\begin{example}
+    \begin{align*}
+        \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & 2 & 0 \\
+            0 & 0 & 3
+        \end{bmatrix}\tag{1}\\
+        \begin{bmatrix}
+            1 & 3 & 5 \\
+            0 & 2 & 6 \\
+            0 & 0 & 3
+        \end{bmatrix}\tag{2}\\
+        \begin{bmatrix}
+            1 & 0 & 0 \\
+            4 & 2 & 0 \\
+            6 & 8 & 3
+        \end{bmatrix}\tag{3}\\
+    \end{align*}
+    $(1)$ is diagonal, lower triangular, and upper triangular. $(2)$ is upper triangular. $(3)$ is lower triangular.
+\end{example}
 \section{Exercises 4}
 \begin{exercise}
     Let $T_{\theta}:\mathbb{R}^2\to\mathbb{R}^2$ be the linear transformation of counterclockwise rotation about the origin by $\theta$ radians. Let $\vec{v}_1=\begin{pmatrix}
@@ -564,7 +593,7 @@ We will only prove Theorem 13.1. Theorem 13.2 will be left as an exercise to tes
     The reverse direction follows the exact same logic as the forward direction. We proceed by contrapositive. Assume that $T_A$ is not injective and fix $\vec{b}\in\mathbb{F}^m$. This means that there exists $\vec{x}_1,\vec{x}_2\in\mathbb{F}^n$ with $\vec{x}_1=\vec{x}_2$ such that $T_A(\vec{x}_1)=T_A(\vec{x}_2)=\vec{b}$. Since $T_A(\vec{x})=A\vec{x}$, we have that $A\vec{x}_1=A\vec{x}_2=\vec{b}$ which shows that there exists a $\vec{b}\in\mathbb{F}^m$ such that $A\vec{x}=\vec{b}$ has more than one solution.
 \end{proof}
 \section{Systems of Linear Equations}
-We're going to take a step back from all the linear transformation stuff and transition into talking about systems of equations. If you have taken a linear algebra course before, this is likely something you are familiar with. 
+We're going to take a step back from all the linear transformation stuff and transition into talking about systems of equations. This is a very very practical application of matrices as they make solving systems of linear equations highly algorithmic. Row reduction is an algorithm you can very easily define and execute. If you have taken a linear algebra course before, this is likely something you are familiar with. 
 
 Let's consider the following system of equations:
 \begin{align*}
@@ -582,7 +611,7 @@ We can actually model this system using a $3\times 4$ matrix shown below:
 \end{align*}
 Notice that the first column corresponds to the coefficients of $x$, the second column for $y$, and the third for $z$. The last column holds the solutions. Moreover, the first row represents the first equation and so on.
 
-When working with systems of linear equations in matrices, we have three elementary operations we can perform: scaling a row by a nonzero constant, swapping two rows, and adding one row to another row.
+When working with systems of linear equations in matrices, we have three elementary operations we can perform: scaling a row by a nonzero constant, swapping two rows, and adding one row to another row. Notice that these actually correspond with the operations we typically do when solving systems of equations. We can scale equations and add equations. Swapping rows/equations isn't actually necessary when we solve systems of equations but we'll soon see that it makes understanding what solving a system really means much easier.
 \begin{definition}
     We define a elementary matrix to be a matrix that is exactly one elementary operation away from the identity matrix.
 \end{definition}
@@ -689,7 +718,7 @@ To get around this, we notice that, no matter what, we are performing Gaussian E
     \end{align*}
     Clearly, $RREF(A)=I_n$ so $A$ is invertible. The right half of this augmented matrix is now actually $A^{-1}$. Let's discuss why.
 
-    We start with $[A|I_3]$. Since $A$ is invertible, we can rewrite this as $[E_kE_{k-1}\ldots E_1I_3|I_3]$. Every step we did in Gaussian Elimination, undoes one of these $E_i$'s until we eventually got to $E_1$. Undoing one of the $E_i$'s is equivalent to multiplying by $E_i^{-1}$. So, after the first step we get $[E_k^{-1}E_kE_{k-1}\ldots E_1I_3|E_k^{-1}I_3]=[E_{k-1}\ldots E_1I_3|E_k^{-1}I_3]$. Then the second step gives $[E_{k-1}^{-1}E_{k-1}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]=[E_{k-2}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]$. This should look familiar. It's the exact same process as we did in proving Theorem 15.2.
+    We start with $[A|I_3]$. Since $A$ is invertible, we can rewrite this as $[E_kE_{k-1}\ldots E_1I_3|I_3]$. Every step we did in Gaussian Elimination, undoes one of these $E_i$'s until we eventually got to $E_1$. Undoing one of the $E_i$'s is equivalent to multiplying by $E_i^{-1}$. So, after the first step we get $[E_k^{-1}E_kE_{k-1}\ldots E_1I_3|E_k^{-1}I_3]=[E_{k-1}\ldots E_1I_3|E_k^{-1}I_3]$. Then the second step gives $[E_{k-1}^{-1}E_{k-1}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]=[E_{k-2}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]$. This should look familiar. It's the exact same process as we did in proving Theorem 2.7.2.
 \end{example}
 \begin{remark}
     Let $A$ be an invertible $n\times n$ matrix. If I want to solve $A\vec{x}=\vec{b}$, I can simply do $A^{-1}A\vec{x}=A^{-1}\vec{b}$ to get $\vec{x}=A^{-1}\vec{b}$.
@@ -801,7 +830,7 @@ Now let's consider what happens if we are off the main diagonal of $I_m$ so $i\n
 \begin{exercise}
     Let $A$ be a $m\times n$ matrix and $T_A:\mathbb{F}^n\to \mathbb{F}^m$ be a linear transformation via $T_A(\vec{x})=A\vec{x}$. Prove that if $T_A$ is injective then $A$ has a left inverse.
 \end{exercise}
-\section{Subspaces: Image and Kernel}
+\section{Image and Kernel}
 \begin{definition}
     Let $T:V\to W$ be a linear transformation. The image of $T$, denoted $Im(T)$, is the set of all vectors $\vec{w}\in W$ such that there exists a $\vec{v}\in V$ where $T(\vec{v})=\vec{w}$.
 \end{definition}
@@ -844,9 +873,9 @@ Consider $A\vec{x}=\vec{b}$. The image of $T_A$ is the set of all $\vec{b}$'s su
         b_1 \\ b_2 \\ b_3
     \end{bmatrix}
     \end{align*}
-    This tells us $Im(T_A)=\{\vec{b}:\vec{b}=\begin{bmatrix}
+    This tells us $Im(T_A)=\{\begin{pmatrix}
         a \\ 0 \\ 0
-    \end{bmatrix}, a\in\mathbb{F}\}$. Additionally, $rank(A)=1$ since $\begin{bmatrix}
+    \end{pmatrix}:a\in\mathbb{F}\}$. Additionally, $rank(A)=1$ since $\begin{bmatrix}
         1 \\ 0 \\ 0
     \end{bmatrix}$ forms a basis for $Im(T_A)$. We can now do something similar to find the kernel and nullity by looking at solutions to $A\vec{x}=\vec{0}$.
     \begin{align*}
