@@ -27,7 +27,7 @@
 \begin{theorem}
     Let $V$ be an inner product space and $\vec{v},\vec{w}\in V$. The following inequality always holds:
     $$|\langle\vec{v},\vec{w}\rangle|\leq||\vec{v}||||\vec{w}||$$
-    This is known as the Cauchy-Schwartz Inequality.
+    This is known as the Cauchy-Schwarz Inequality.
 \end{theorem}
 \begin{theorem}
     Let $V$ be an inner product space and $\vec{v},\vec{w}\in V$. The following inequality always holds:
@@ -43,7 +43,7 @@
         &=||\vec{v}||^2+\langle\vec{v},\vec{w}\rangle+\langle\vec{v},\vec{w}\rangle+||\vec{w}||^2\tag{by Symmetry of Inner Product}\\
         &\leq||\vec{v}||^2+|\langle\vec{v},\vec{w}\rangle+\langle\vec{v},\vec{w}\rangle|+||\vec{w}||^2\\
         &\leq||\vec{v}||^2+|\langle\vec{v},\vec{w}\rangle|+|\langle\vec{v},\vec{w}\rangle|+||\vec{w}||^2\\
-        &\leq||\vec{v}||^2+||\vec{v}||||\vec{w}||+||\vec{v}||||\vec{w}||+||\vec{w}||^2\tag{by Cauchy Schwartz Inequality}\\
+        &\leq||\vec{v}||^2+||\vec{v}||||\vec{w}||+||\vec{v}||||\vec{w}||+||\vec{w}||^2\tag{by Cauchy Schwarz Inequality}\\
         &\leq||\vec{v}||^2+2||\vec{v}||||\vec{w}||+||\vec{w}||^2
     \end{align*}
     Take the square root of both sides to get the Triangle Inequality.
@@ -88,15 +88,18 @@
 
     Case 2: If $\vec{v}_i\notin span(\mathcal{O}_{i-1})$, then we want to add it to make $\mathcal{O}_{i-1}$ into an orthonormal list with a larger span. To ensure the new vector is orthogonal to $\mathcal{O}_{i-1}$, we will use the projection. We will add $\frac{\vec{v}_i-proj_{\mathcal{O}_{i-1}}(\vec{v}_i)}{||\vec{v}_i-proj_{\mathcal{O}_{i-1}}(\vec{v}_i)||}$. The numerator is simply a vector that is orthogonal to $\mathcal{O}_{i-1}$ as we proved with projections. We divide by its norm to make this vector into a unit vector.
 \end{definition}
+\begin{remark}
+    The Gram-Schmidt Process works for arbitrary inner products. However, it is most commonly done with the dot product since this preserves the fact that orthogonal is equivalent to the vectors being perpendicular which is not true for arbitrary inner products.
+\end{remark}
 \section{Exercises 7}
 \begin{exercise}
     Let $\vec{x},\vec{y}\in\R^3$. Prove or disprove that $\langle\vec{x},\vec{y}\rangle=2x_1y_1+3x_2y_2+5x_3y_3$ where $\vec{x}=(x_1, x_2,x_3)$ and $\vec{y}=(y_1,y_2,y_3)$ is an inner product
 \end{exercise}
 \begin{exercise}
-    Prove that the Cauchy-Schwartz Inequality has equality if and only if one of the vectors is a scalar of the other.
+    Prove that the Cauchy-Schwarz Inequality has equality if and only if one of the vectors is a scalar of the other.
 \end{exercise}
 \begin{exercise}
-    Perform the Gram-Schmidt Process on the following vectors:
+    Perform the Gram-Schmidt Process on the following vectors using the dot product:
     $$\vec{v}_1=\begin{pmatrix}
         1 \\ 1
     \end{pmatrix}\quad\quad\vec{v}_2=\begin{pmatrix}
@@ -104,7 +107,7 @@
     \end{pmatrix}$$
 \end{exercise}
 \begin{exercise}
-    Perform the Gram-Schmidt Process on the following vectors:
+    Perform the Gram-Schmidt Process on the following vectors using the dot product:
     $$\vec{v}_1=\begin{pmatrix}
         1 \\ 1 \\ 0
     \end{pmatrix}\quad\quad\vec{v}_2=\begin{pmatrix}
