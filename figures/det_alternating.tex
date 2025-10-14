@@ -1,0 +1,18 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.9, >=stealth]
+
+    % Axes
+    \draw[->,thick] (-0.5,0) -- (3,0) node[right] {$x$};
+    \draw[->,thick] (0,-0.5) -- (0,2) node[above] {$y$};
+
+    % Basis vectors (both same)
+    \draw[->,very thick,red] (0,0) -- (1,0) node[below right] {$(1,0)$};
+    \draw[->,very thick,red] (0,0) -- (1,0);
+
+    % Degenerate "parallelogram"
+    \filldraw[fill=red!10, draw=red!70!black, dashed]
+      (0,0) -- (1,0) -- (2,0) -- (1,0) -- cycle;
+\end{tikzpicture}
+\caption{When both vectors are identical, the parallelogram collapses into a line, and the area is zero.}
+\end{figure}

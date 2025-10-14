@@ -1,0 +1,19 @@
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7, >=stealth]
+    % Draw grid
+    \draw[step=1cm,gray!40,thin] (-0.5,-0.5) grid (4.5,4.5);
+
+    % Axes
+    \draw[->,thick] (-0.5,0) -- (4.5,0) node[right] {$x$};
+    \draw[->,thick] (0,-0.5) -- (0,4.5) node[above] {$y$};
+
+    % Basis vectors
+    \draw[->,very thick,blue] (0,0) -- (1,0) node[below right] {$\mathbf{e}_1$};
+    \draw[->,very thick,blue] (0,0) -- (0,1) node[above left] {$\mathbf{e}_2$};
+
+    % Label
+    \node at (2, -1) {\large Original grid};
+\end{tikzpicture}
+\caption{The standard basis and unit grid in $\mathbb{R}^2$.}
+\end{figure}
