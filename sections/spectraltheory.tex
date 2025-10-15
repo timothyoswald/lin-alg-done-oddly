@@ -64,14 +64,33 @@ If $A-\lambda I$ is invertible, then this equation has exactly one solution: the
 The previous example actually tells us something more about eigenvectors. We notice that when we solved the system, we got eigenvectors of a certain form not just one specific vector. In fact, once you have one eigenvector, you can generate many more by scaling.
 \begin{example}
     Let $A=\begin{bmatrix}
-        2 & 1 & 1\\
-        1 & 2 & 1\\
-        -2 & -2 & 1
-    \end{bmatrix}$.
+        1 & 0 & 0\\
+        0 & 0 & 0\\
+       0 & 0 & 0
+    \end{bmatrix}$. We can compute that $\det(A-\lambda I)=\lambda^2(1-\lambda)$ which has roots $1$ and $0$. Let's consider the case where $\lambda =0$. We want to solve $A\vec{x}=0\vec{x}=\vec{0}$.
+    \begin{align*}
+        A\vec{x}&=\vec{0}\\
+        \begin{bmatrix}
+        1 & 0 & 0\\
+        0 & 0 & 0\\
+       0 & 0 & 0
+    \end{bmatrix}\begin{bmatrix}
+        x \\ y \\ z
+    \end{bmatrix}&=\begin{bmatrix}
+        x \\ 0 \\ 0
+    \end{bmatrix}=\vec{0}
+    \end{align*}
+    This implies that as long as the first coordinate is zero, the other coordinates can be anything. In particular, $(0,1,0)$ and $(0,0,1)$ are both eigenvectors and every vector in their span is also an eigenvector.
+
+    The case where $\lambda=1$ is uninteresting so we omit it.
 \end{example}
+From the previous examples, we can see that the term eigenvector is not unique. A singular eigenvalue can have many, often infinitely many eigenvectors. This leads to the following definition:
 \begin{definition}
-    Let $\lambda$ be an eigenvalue of a matrix $A$. The eigenspace of $\lambda$ is the space spanned by the corresponding eigenvectors.
+    Let $\lambda$ be an eigenvalue of a matrix $A$. The eigenspace of $\lambda$ is the space spanned by the corresponding eigenvectors. The dimension of the eigenspace for an eigenvalue $\lambda$ is known as the geometric multiplicity of $\lambda$.
 \end{definition}
+\begin{remark}
+    So in the previous example, the eigenspace of $0$ would be $span({(0,1,0),(1,0,0)})$
+\end{remark}
 \begin{remark}
     We discussed above how eigenvalues are exactly the solutions to the equation $(A-\lambda I)\vec{x}=\vec{0}$. This implies that the eigenspace is equivalent to the kernel of the transformation $A-\lambda I$.
 \end{remark}
@@ -147,7 +166,7 @@ Let's consider where this matrix comes from. We know that the first column of th
 
 Now, let's talk about how do we find this diagonal matrix. Based on the definition, we could find every single eigenvector and then check if they form a basis. If not, then $T$ is not diagonalizable. Otherwise, let's look at how we get $[T]_{BB}$. If we want, $[T]_{BB}$ we need to use change of basis matrices:
 $$[T]_{BB}=[I]_{BE}[T]_{EE}[I]_{EB}$$
-Note that $E$ represents the elementary basis. Note that initially, we only know $[T]_{EE}$.
+Note that $E$ represents the elementary basis and as long as you know the transformation with respect to some basis you can do this. Initially, we only know $[T]_{EE}$.
 \begin{align*}
     [T]_{BB}&=[I]_{BE}[T]_{EE}[I]_{EB}\\
     [I]_{BE}^{-1}[T]_{BB}&=[I]_{BE}^{-1}[I]_{BE}[T]_{EE}[I]_{EB}\\
