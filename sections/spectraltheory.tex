@@ -61,9 +61,16 @@ If $A-\lambda I$ is invertible, then this equation has exactly one solution: the
         a \\ a
     \end{pmatrix}$.
 \end{example}
-The previous example actually tells us something more about eigenvectors. We notice that when we solved the system, we got eigenvectors of a certain form not just one specific vector. In fact, once you have one eigenvector, you can generate many more by scaling. This leads to the following definition:
+The previous example actually tells us something more about eigenvectors. We notice that when we solved the system, we got eigenvectors of a certain form not just one specific vector. In fact, once you have one eigenvector, you can generate many more by scaling.
+\begin{example}
+    Let $A=\begin{bmatrix}
+        2 & 1 & 1\\
+        1 & 2 & 1\\
+        -2 & -2 & 1
+    \end{bmatrix}$.
+\end{example}
 \begin{definition}
-    The set of all eigenvectors of a matrix $A$ is called the \textit{eigenspace}. Note that this is a vector space so it necessarily includes the zero vector, but the zero vector is, by definition, not an eigenvector.
+    Let $\lambda$ be an eigenvalue of a matrix $A$. The eigenspace of $\lambda$ is the space spanned by the corresponding eigenvectors.
 \end{definition}
 \begin{remark}
     We discussed above how eigenvalues are exactly the solutions to the equation $(A-\lambda I)\vec{x}=\vec{0}$. This implies that the eigenspace is equivalent to the kernel of the transformation $A-\lambda I$.
@@ -78,7 +85,30 @@ The previous example actually tells us something more about eigenvectors. We not
 
     This leaves the case when $k<1$. When $k<1$, our polynomial is simply a constant. The derivative of a constant is just $0$. Thus, this tells us that $T$ has eigenvalue $0$ which has eigenvectors that are any constant.
 \end{example}
-Before further discussion, we need to briefly discuss some algebra as solving the characteristic polynomial is the key component of finding eigenvalues.
+Before further discussion, we need to briefly discuss some algebra as solving the characteristic polynomial is the key component of finding eigenvalues. It is common to work in $\C^n$ when discussing eigenvalues because polynomials always have roots in the complex numbers. In particular, a polynomial of degree $n$ always has $n$ roots (counting multiplicities) over the complex numbers. Counting multiplicities means that if a polynomial is divisible by $(x-3)^5$, we count $3$ as a root $5$ times.
+\begin{definition}
+    The algebraic multiplicity of an eigenvalue $\lambda$ for a matrix $A$ is its degree in the characteristic polynomial of $A$.
+\end{definition}
+This is important because when we analyze the characteristic polynomial of an $n\times n$ matrix $A$, $n$ $\lambda$ terms along the main diagonal of $A-\lambda I$. When we compute $\det(A-\lambda I)$, we will end up with a degree $n$ polynomial whose roots are our eigenvalues.
+\begin{theorem}
+    Every single variable polynomial with complex coefficients and degree at least one has at least one complex root. This is the \textit{Fundamental Theorem of Algebra}.
+\end{theorem}
+\begin{theorem}
+    If $p(z)$ is a polynomial with complex coefficients and we have that $p(c)=0$, then $(z-c)$ divides $p(z)$.
+\end{theorem}
+We will use these as facts without proof as their proofs are highly unrelated to linear algebra. These two facts alone give us a lot of important takeaways.
+\begin{corollary}
+    Every square matrix $A$ with complex values has at least one eigenvalue.
+\end{corollary}
+\begin{proof}
+    If $A$ is an $n\times n$ matrix, $\det(A-\lambda I)$ will be a degree $n$ polynomial. By the Fundamental Theorem of Algebra, this has at least one complex root. We know that this root is an eigenvalue so $A$ has at least one eigenvalue.
+\end{proof}
+\begin{corollary}
+    Every degree $n\geq 1$ polynomial has $n$ roots counting multiplicities.
+\end{corollary}
+\begin{proof}
+    Let $p(z)$ be our polynomial of degree $n\geq 1$. We induct on $n$. If $n=1$, then the Fundamental Theorem of Algebra gives us what we want. For $n>1$, the Fundamental Theorem of Algebra gives us one root $c$. Theorem 5.1.8 tells us that we can divide $p(z)$ by this $z-c$ to get a degree $n-1$ polynomial. Induction now concludes the proof.
+\end{proof}
 \section{Diagonalization}
 We previously discussed taking large powers of $A$. This can be very expensive especially if $A$ is high dimensional. However, if we have the special case where $A$ is diagonal, this computation is really easy since:
 $$\begin{bmatrix}
