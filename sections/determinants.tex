@@ -30,7 +30,7 @@ Now let's analyze what happens to the area under operations like vector addition
 \end{pmatrix}$ to the transformation of $\vec{e}_1$.
 \input{figures/det_multilinearity}
 \begin{definition}
-    Let $V$ be a vector space over a field $\mathbb{F}$. Let $A$ be an $n\times n$ matrix where $A=[\vec{a}_1,\vec{a}_2,\dots,\vec{a}_n]$ where $\vec{a}_i$ is the $i$th column of $A$. For any arbitrary $\vec{v}\in V$ and $\alpha\in\mathbb{F}$, we define $\det([\vec{a}_1,\dots\alpha\vec{a}_i+\vec{v},\dots,\vec{a}_n])=\alpha\det([\vec{a}_1,\dots,\vec{a}_{i-1},\vec{a}_i,\dots,\vec{a}_n])+\det([\vec{a}_1,\dots,\vec{a}_{i-1},\vec{v},\dots,\vec{a}_n])$. This is known as the \textit{multi-linearity} property.
+    Let $V$ be a vector space over a field $\mathbb{F}$. Let $A$ be an $n\times n$ matrix where $A=[\vec{a}_1,\vec{a}_2,\dots,\vec{a}_n]$ where $\vec{a}_i$ is the $i$th column of $A$. For any arbitrary $\vec{v}\in V$ and $\alpha\in\mathbb{F}$, we define $\det(\vec{a}_1,\dots\alpha\vec{a}_i+\vec{v},\dots,\vec{a}_n)=\alpha\det(\vec{a}_1,\dots,\vec{a}_{i-1},\vec{a}_i,\dots,\vec{a}_n)+\det(\vec{a}_1,\dots,\vec{a}_{i-1},\vec{v},\dots,\vec{a}_n)$. This is known as the \textit{multi-linearity} property.
 \end{definition}
 One can do all the geometry and check that this property does in fact hold for the above transformation. However, it is much more useful to think about it broadly. If I scale one of the vectors, my area clearly increases by the scalar. If I add to one of my vectors, I am adding a new parallelogram to my current one which results in us adding the determinants.
 
@@ -49,39 +49,39 @@ You may notice that this definition seems a little off. For example, the matrix 
 \begin{proof}
     Let $A=[\vec{v}_1,\dots,\vec{v}_n]$. Since the columns are linearly dependent, there exists a $\vec{v}_i$ that can be written as a linear combination of the other vectors. Without loss of generality, let $\vec{v}_1=\sum_{i=2}^n\alpha_i\vec{v}_i$.
     \begin{align*}
-        \det(A)&=\det([\vec{v}_1,\dots,\vec{v}_n])\\
-        &=\det([\sum_{i=2}^n\alpha_i\vec{v}_i,\vec{v}_2,\dots,\vec{v}_n])\\
-        &=\sum_{i=2}^n\alpha_i\det([\vec{v}_i,\vec{v}_2,\dots,\vec{v}_n])\tag{by Multilinearity}
+        \det(A)&=\det(\vec{v}_1,\dots,\vec{v}_n)\\
+        &=\det(\sum_{i=2}^n\alpha_i\vec{v}_i,\vec{v}_2,\dots,\vec{v}_n)\\
+        &=\sum_{i=2}^n\alpha_i\det(\vec{v}_i,\vec{v}_2,\dots,\vec{v}_n)\tag{by Multilinearity}
     \end{align*}
     Now we can simply go through the terms one by one. Since $i$ ranges from $2$ to $n$, no matter what the value of $i$ is we will have two copies of $\vec{v}_i$ inside the determinant. By the alternating property, this means the determinant is zero for all possible values of $i$. Thus, the sum is zero.
 \end{proof}
 \begin{theorem}
     Consider $[\vec{v}_1,\dots,\vec{v}_n]$ where $\vec{v}_i\in\mathbb{F}^n$. Then
-    $$\det([\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n])=\det([\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n])$$
+    $$\det(\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n)=\det(\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n)$$
 \end{theorem}
 \begin{proof}
     \begin{align*}
-        \det([\vec{v}_1,\dots\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n])&=\det([\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n])+\det([\vec{v}_1,\dots\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n])\tag{by multi-linearity}\\
-        &=\det([\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n])+0\tag{by alternating}\\
-        &=\det([\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n])
+        \det(\vec{v}_1,\dots\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n)&=\det(\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n)+\det(\vec{v}_1,\dots\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n)\tag{by multi-linearity}\\
+        &=\det(\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n)+0\tag{by alternating}\\
+        &=\det(\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n)
     \end{align*}
 \end{proof}
 \begin{remark}
-    There is another notion of what the final property of a determinant should be called \textit{antisymmetry}. This one says that if you swap two columns of a matrix, the sign of the determinant should switch. However, the determinant is supposed to be the unique function from $\mathbb{F}^{n^2}\to\mathbb{F}$ and \textit{antisymmetry} is not a sufficient condition for uniqueness in $\mathbb{F}_2$ where $1=-1$. But in $\R^n$ \textit{antisymmetry} will result in the same unique determinant as \textit{alternating} will.
+    There is another notion of what the final property of a determinant should be called \textit{antisymmetry}. This one says that if you swap two columns of a matrix, the sign of the determinant should switch. However, the determinant is supposed to be the unique function from $\mathbb{F}^{n^2}\to\mathbb{F}$ and \textit{antisymmetry} is not a sufficient condition for uniqueness in $\mathbb{F}_2$ where $1=-1$. In fact, \textit{antisymmetry} says literally nothing in $\mathbb{F}_2$. But in $\R^n$ \textit{antisymmetry} will result in the same unique determinant as \textit{alternating} will.
 \end{remark}
 In light of this fact, let's prove that our current properties imply \textit{antisymmetry}.
 \begin{theorem}
-    Consider $[\vec{v}_1,\dots,\vec{v}_n]$ where $\vec{v}_i\in\mathbb{F}^n$. Then $$\det([\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n])=-\det([\vec{v}_1,\dots\vec{v}_j,\dots,\vec{v}_i,\dots,\vec{v}_n])$$
+    Consider $[\vec{v}_1,\dots,\vec{v}_n]$ where $\vec{v}_i\in\mathbb{F}^n$. Then $$\det(\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n)=-\det(\vec{v}_1,\dots\vec{v}_j,\dots,\vec{v}_i,\dots,\vec{v}_n)$$
 \end{theorem}
 \begin{proof}
 Almost every line of this proof makes use of Theorem 3.2.6 which says that you can add columns to one another without changing the determinant.
     \begin{align*}
-        \det([\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n])&=\det([\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n])\\
-        &=\det([\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j-(\vec{v}_i+\vec{v}_j),\dots,\vec{v}_n])\\
-        &=\det([\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,-\vec{v}_i,\dots,\vec{v}_n])\\
-        &=\det([\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j+(-\vec{v}_i),\dots,-\vec{v}_i,\dots,\vec{v}_n])\\
-        &=\det([\vec{v}_1,\dots,\vec{v}_j,\dots,-\vec{v}_i,\dots,\vec{v}_n])\\
-        &=-\det([\vec{v}_1,\dots,\vec{v}_j,\dots,\vec{v}_i,\dots,\vec{v}_n])\tag{by multi-linearity}
+        \det(\vec{v}_1,\dots\vec{v}_i,\dots,\vec{v}_j,\dots,\vec{v}_n)&=\det(\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j,\dots,\vec{v}_n)\\
+        &=\det(\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,\vec{v}_j-(\vec{v}_i+\vec{v}_j),\dots,\vec{v}_n)\\
+        &=\det(\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j,\dots,-\vec{v}_i,\dots,\vec{v}_n)\\
+        &=\det(\vec{v}_1,\dots,\vec{v}_i+\vec{v}_j+(-\vec{v}_i),\dots,-\vec{v}_i,\dots,\vec{v}_n)\\
+        &=\det(\vec{v}_1,\dots,\vec{v}_j,\dots,-\vec{v}_i,\dots,\vec{v}_n)\\
+        &=-\det(\vec{v}_1,\dots,\vec{v}_j,\dots,\vec{v}_i,\dots,\vec{v}_n)\tag{by multi-linearity}
     \end{align*}
 \end{proof}
 \section{Defining the Determinant}
@@ -95,74 +95,74 @@ We have already proved significant things about the determinant without even def
         c & d
     \end{bmatrix}$. You may already know that the determinant of a $2\times 2$ matrix is $ad-bc$, but let's actually prove it using these properties.
     \begin{align*}
-        det(A)&=det(\begin{bmatrix}
+        \det(A)&=\det\left(\begin{bmatrix}
         a & b \\
         c & d
-    \end{bmatrix})\\
-    &=det(\begin{pmatrix}
+    \end{bmatrix}\right)\\
+    &=\det\left(\begin{pmatrix}
         a \\ c
     \end{pmatrix}, \begin{pmatrix}
         b \\ d
-    \end{pmatrix})\\
-    &=det(\begin{pmatrix}
+    \end{pmatrix}\right)\\
+    &=\det\left(\begin{pmatrix}
         a \\ 0
     \end{pmatrix}+\begin{pmatrix}
         0 \\ c
     \end{pmatrix}, \begin{pmatrix}
         b \\ d
-    \end{pmatrix})\\
-    &=det(\begin{pmatrix}
+    \end{pmatrix}\right)\\
+    &=\det\left(\begin{pmatrix}
         a \\ 0
     \end{pmatrix}, \begin{pmatrix}
         b \\ d
-    \end{pmatrix})+det(\begin{pmatrix}
+    \end{pmatrix}\right)+\det\left(\begin{pmatrix}
         0 \\ c
     \end{pmatrix}, \begin{pmatrix}
         b \\ d
-    \end{pmatrix})\tag{by Multilinearity}\\
-    &=det(\begin{pmatrix}
+    \end{pmatrix}\right)\tag{by Multilinearity}\\
+    &=\det\left(\begin{pmatrix}
         a \\ 0
     \end{pmatrix}, \begin{pmatrix}
         b \\ 0
     \end{pmatrix}+\begin{pmatrix}
         0 \\ d
-    \end{pmatrix})+det(\begin{pmatrix}
+    \end{pmatrix}\right)+\det\left(\begin{pmatrix}
         0 \\ c
     \end{pmatrix}, \begin{pmatrix}
         b \\ 0
     \end{pmatrix}+\begin{pmatrix}
         0 \\ d
-    \end{pmatrix})\\
-    &=det(\begin{pmatrix}
+    \end{pmatrix}\right)\\
+    &=\det\left(\begin{pmatrix}
         a \\ 0
     \end{pmatrix}, \begin{pmatrix}
         b \\ 0
-    \end{pmatrix})+det(\begin{pmatrix}
+    \end{pmatrix}\right)+\det\left(\begin{pmatrix}
         a \\ 0
     \end{pmatrix}, \begin{pmatrix}
         0 \\ d
-    \end{pmatrix})+det(\begin{pmatrix}
+    \end{pmatrix}\right)+\det\left(\begin{pmatrix}
         0 \\ c
     \end{pmatrix}, \begin{pmatrix}
         b \\ 0
-    \end{pmatrix})+det(\begin{pmatrix}
+    \end{pmatrix}\right)+\det\left(\begin{pmatrix}
         0 \\ c
     \end{pmatrix}, \begin{pmatrix}
         0 \\ d
-    \end{pmatrix})\tag{by Multilinearity}\\
-    &=det(\begin{bmatrix}
+    \end{pmatrix}\right)\tag{by Multilinearity}\\
+    &=\det\left(\begin{bmatrix}
         a & b \\
         0 & 0
-    \end{bmatrix})+det(\begin{bmatrix}
+    \end{bmatrix}\right)+\det\left(\begin{bmatrix}
         a & 0 \\
         0 & d
-    \end{bmatrix})+det(\begin{bmatrix}
+    \end{bmatrix}\right)+\det\left(\begin{bmatrix}
         0 & b \\
         c & 0
-    \end{bmatrix})+det(\begin{bmatrix}
+    \end{bmatrix}\right)+\det\left(\begin{bmatrix}
         0 & 0 \\
         c & d
-    \end{bmatrix})
+    \end{bmatrix}\right)
     \end{align*}
     Let's figure what the determinants of each of these matrices are. We want to figure out how to reach each of them from the identity since we know the determinant of the identity and we know what specific operations do to the determinant. 
 
@@ -192,16 +192,14 @@ Next, we will partially do the same for $3\times 3$ matrices and then generalize
 
     If we ignore the cases where any of $i,j,k$ are equal, we are actually left with the permutations of $[3]=\{1,2,3\}$. This is because the remaining combinations all have $3$ distinct elements and there are only three choices possible namely $1,2,3$, so we end up only looking at permutations.
 
-    Now notice that if we are only looking at permutations of $[3]$ then $[\vec{e}_i,\vec{e}_j,\vec{e}_k]$ is just $I_3$ but with swapped columns. So $\det(\vec{e}_i,\vec{e}_j,\vec{e}_k)=\pm 1$ when we are only looking at permutations.
-    
-    We are still not done because some of these permutations have a different sign than others. For example $(i,j,k)=(1,2,3)$ gives us $\det(I_3)=1$, but $(i,j,k)=(2,1,3)$ gives us $\\det(\vec{e}_i,\vec{e}_j,\vec{e_k})=-1$ because this is the identity matrix with two columns swapped so by \textit{antisymmetry} the determinant switches sign.
+    Now notice that if we are only looking at permutations of $[3]$ then $[\vec{e}_i,\vec{e}_j,\vec{e}_k]$ is just $I_3$ but with swapped columns. So $\det(\vec{e}_i,\vec{e}_j,\vec{e}_k)=\pm 1$ by \textit{antisymmetry} when we are only looking at permutations.
 \end{example}
 This is enough work with $3\times 3$ matrices to motivate what we will do for $n\times n$ matrices. We first notice that the algebra performed above will still work for arbitrary $n\times n$ matrices. If you don't believe this, you can prove it by induction. But we immediately run into a syntactic issue. We do not want to write $n$ different summations for each of the $n$ coordinates so how can we clean up the notation?
 \begin{definition}
     Let $n\in\N$. A permutation on $[n]=\{1,2,\dots,n\}$ is a bijective function $\sigma:[n]\to [n]$. We denote the set of all permutations on $[n]$ as $S_n$.
 \end{definition}
 \begin{remark}
-    You are probably used to thinking about permutations as a rearrangement of the elements of $[n]$. This is just a more mathematical way of writing it. For example, the permutation "[2,3,1,4,5]" is the function $\sigma:[5]\to[5]$ defined as:
+    You are probably used to thinking about permutations as a rearrangement of the elements of $[n]$. This is just a more mathematical way of writing it. For example, the permutation [2,3,1,4,5] is the function $\sigma:[5]\to[5]$ defined as:
     \begin{align*}
         \sigma(1)&=2\\
         \sigma(2)&=3\\
@@ -211,8 +209,8 @@ This is enough work with $3\times 3$ matrices to motivate what we will do for $n
     \end{align*}
 \end{remark}
 Using this notation and the same algebra we did in the $3\times 3$ matrix case, we can write that for an arbitary $n\times n$ matrix $A$:
-$$\det(A)=\sum_{f\in S_n}\prod_{i=1}^n\left(a_{if(i)}\det(\vec{e}_{f(1)},\vec{e}_{f(2)},\dots,\vec{e}_{f(n)})\right)$$
-Although this formula now looks nicer, it is still not easy to evaluate. We still have this same issue where we don't know the sign of $\det(\vec{e}_{f(1)},\vec{e}_{f(2)},\dots,\vec{e}_{f(n)})$. So our next quest is to figure out, given a permutation $\sigma:[n]\to[n]$, what is the sign of $\det(\vec{e}_{f(1)},\vec{e}_{f(2)},\dots,\vec{e}_{f(n)})$.
+$$\det(A)=\sum_{\sigma\in S_n}\prod_{i=1}^na_{i\sigma(i)}\det(\vec{e}_{\sigma(1)},\vec{e}_{\sigma(2)},\dots,\vec{e}_{\sigma(n)})$$
+Although this formula now looks nicer, it is still not easy to evaluate. We still have this same issue where we don't know the sign of $\det(\vec{e}_{\sigma(1)},\vec{e}_{\sigma(2)},\dots,\vec{e}_{\sigma(n)})$. So our next quest is to figure out, given a permutation $\sigma:[n]\to[n]$, what is the sign of $\det(\vec{e}_{\sigma(1)},\vec{e}_{\sigma(2)},\dots,\vec{e}_{\sigma(n)})$?
 \section{idk what this section is}
 \begin{lemma}
     Let $A$ be an $n\times n$ matrix and $E$ be a $n\times n$ elementary matrix then $det(AE)=det(A)det(E)$
