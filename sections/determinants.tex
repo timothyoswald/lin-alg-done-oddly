@@ -231,20 +231,26 @@ Remark $3.3.5$ gives an example of a transposition. The reason we define this sp
 \end{definition}
 This definition appears nice and all but it turns out there is something we do need to check. 
 
-\section{idk what this section is}
+\section{More Determinant Properties}
 \begin{lemma}
-    Let $A$ be an $n\times n$ matrix and $E$ be a $n\times n$ elementary matrix then $det(AE)=det(A)det(E)$
+    Let $A$ be an $n\times n$ matrix and $E$ be a $n\times n$ elementary matrix then $\det(AE)=\det(A)\det(E)$
 \end{lemma}
 \begin{proof}
-    just check lol
+    There are three types of elementary matrices. We can simply check that this holds in every case.
 \end{proof}
 \begin{theorem}
-    Let $A$ be a $n\times n$ matrix. $A$ is invertible if and only if $det(A)\neq 0$.
+    Let $A$ be an $n\times n$ matrix and $E_1,E_2,\dots, E_k$ be $n\times n$ elementary matrices. Then $\det(AE_1E_2\dots E_k)=\det(A)\det(E_1)\det(E_2)\dots\det(E_k)$.
 \end{theorem}
 \begin{proof}
-    Since $A$ is invertible, $A=E_kE_{k-1}\ldots E_1 I$. We know the determinants of the elementary matrices and none of them are zero. Thus, $det(A)=det(E_k E_{k-1}\ldots E_1)$ and by the above lemma and induction we get that $det(E_k E_{k-1}\ldots E_1)=det(E_k)det(E_{k-1})\ldots det(E_1)\neq 0$.
+    Induction on previous Lemma.
+\end{proof}
+\begin{theorem}
+    Let $A$ be a $n\times n$ matrix. $A$ is invertible if and only if $\det(A)\neq 0$.
+\end{theorem}
+\begin{proof}
+    Since $A$ is invertible, $A=E_kE_{k-1}\ldots E_1 I$. We know the determinants of the elementary matrices and none of them are zero. Thus, $\det(A)=\det(E_k E_{k-1}\ldots E_1)$ and by the above lemma and induction we get that $\det(E_k E_{k-1}\ldots E_1)=\det(E_k)\det(E_{k-1})\ldots \det(E_1)\neq 0$.
 
-    Assume $det(A)=0$
+    Assume $\det(A)\neq 0$.
 \end{proof}
 \begin{lemma}
     Let $A$ and $B$ be $n\times n$ matrices. If either $A$ is not invertible or $B$ is not invertible, then $AB$ is not invertible.
