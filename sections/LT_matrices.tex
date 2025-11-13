@@ -718,7 +718,9 @@ To get around this, we notice that, no matter what, we are performing Gaussian E
     \end{align*}
     Clearly, $RREF(A)=I_n$ so $A$ is invertible. The right half of this augmented matrix is now actually $A^{-1}$. Let's discuss why.
 
-    We start with $[A|I_3]$. Since $A$ is invertible, we can rewrite this as $[E_kE_{k-1}\ldots E_1I_3|I_3]$. Every step we did in Gaussian Elimination, undoes one of these $E_i$'s until we eventually got to $E_1$. Undoing one of the $E_i$'s is equivalent to multiplying by $E_i^{-1}$. So, after the first step we get $[E_k^{-1}E_kE_{k-1}\ldots E_1I_3|E_k^{-1}I_3]=[E_{k-1}\ldots E_1I_3|E_k^{-1}I_3]$. Then the second step gives $[E_{k-1}^{-1}E_{k-1}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]=[E_{k-2}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]$. This should look familiar. It's the exact same process as we did in proving Theorem 2.7.2.
+    We start with $[A|I_3]$. Since $A$ is invertible, we can rewrite this as $[E_kE_{k-1}\ldots E_1I_3|I_3]$. Every step we did in Gaussian Elimination, undoes one of these $E_i$'s until we eventually got to $E_1$. Undoing one of the $E_i$'s is equivalent to multiplying by $E_i^{-1}$. So, after the first step we get $$[E_k^{-1}E_kE_{k-1}\ldots E_1I_3|E_k^{-1}I_3]=[E_{k-1}\ldots E_1I_3|E_k^{-1}I_3]$$
+    Then the second step gives $$[E_{k-1}^{-1}E_{k-1}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]=[E_{k-2}\ldots E_1I_3|E_{k-1}^{-1}E_k^{-1}I_3]$$ 
+    This should look familiar. It's the exact same process as we did in proving Theorem 2.7.2.
 \end{example}
 \begin{remark}
     Let $A$ be an invertible $n\times n$ matrix. If I want to solve $A\vec{x}=\vec{b}$, I can simply do $A^{-1}A\vec{x}=A^{-1}\vec{b}$ to get $\vec{x}=A^{-1}\vec{b}$.
@@ -788,7 +790,7 @@ Let $A$ be a $m\times n$ matrix and $T_A:\mathbb{F}^n\to \mathbb{F}^m$ be a line
     \end{align*}
     Thus, we have that $A_r^{-1}G$ is a right inverse of $A$.
 \end{example}
-We have now conjectured that a right inverse of $A_r$ is this transpose like construct we defined earlier. Let's prove it algebraically. Let the "transpose like construct" be denoted $B_r$. Let $A_r$ be a $m\times n$ matrix. We know that $A_{r_{(ij)}}=B_{r_{(ji)}}$. Let's consider what $A_rB_r$ is.
+We have now conjectured that a right inverse of $A_r$ is this transpose like construct we defined earlier. Let's prove it algebraically. Let the "transpose like construct" be denoted $B_r$. Let $A_r$ be a $m\times n$ matrix. Let's consider what $A_rB_r$ is.
 \begin{align*}
     (A_rB_r)_{ij}&=\sum_{k=1}^n A_{r_{(ik)}}B_{r_{(kj)}}
 \end{align*}
