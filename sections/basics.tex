@@ -49,9 +49,9 @@ Importantly, the naturals and integers are not fields. The naturals lack an addi
     \begin{enumerate}
         \item $\mathbb{R}^2=\left\{\begin{pmatrix}
             x \\ y
-        \end{pmatrix}: x,y\in\mathbb{F}\right\}$
+        \end{pmatrix}: x,y\in\mathbb{R}\right\}$
         \item The set of all continuous functions $f:[0,1]\to\mathbb{R}$ over $\mathbb{R}$
-        \item The set of all polynomials of degree $5$ over $\mathbb{R}$
+        \item The set of all polynomials of degree less than or equal to $5$ over $\mathbb{R}$
     \end{enumerate}
 \end{example}
 This example should make it clear that not all vector spaces contain what we normally think of as vectors. The set of all continuous functions is very strange to think of as a vector space since you can't really represent a function in our typical $\begin{pmatrix}
@@ -282,7 +282,7 @@ We will now consider some definitions that are equivalent to our definition of l
 \section{Basis and Dimension}
 Since there are so many possible vector spaces, we want to introduce a concept to ground the idea of a vector space.
 \begin{definition}
-    Let $V$ be a vector space. A basis of $V$ is a list $L$ which satisfies the following two properties:
+    Let $V$ be a vector space. A basis of $V$ is a list $L\subseteq V$ which satisfies the following two properties:
     \begin{enumerate}
         \item $L$ is linearly independent
         \item $span(L)=V$
@@ -315,9 +315,9 @@ We will now explore how one can apply the Exchange Lemma to get some standard fa
     Let $V$ be a vector space with $dim(V)=n$. All sets in $V$ with size greater than $n$ must be linearly dependent.
 \end{corollary}
 \begin{proof}
-    From Theorem $8.5$, we showed that linearly independent sets are at most the size of any spanning set. Since a basis is a spanning set and it has size $n$, all linearly independent lists must be at most size $n$. So any list larger than size $n$ must be linearly dependent.
+    From Theorem $1.6.5$, we showed that linearly independent sets are at most the size of any spanning set. Since a basis is a spanning set and it has size $n$, all linearly independent lists must be at most size $n$. So any list larger than size $n$ must be linearly dependent.
 \end{proof}
-There exists a similar statement to Corollary 8.6 regarding span which is left as an exercise. You should realize that these statements are immensely powerful. You need not know a single thing about any of the vectors than the list other than there are "too many" or "too few" vectors in a list and you immediately know facts about span and linear independence.
+There exists a similar statement to Corollary $1.6.6$ regarding span which is left as an exercise. You should realize that these statements are immensely powerful. You need not know a single thing about any of the vectors than the list other than there are "too many" or "too few" vectors in a list and you immediately know facts about span and linear independence.
 \begin{theorem}
     Let $V$ be a vector space such that $dim(V)=n$. Every basis of $V$ has the same size.
 \end{theorem}
@@ -367,7 +367,7 @@ We will now go over a notation that will become much more useful when we discuss
     \end{smallmatrix}\right]_B$ where $\vec{v}=\sum_{i=1}^n a_i\vec{v}_i$. We denote the coordinate vector of $\vec{v}$ with respect to a basis $B$ as $[\vec{v}]_B$.
 \end{definition}
 \begin{remark}
-    The coordinate vector essentially describes the vector $\vec{v}$ as a vector of its coefficients with respect to a basis $B$.
+    The coordinate vector essentially describes the vector $\vec{v}$ as a vector of its coefficients with respect to a basis $B$. Here is becomes important that we defined a basis as a list and not a set. This means that it is ordered so the coordinate vector is well-defined.
 \end{remark}
 \begin{remark}
     Consider $(1,2,3)\in\mathbb{R}^3$. This is actually also a coordinate vector with respect to the elementary basis. The way we write vectors that we are used to is as the coordinate vectors of the elementary basis. So if no subscript basis is written, you are safe to assume that it is using the elementary basis.
@@ -399,7 +399,7 @@ Coordinate vectors possess certain properties that you will recognize when we di
 \end{proof}
 \section{Exercises 2}
 \begin{exercise}
-    Prove that (1) and (3) imply each other in Theorem 5.4.
+    Prove that (1) and (3) imply each other in Theorem 1.5.4.
 \end{exercise}
 \begin{proof}
     For (1) implies (3), we observe that $\vec{v}_j\in L$ means that $\vec{v}_j\in span(L)$. This means that it has a unique linear combination and since $1\vec{v}_j$ is a linear combination is must be the only one. Thus, $L\setminus\{\vec{v}_j\}$ cannot form $\vec{v}_j$ as a linear combination.
