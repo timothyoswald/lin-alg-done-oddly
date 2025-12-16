@@ -368,7 +368,7 @@ When composing linear transformations, we have to be very careful that the codom
     When we say "wouldn't make any sense", it doesn't mean that the math will magically break down and stop working. It actually means that you are composing a different linear transformation than the one you intended. If we did end up applying the $\mathcal{D}$ input $A$ to $B\vec{x}$, all of the formulas would still work as long as the dimensions lined up. It's just that $A$ would interpret the coordinates of $B\vec{x}$ with respect to $\mathcal{D}$. This is an issue because this would almost surely represent a different vector than when interpreted with $\mathcal{B}$.
 \end{remark}
 \begin{example}
-        All that Remark 11.4 is saying is that if we had $\mathcal{D}=(\begin{pmatrix}
+        All that Remark 2.3.7 is saying is that if we had $\mathcal{D}=(\begin{pmatrix}
         1 \\ 2
     \end{pmatrix}, \begin{pmatrix}
         3 \\ 4
@@ -396,7 +396,7 @@ When composing linear transformations, we have to be very careful that the codom
         5 \\ 6
     \end{bmatrix}$
 \end{example}
-Now let's consider an example of composing linear transformations. This example is a followup to Example 11.2. We're going to talk about how we can do that exact same process but now in the context of composing linear transformations.
+Now let's consider an example of composing linear transformations. This example is a followup to Example 2.3.2. We're going to talk about how we can do that exact same process but now in the context of composing linear transformations.
 \begin{example}
     We will now find a way to generalize switching a vector between bases. Let $V$ be a $\mathbb{F}$-vector space and $\vec{v}\in V$ with $B$, $C$, and $D$ as bases. We want to find a matrix that when applied to $[\vec{v}]_B$ gives us $[\vec{v}]_C$. Since we are looking for a matrix, we know that this must be a linear transformation. One important thing to notice is that $[\vec{v}]_B$ and $[\vec{v}]_C$ actually encode the same vector for all $\vec{v}\in V$. This means that our linear transformation must be the identity transformation.
 
@@ -573,9 +573,9 @@ We will now state the Fundamental Theorem of Linear Algebra (technically three t
     \end{enumerate}
     Moreover, these imply that $m=n$.
 \end{theorem}
-Hopefully, some of these are believable. Specifically, $(1)$, $(2)$, and $(4)$ for each of the three theorems. Additionally, you should believe that Theorem 13.1 and Theorem 13.2 imply Theorem 13.3. Take the time to convince yourself that you, at least to some degree, believe the last two sentences. We will spend the rest of this section proving that $(1)$, $(2)$, and $(4)$ imply each other.
+Hopefully, some of these are believable. Specifically, $(1)$, $(2)$, and $(4)$ for each of the three theorems. Additionally, you should believe that Theorem 2.5.1 and Theorem 2.5.2 imply Theorem 2.5.3. Take the time to convince yourself that you, at least to some degree, believe the last two sentences. We will spend the rest of this section proving that $(1)$, $(2)$, and $(4)$ imply each other.
 
-We will only prove Theorem 13.1. Theorem 13.2 will be left as an exercise to test your understanding of the proofs used in Theorem 13.1.
+We will only prove Theorem 2.5.1. Theorem 2.5.2 will be left as an exercise to test your understanding of the proofs used in Theorem 2.5.1.
 \begin{lemma}
     $T_A$ is injective if and only if $A\vec{x}=\vec{b}$ has at most one solution for all $\vec{b}\in\mathbb{F}^m$.
 \end{lemma}

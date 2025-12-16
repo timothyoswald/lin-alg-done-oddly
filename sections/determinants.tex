@@ -229,7 +229,54 @@ Remark $3.3.5$ gives an example of a transposition. The reason we define this sp
 \begin{definition}
     The sign of a permutation $\sigma$, denoted $\text{sgn}(\sigma)$, is $1$ if it takes an even amount of transpositions to generate $\sigma$ and $-1$ otherwise.
 \end{definition}
-This definition appears nice and all but it turns out there is something we do need to check. 
+This definition appears nice and all but it turns out there is something we do need to check. How do we know that the $\text{sgn}$ function is well-defined? The previous remark told us that there are infinitely many ways to write every permutation, so how do we know there doesn't exist two of them that have different signs?
+
+To resolve this issue, we analyze an equivalent formulation of sign.
+
+\begin{definition}
+   The number of inversions of a permutation $\sigma\in S_n$ is the number of $i,j\in[n]$ pairs such that $i<j$ but $\sigma(i)>\sigma(j)$.
+\end{definition}
+
+\begin{definition}
+    Let $c(\sigma)$ be the number of inversions in a permutation $\sigma$. The sign of $\sigma$ is defined to be $-1^{c(\sigma)}$.
+\end{definition}
+
+Now we analyze how a transposition affects the number of inversions. The proof is done by sheer exhaustive casework.
+
+\begin{theorem}
+    Let $\sigma$ be a permutation and $\tau$ be a transposition. Then $c(\tau\circ\sigma)$ has the opposite parity as $c(\sigma)$.
+\end{theorem}
+\begin{proof}
+    Let $\sigma=\begin{pmatrix}
+    1 & ... & i & ... & j & ... & n\\
+    \sigma(1) & ... & \sigma(i) & ... & \sigma(j) & ... & \sigma(n)
+\end{pmatrix}$
+
+Assume $\tau$ swaps $\sigma(i)$ and $\sigma(j)$. The number of inversions from $1$ to $i-1$ is unaffected since $\tau$ changes the position of the inversion but doesn't change the order of $1$ to $i-1$. The same logic holds for $j+1$ to $n$. This means we only need to consider what happens to the number of inversions from $i$ to $j$.
+
+Let $i<k<j$. We want to show that for all cases the number of inversions changes parity.
+
+%thes four cases should be exhaustive dont need assumption of whether \tau gains or loses an inversion
+
+\textbf{Case 1:} $(i,k)$ and $(k,j)$ were inversions
+
+After $\tau$, $(i,k)$ is no longer an inversion since $\sigma(k)>\sigma(j)$ and neither is $(k,j)$ since $\sigma(i)>\sigma(k)$ so we have lost an even number of inversions
+
+\textbf{Case 2:} $(i,k)$ was an inversion but $(k,j)$ was not
+
+After $\tau$, $(i,k)$ is still an inversion since $\sigma(j)>\sigma(k)$. $(k,j)$ still isn't an inversion since $\sigma(k)<\sigma(i)$ so the net change in inversions is zero.
+
+\textbf{Case 3:} $(i,k)$ was not an inversion but $(k,j)$ was
+
+After $\tau$, $(i,k)$ is still not an inversion since $\sigma(k)>\sigma(j)$ and $(k,j)$ is still an inversion since $\sigma(k)>\sigma(i)$ so the net change in inversions is zero
+
+\textbf{Case 4:} Neither $(i,k)$ nor $(k,j)$ were inversions
+
+After $\tau$, both $(i,k)$ and $(k,j)$ become inversions since $\sigma(k)>\sigma(i)\wedge\sigma(k)>\sigma(j)$ so we have gained an even number of inversions
+
+In all four cases, an even number of changes in the number of inversions occurs. The only uncounted change in inversions is whether $(i,j)$ becomes an inversion or is no longer an inversion after $\tau$. Either way, the total number of changes in inversions is odd which will change the parity and thus the sign.
+\end{proof}
+
 
 \section{More Determinant Properties}
 \begin{lemma}
