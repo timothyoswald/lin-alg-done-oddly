@@ -60,6 +60,18 @@ This example should make it clear that not all vector spaces contain what we nor
 \begin{remark}
     Take the polynomial $4x^5+x^4-x^3+2x^2+7x+15$. We can encode this as a vector via $(4, 1, -1, 2, 7, 15)$ where each component represents the coefficient of the respective degrees in the polynomial.
 \end{remark}
+A more formal definition of a vector space is as follows:
+\begin{definition}
+    Let $(E,+)$ be an abelian group and let $(\mathbb{K}, +,\cdot)$ be a field. We say that $E$ is a vector space over $\mathbb{K}$ if there exists a map $\mathbb{K}\times E\to E$ via $(\alpha,x)\mapsto\alpha\cdot x$ called scalar multiplication satisfying four axioms:
+    \begin{enumerate}
+        \item For all $x\in E$, $1_\mathbb{K}\cdot x=x$
+        \item For all $\alpha,\beta\in\mathbb{K}$,$x\in E$, $(\alpha+\beta)\cdot x=\alpha x+\beta x$
+        \item For all $\alpha,\beta\in\mathbb{K}$, $(\alpha\beta)\cdot x=\alpha\cdot(\beta\cdot x)$.
+        \item For all $\alpha\in\mathbb{K}$ and all $x,y\in E$, $\alpha\cdot(x+y)=\alpha\cdot x+\alpha\cdot y$.
+    \end{enumerate}
+\end{definition}
+If you do not know what a group is, you can just ignore this definition and move on. But I think that even if you don't know what that is, you can believe that this is equivalent to the previous definition based on the properties.
+
 Vector space axioms do not explicitly contain everything about vectors. However, they are written in such a way that any standard rule of vectors can be derived from them. Below is an example:
 \begin{theorem}
     Let $V$ be a vector space. For all $\vec{v}\in V$, we have that $0\cdot\vec{v}=\vec{0}$
