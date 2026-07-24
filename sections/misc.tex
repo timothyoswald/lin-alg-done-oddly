@@ -1,0 +1,386 @@
+\section{Minimal Polynomial}
+This section will discuss a different point of view on eigenvalues and linear transformations. The idea of a minimal polynomial also manifests itself as the generator of ideals in polynomial rings and we'll see a similar result here.
+\begin{definition}
+    A monic polynomial is a polynomial where the coefficient of the highest degree term is $1$.
+\end{definition}
+First, we discuss a slight abuse of notation. Let $p(x)=\sum_{i=1}^nc_ix^i$ be a polynomial with coefficients in $\mathbb{F}$. For a linear transformation $T:V\to V$ where $V$ is over the field $\mathbb{F}$, we define $p(T)(\vec{v})=\sum_{i=1}^nc_iT^i(\vec{v})$.
+\begin{theorem}
+    Let $V$ be a finite-dimensional vector space over $\mathbb{F}$ and $T:V\to V$ be a linear transformation. Then there exists a unique monic polynomial of smallest degree in $\mathbb{P}(\mathbb{F})$ such that $p(T)=\vec{0}$. Moreover, $\text{deg}(p)\leq\dim(V)$.
+\end{theorem}
+
+\begin{proof}
+    First, we show existence of such a monic polynomial not necessarily of minimal degree. We proceed by induction on $\dim(V)$. If $\dim(V)=0$, then $V=\{0\}$ and the only linear transformation on $V$ is $T(0)=0$. The unique monic polynomial is $p(x)=1$ since then $p(T)=\text{Id}_V$ but the only vector in $V$ is the zero vector so this is exactly the zero transformation. 
+
+    Now let $\dim(V)>0$ and assume the statement is true for all vector spaces of smaller dimension. Let $n:=\dim(V)$ and $\vec{v}\in V$, $\vec{v}\neq\vec{0}$. Consider the list $(\vec{v},T(\vec{v}),T^2(\vec{v}),\dots, T^n(\vec{v}))$. This is a list of length $n+1$ in an $n$-dimensional space so it must be linearly dependent. This means we can find $k\in[n-1]$ such that $(\vec{v},T(\vec{v}),\dots,T^k(\vec{v}))$ are linearly independent and $T^{k+1}(\vec{v})\in\Span(\{\vec{v},T(\vec{v}),\dots,T^k(\vec{v})\})$ (can you see why?). Thus, we can write:
+    \[c_0\vec{v}+c_1T(\vec{v})+\dots+c_kT^k(\vec{v})+T^{k+1}(\vec{v})=\vec{0}\]
+    Let $p(x):=c_0+c_1x+\dots c_kx^k+x^{k+1}$ and note that $p(T)=0$ since the above holds for any $\vec{v}\in V$. Now we check that $\deg(p)\leq\dim(V)$. Observe that for any $i\in\N$:
+    \[p(T)(T^i(\vec{v}))=T^i(p(T)(\vec{v}))=T^i(\vec{0})=\vec{0}\]
+    Thus, $T^i(\vec{v})\in\ker p(T)$. In particular, $(\vec{v},T(\vec{v}),T^2(\vec{v}),\dots, T^k(\vec{v}))$ is a linearly independent list in the kernel of $p(T)$ so $\nll(p(T))\geq k+1=\deg(p)$. Using Rank-Nullity, we get that
+    \begin{align*}
+        \dim(V)-(k+1)\geq\dim(V)-\nll(p(T))=\rank(p(T))\tag{1}
+    \end{align*}
+
+    Consider $T:\im(p(T))\to \im(p(T))$. This is well-defined because for $\vec{y}\in\im(p(T))$, there exists some $\vec{x}\in V$ such that $p(T)(\vec{x})=\vec{y}$:
+    \[T(\vec{y})=T(p(T)(\vec{x}))=p(T)(T(\vec{x}))\in\im(p(T))\]
+    (1) tells us $\im(p(T))$ has dimension strictly less than $V$. Thus, we can apply the Induction Hypothesis to find a unique monic polynomial of minimal degree $q$ such that $q(T\restriction_{\im(p(T))})=\vec{0}$ and $\deg(q)\leq\dim(V)-(k+1)$.
+    We claim that $qp$ is the desired unique monic polynomial. We compute:
+    \[(qp)(T)(\vec{v})=(q(T)p(T))(\vec{v})=q(T)(p(T)(\vec{v}))=\vec{0}\]
+    where the final equality follows from the fact that $p(T)(\vec{v})\in\im(p(T))$ so by construction of $q$, $q\restriction_{\im(p(T))}=\vec{0}$. Thus, $qp$ is a monic polynomial such that $qp(T)=\vec{0}$. The degree of polynomials is bounded from below by $0$ thus there exists a minimal one.
+
+    Now we show uniqueness. Let $p,q\in\mathbb{P}(\mathbb{F})$ be two monic polynomials of smallest degrees such that $p(T)=q(T)=\vec{0}$ but $p\neq q$. Notice that because $p$ and $q$ are both monic, $\deg(p-q)<\deg(p)=\deg(q)$. Let $c$ be the coefficient of the leading term of $p-q$. Notice that $\frac{1}{c}(p-q)$ is monic and $\frac{1}{c}(p-q)(T)=\vec{0}$. But this polynomial has smaller degree than $p$ and $q$ so this is a contradiction. T
+    \end{proof}
+
+    Now that we know such an object exists and is unique, we can formally define it.
+    \begin{definition}
+        Let $V$ be a finite dimensional vector space over a field $\mathbb{F}$ and $T:V\to V$ be a linear transformation. Then the \textit{minimal polynomial} of $T$ is the unique monic polynomial of smallest degree $p\in\mathbb{P}(\mathbb{F})$ such that $p(T)=\vec{0}$.
+    \end{definition}
+
+\begin{theorem}
+    The set of all roots of the minimal polynomial for a linear transformation $T$ is exactly the set of all eigenvalues of $T$.
+\end{theorem}
+
+\begin{theorem}
+    The minimal polynomial divides all polynomials which annihilate $T$ 
+\end{theorem}
+
+\begin{lemma}
+    Let $V$ be an $n$-dimensional vector space and $T:V\to V$ be a linear transformation such that $T$ can be written as an upper triangular matrix with diagonal entries $\lambda_1,\dots,\lambda_n$. Then:
+    $$(T-\lambda_1 I)\dots(T-\lambda_nI)=0$$
+\end{lemma}
+
+\begin{proof}
+    We proceed by induction on $n\in\N$. If $n=1$, then $(T-\lambda _1I)\vec{v}_1=T(\vec{v}_1)-\lambda\vec{v}_1=\vec{0}$. Assume the statement is true for all $(n-1)$-dimensional spaces so,
+    $$(T-\lambda_1 I)\dots(T-\lambda_{n-1}I)=0$$
+    Let $(\vec{v}_1,\dots,\vec{v}_n)$ be a basis by which $T$ is upper triangular. In particular the above expression sends $(\vec{v}_1,\dots,\vec{v}_{n-1})$ to $\vec{0}$. Now we consider $(T-\lambda_1 I)\dots(T-\lambda_{n-1}I)(T-\lambda_nI)$. Notice that $(T-\lambda_nI)\vec{v}_n\in\Span(\{\vec{v}_1,\dots,\vec{v}_{n-1}\})$. By Induction, $(\vec{v}_1,\dots,\vec{v}_{n-1})$ are sent to $\vec{0}$ and since $(T-\lambda_nI)\vec{v}_n\in\Span(\{\vec{v}_1,\dots,\vec{v}_{n-1}\})$, $\vec{v}_n$ also gets sent to $\vec{0}$. This map sends all basis vectors to $\vec{0}$ so it is the zero operator.
+\end{proof}
+
+\begin{theorem}
+    Let $T:V\to V$ be a linear transformation such that it can be written as an upper triangular maatrix. Then the eigenvalues of $T$ are the diagonal entries of said matrix.
+\end{theorem}
+
+\begin{proof}
+    Let $(\vec{v}_1,\dots,\vec{v}_n)$ be a basis by which $T$ is upper triangular with diagonal entries $\lambda_1,\dots,\lambda_n$. Clearly, $T(\vec{v}_1)=\lambda_1\vec{v}_1$. We again use the fact that $(T-\lambda_kI)\vec{v}_k\in\Span(\{\vec{v}_1,\dots,\vec{v}_{k-1}\})$. Notice that $T-\lambda_kI:\Span(\{\vec{v}_1,\dots,\vec{v}_k\})\to\Span(\{\vec{v}_1,\dots,\vec{v}_{k-1}\})$. In particular, this map is not injective and its kernel is nontrivial. Let $\vec{v}\in\ker(T-\lambda_kI)$ with $\vec{v}\neq\vec{0}$.
+    \begin{gather*}
+        (T-\lambda_kI)\vec{v}=\vec{0}\\
+        T(\vec{v})-\lambda_k\vec{v}=\vec{0}\\
+        T(\vec{v})=\lambda_k\vec{v}
+    \end{gather*}
+    This shows $\lambda_k$ is an eigenvalue of $T$. Thus, all entries on the diagonal are eigenvalues. It remains to show all eigenvalues are also on the diagonal. Consider $q(x)=(x-\lambda_1)\dots(x-\lambda_n)$. By the previous Lemma,
+    $$q(T)=(T-\lambda_1I)\dots(T-\lambda_nI)=0$$
+    Note that the minimal polynomial of $T$ must divide $Q$. We know that the roots of the minimal polynomial are exactly all the eigenvalues of $T$ so they are also roots of $q$. These are on the diagonal of $T$ because the roots of $q$ is exactly $\lambda_1,\dots,\lambda_n$.
+\end{proof}
+We now give a characterization of what types of linear transformations can be written as upper triangular matrices.
+\begin{theorem}
+    Let $T:V\to V$ be a linear transformation. $T$ has an upper triangular matrix with entries $\lambda_1,\dots,\lambda_n$ if and only if the minimal polynomial of $T$ can be written as $(x-\lambda_1)\dots(x-\lambda_n)$.
+\end{theorem}
+
+\begin{corollary}[Schur's Theorem]
+    Let $V$ be a complex vector space. Then any linear transformation $T:V\to V$ has an associated upper triangular matrix.
+\end{corollary}
+
+\subsection{Least Squares Solution and Normal Equation}
+Let $(V,\langle\cdot,\cdot\rangle)$ be an inner product space and $\norm{\cdot}=\sqrt{\langle\cdot,\cdot\rangle}$. We let $\proj_V(\bd{v})$ denote the orthogonal projection of $\bd{v}$ onto $V$.
+
+We are interested in solving the problem $\bd{A}{\bd{x}}=\bd{b}$ but if $A$ is not surjective then this may not necessarily have a solution. In these cases, we may be interested in instead minimizing $||\bd{A}\bd{x}-\bd{b}||^2$.
+\begin{theorem}\label{thm:proj_minimizer}
+    Let $\bd{v}\in V$ and $E\subseteq V$ then $\bd{w}=\proj_E(\bd{v})$ minimizes the distance from $\bd{v}$ to $E$. Formally, for all $\bd{x}\in V$,
+    \[
+    \norm{\bd{w}-\bd{v}}\leq\norm{\bd{x}-\bd{v}}
+    \]
+    Moreover, we have equality if and only if $\bd{x}=\bd{w}$.
+\end{theorem}
+Thus, the solution that minimizes $||\bd{A}\bd{x}-\bd{b}||^2$ is $\bd{A}\bd{x}=\proj_{\im{A}}\bd{b}$.
+\begin{theorem}\label{thm:normalequation}
+    For some fixed matrix $\bd{A}:\R^n\to\R^m$ and vector $\bd{b}\in\R^m$, $\bd{A}\bd{x}=\proj_{\im(A)}\bd{b}$ if and only if $\bd{A}^T\bd{A}\bd{x}=\bd{A}^T\bd{b}$. We refer to $\bd{A}^T\bd{A}\bd{x}=\bd{A}^T\bd{b}$ as the normal equation.
+\end{theorem}
+
+\begin{proof}
+    $\bd{A}\bd{x}=\proj_{\im(A)}\bd{b}$ if and only if $\bd{b}-\bd{A}\bd{x}\perp\im(A)$. Let $\bd{a}_1,\dots,\bd{a}_n$ be the columns of $\bd{A}$. $\bd{b}-\bd{A}\bd{x}\perp\im(A)$ if and only if $\bd{b}-\bd{A}\bd{x}\perp\bd{a}_k$ for all $k\in[n]$. $\bd{b}-\bd{A}\bd{x}\perp\bd{a}_k$ for all $k\in[n]$ if and only if $\inprod{\bd{b}-\bd{A}\bd{x}}{\bd{a}_k}=\bd{a}_k^T(\bd{b}-\bd{A}\bd{x})=0$ for all $k\in [n]$. $\bd{a}_k^T(\bd{b}-\bd{A}\bd{x})=0$ for all $k\in [n]$ if and only if $\bd{A}^T(\bd{b}-\bd{A}\bd{x})=\bd{0}$. Rearranging yields the desired normal equation.
+\end{proof}
+
+\begin{theorem}\label{thm:least_squares_sol_characterization}
+    Let $\bd{x}_0$ be a solution to the least squares problem $\bd{A}\bd{x}=\bd{b}$. Then all solutions to the least square problem $\bd{A}\bd{x}=\bd{b}$ can be written as $\bd{x}_0+\bd{y}$ for some $\bd{y}\in\ker(\bd{A})$.
+\end{theorem}
+
+\begin{proof}
+    Let $S$ be the set of all solutions to the least squares problem and $T=\{\bd{x}_0+\bd{y}:\bd{y}\in\ker(\bd{A})\}$.
+
+    \textbf{Step 1:} $T\subseteq S$
+    \[
+    \bd{A}(\bd{x}_0+\bd{y})=\bd{A}\bd{x}_0+\bd{A}\bd{y}=\bd{A}\bd{x}_0
+    \]
+
+    \textbf{Step 2:} $S\subseteq T$
+
+    Let $\bd{x}_1\in S$. We can write the normal equations:
+    \begin{align*}
+        \bd{A}^T\bd{A}\bd{x}_0=\bd{A}^T\bd{b}\\
+        \bd{A}^T\bd{A}\bd{x}_1=\bd{A}^T\bd{b}
+    \end{align*}
+    Subtracting these two expressions, we get
+    \[
+    \bd{A}^T\bd{A}(\bd{x}_1-\bd{x}_0)=\bd{0}
+    \]
+    So $\bd{x}_1-\bd{x}_0\in\ker(\bd{A}^T\bd{A})$. By Theorem \ref{thm:equal_kernels}, we get $\bd{x}_1-\bd{x}_0\in\ker(\bd{A})$. Take $\bd{y}=\bd{x}_1-\bd{x}_0$. Then we see that $\bd{x}_1=\bd{x}_0+\bd{y}$ so $\bd{x}_1\in T$.
+\end{proof}
+
+\section{Singular Value Decomposition}
+First, we observe some facts about $\bd{A}^T\bd{A}$.
+\begin{theorem}\label{thm:modulus_sym_posdef}
+    $\bd{A}^T\bd{A}$ is symmetric and positive semi-definite.
+\end{theorem}
+
+\begin{proof}
+    Clearly, $(\bd{A}^T\bd{A})^T=\bd{A}^{T}\bd{A}^{T^T}=\bd{A}^T\bd{A}$ thus $\bd{A}^T\bd{A}$ is symmetric. We compute:
+    \begin{align*}
+        \inprod{\bd{A^T}\bd{A}\bd{x}}{\bd{x}}=\inprod{\bd{A}\bd{x}}{\bd{A}\bd{x}}=||\bd{A}\bd{x}||^2
+    \end{align*}
+    The norm is non-negative so $\bd{A}^T\bd{A}$ is positive semi-definite.
+\end{proof}
+
+\begin{theorem}\label{thm:equal_kernels}
+    $\ker(\bd{A}^T\bd{A})=\ker(\bd{A})$
+\end{theorem}
+
+\begin{proof}
+    Clearly, $\ker(\bd{A})\subseteq\ker(\bd{A}^T\bd{A})$. Let $\bd{x}\in\ker(\bd{A}^T\bd{A})$. Then $\bd{A}^T\bd{A}\bd{x}=\bd{0}$ so $\inprod{\bd{A^T}\bd{A}\bd{x}}{\bd{x}}=\bd{x}^T\bd{A}^T\bd{A}\bd{x}=\bd{0}$. From the previous Theorem, we know that $\inprod{\bd{A^T}\bd{A}\bd{x}}{\bd{x}}=\norm{\bd{A}\bd{x}}^2$. This is zero if and only if $\bd{A}\bd{x}=\bd{0}$ so $\bd{x}\in\ker(\bd{A})$.
+\end{proof}
+
+\begin{theorem}\label{thm:squareroot}
+    Let $\bd{A}$ be a positive semi-definite operator. Then there exists a unique positive semi-definite operator $\bd{B}$ such that $\bd{B}^2=\bd{A}$.
+\end{theorem}
+
+\begin{proof}
+    \textbf{Step 1: Existence}
+
+    $\bd{A}$ is real, symmetric so it admits an orthonormal basis of eigenvectors $\bd{v}_1,\dots,\bd{v}_n$ with associated eigenvalues $\lambda_1,\dots,\lambda_n$. We claim that $\lambda_k\geq 0$ for all $k\in[n]$.
+    \[\inprod{\bd{A}\bd{v}_k}{\bd{v}_k}=\inprod{\lambda_k\bd{v}_k}{\bd{v}_k}=\lambda_k||\bd{v}_k||^2\geq 0\]
+    Since the norm is non-negative, we must also have that $\lambda_k\geq 0$. Writing $\bd{A}$ with respect to this orthonormal basis gives a diagonal matrix with entries $\lambda_1,\dots,\lambda_n$ along the diagonal. One can check that defining $\bd{B}$ to be a diagonal matrix with $\sqrt{\lambda_1},\dots,\sqrt{\lambda_n}$ satisfies $\bd{B}^2=\bd{A}$ and $\bd{B}$ being positive semi-definite. Moreover, observe that $\bd{B}$ is symmetric since it is diagonal.
+
+    \textbf{Step 2: Uniqueness}
+
+    Let $\bd{C}$ be a symmetric positive semi-definite matrix such that $\bd{C}^2=\bd{A}$. Let $\bd{u}_1,\dots,\bd{u}_n$ be an orthonormal basis of eigenvectors with eigenvalues $\mu_1,\dots,\mu_n$. We can write $\bd{C}$ as a diagonal matrix with values $\mu_1,\dots,\mu_n$. Since $\bd{C}^2=\bd{A}$, this tells us that $\mu_k^2=\lambda_k$ for all $k\in[n]$. But then $\mu_k=\sqrt{\lambda_k}$ and this shows $\bd{C}=\bd{B}$.
+\end{proof}
+
+We know from \ref{thm:modulus_sym_posdef} and \ref{thm:squareroot} that $\bd{A}^T\bd{A}$ has a unique symmetric, positive semi-definite square root. Denote this unique square rootthe operator $\bd{R}$. We call $\bd{R}$ the modulus of $\bd{A}$.
+
+The eigenvalues of $\bd{R}$ are known as the singular values of $\bd{A}$. One can observe that the singular values are exactly $\sqrt{\lambda_1},\dots,\sqrt{\lambda_n}$ where $\lambda_1,\dots,\lambda_n$ are the eigenvalues of $\bd{A}^T\bd{A}$.
+
+\begin{theorem}[Schmidt Decomposition]\label{thm:schmidtdecomp}
+    Let $\bd{A}$ be an operator with singular values $\sigma_1,\dots,\sigma_r,\sigma_{r+1},\dots,\sigma_n$ such that $\sigma_k=0$ for $k>r$ and $\sigma>0$ for $k\leq r$. Furthermore, let $\bd{v}_1,\dots,\bd{v}_n$ be an orthonormal basis of eigenvectors for $\bd{A}^T\bd{A}$. Then we can write:
+    \[
+    \bd{A}\bd{x}=\sum_{k=1}^r\sigma_k\inprod{\bd{x}}{\bd{v}_k}\bd{u_k}
+    \]
+    where $\bd{u}_k:=\frac{1}{\sigma_k}\bd{A}\bd{v}_k$ for $k\in[r]$
+\end{theorem}
+
+\begin{proof}
+
+\textbf{Step 1:}
+
+    We claim that $(\bd{u}_1,\dots,\bd{u}_r)$ is an orthonormal list.
+    \[
+    \inprod{\frac{1}{\sigma_j}\bd{A}\bd{v}_j}{\frac{1}{\sigma_k}\bd{A}\bd{v}_k}=\frac{1}{\sigma_j\sigma_k}\inprod{\bd{A}\bd{v}_j}{\bd{A}\bd{v}_k}=\frac{1}{\sigma_j\sigma_k}\inprod{\bd{A}^T\bd{A}\bd{v}_j}{\bd{v}_k}=\frac{1}{\sigma_j\sigma_k}\inprod{\sigma_j^2\bd{v}_j}{\bd{v}_k}
+    \]
+    where we use the fact that $\bd{v}_j$ is an eigenvector of $\bd{A}^T\bd{A}$. Now observe that by orthonormality of the $\bd{v}_i$'s, if $j\neq k$ then this equals $0$ and if $j=k$ then we get $1$. This shows that the list is orthonormal.
+
+\textbf{Step 2:}
+
+    Since $\bd{v}_1,\dots,\bd{v}_n$ is an orthonormal basis, for any vector $\bd{x}$, we can write:
+    \[
+    \bd{x}=\sum_{k=1}^n\inprod{\bd{x}}{\bd{v}_k}\bd{v}_k
+    \]
+    Now multiply both sides by $\bd{A}$.
+    \[
+    \bd{A}\bd{x}=\sum_{k=1}^n\inprod{\bd{x}}{\bd{v}_k}\bd{A}\bd{v}_k
+    \]
+    Observe that $\bd{A}\bd{v}_k=\sigma_k\bd{u}_k$ for $k\in [r]$. We claim that for $k>r$, $\bd{A}\bd{v}_k=\bd{0}$. Fix $k>r$. We know that
+    \[
+    \bd{A}^T\bd{A}\bd{v}_k=\sigma_k^2\bd{v}_k=0
+    \]
+    In particular,
+    \[
+    ||\bd{A}\bd{v}_k||^2=\inprod{\bd{A}\bd{v}_k}{\bd{A}\bd{v}_k}=\inprod{\bd{A}^T\bd{A}\bd{v}_k}{\bd{v}_k}=0
+    \]
+    Thus, $\bd{A}\bd{v}_k=\bd{0}$ for $k>r$. This reduces the previous summation to:
+    \[
+    \bd{A}\bd{x}=\sum_{k=1}^r\sigma_k\inprod{\bd{x}}{\bd{v}_k}\bd{u}_k
+    \]
+\end{proof}
+Note that this decomposition is not unique. One way to see this is to flip the sign on $\bd{v}_k$ and $\bd{w}_k$. Furthermore, an equivalent formulation of the previous Theorem \ref{thm:schmidtdecomp} is that:
+\[
+\bd{A}=\sum_{k=1}^r\sigma_k\bd{u_k}\bd{v}_k^T
+\]
+This follows by noting that multiplying both sides by $\bd{x}$ recovers the previous Theorem \ref{thm:schmidtdecomp}. We can also write this in a matrix form as
+\begin{equation}\label{eq:schdmit_decomp_matrix}
+    \bd{A}=\widetilde{\bd{U}}\widetilde{\bd{\Sigma}}\widetilde{\bd{V}}^T
+\end{equation}
+where $\widetilde{\bd{\Sigma}}$ is diagonal with entries $\sigma_1,\dots,\sigma_r$, $\widetilde{\bd{U}}$ has columns $\bd{u}_1,\dots,\bd{u}_r$, and $\widetilde{\bd{V}}$ has columns $\bd{v}_1,\dots,\bd{v}_r$. Note that if $A$ is $m\times n$ then $\widetilde{\bd{U}}$ is $m\times r$, $\widetilde{\bd{V}}$ is $n\times r$, and $\widetilde{\bd{\Sigma}}$ is $r\times r$.
+
+\begin{theorem}[Singular Value Decomposition]\label{thm:svd}
+    Let $\bd{A}$ be an $m\times n$ operator. Then we can write $\bd{A}=\bd{U}\bd{\Sigma}{\bd{V}}^T$ where $\bd{U}\in \R^{m\times m}$, $\bd{V}\in\R^{n\times n}$ are orthogonal and $\bd{\Sigma}\in\R^{m\times n}$ is a rectangular diagonal matrix with the singular values of $\bd{A}$ along the diagonal.
+\end{theorem}
+
+\begin{proof}
+    From the previous results, extend the lists $\bd{v}_1,\dots,\bd{v}_r$ and $\bd{u}_1,\dots,\bd{u}_r$ to bases of $\R^n$ and $\R^m$ respectively. \textcolor{red}{its good to be picky here and specifically extend them such that $\bd{v}_{r+1},\dots,\bd{v}_n\in\ker(\bd{V}^T)$} Define $\bd{U}$ to have columns $\bd{u}_1,\dots,\bd{u}_m$ and similarly for $\bd{V}$. One can check that $\bd{U},\bd{V}$ are orthogonal. To see that $\bd{U}\bd{\Sigma}\bd{V}^T=\bd{A}$, let $\bd{x}\in\R^n$. Since $\bd{v}_1,\dots,\bd{v}_n$ is an orthonormal basis, we can write:
+    \[
+    \bd{x}=\sum_{k=1}^n\inprod{\bd{x}}{\bd{v}_k}\bd{v}_k
+    \]
+    Applying $\bd{V}^T$, we get:
+    \[
+    \bd{V}^T\bd{x}=\begin{bmatrix}
+        \inprod{\bd{x}}{\bd{v}_1} \\
+        \vdots \\
+        \inprod{\bd{x}}{\bd{v}_n}
+    \end{bmatrix}
+    \]
+    Applying $\bd{\Sigma}$, we get:
+    \[
+    \bd{\Sigma}\bd{V}^T\bd{x}=\begin{bmatrix}
+        \sigma_1\inprod{\bd{x}}{\bd{v}_1} \\
+        \vdots \\
+        \sigma_r\inprod{\bd{x}}{\bd{v}_r} \\
+        0 \\
+        \vdots \\
+        0
+    \end{bmatrix}
+    \]
+    Lastly, multiplying by $\bd{U}$ yields,
+    \[
+    \bd{U}\bd{\Sigma}\bd{V}^T\bd{x}=\sum_{k=1}^r\sigma_k\inprod{\bd{x}}{\bd{v}_k}\bd{u}_k
+    \]
+    From Schmidt Decomposition (\ref{thm:schmidtdecomp}), the right hand side is equal to $\bd{A}\bd{x}$. Thus, $\bd{U}\bd{\Sigma}\bd{V}^T=\bd{A}$.
+\end{proof}
+Using SVD, we can define the Moore-Penrose Pseudoinverse of an operator $\bd{A}=\bd{U}\bd{\Sigma}\bd{V}^T$ as $\bd{V}\bd{\Sigma}^{\dagger}\bd{U}$ where $\bd{\Sigma}^{\dagger}$ is the transpose of the diagonal matrix with entries $\frac{1}{\sigma_1},\dots,\frac{1}{\sigma_r}$. In other words, it inverts the non-zero singular values.
+
+\subsection{Closed-Form Solution of Least Squares}
+Consider the separable nonlinear least-squares problem of the form
+    \begin{align*}\label{eq:leastsquares}
+        \min_{\bd{x}, \bd{\theta}} \frac{1}{2}\|\bd{A}(\bd{\theta}) \bd{x} - \bd{b}\|^2
+    \end{align*}
+We want to find a closed form for the optimal linear weights $\bd{x}^\star(\bd{\theta})$; that is
+    \begin{align*}
+        \bd{x}^\star(\bd{\theta}) = \arg\min_{\bd{x}} \frac{1}{2}\norm{\bd{A}(\bd{\theta}) \bd{x} - \bd{b}}^2.
+    \end{align*}
+We will assume that $\bd{A}$ is $m\times n$. From Theorem \ref{thm:proj_minimizer}, we know that the quantity $\norm{\bd{A}(\bd{\theta}) \bd{x} - \bd{b}}^2$ is minimized when $\bd{A}(\bd{\theta})\bd{x}=\proj_{\im(\bd{A}(\bd{\theta}))}(\bd{b})$ where $\proj_V(\bd{u})$ denotes the orthogonal projection of $\bd{u}$ onto $V$.
+
+\subsubsection{Arbitrary $\bd{A}$}
+
+Using SVD (\ref{thm:svd}), write $\bd{V}=[\bd{v}_1,\dots,\bd{v}_n]$, $\bd{U}=[\bd{u}_1,\dots, \bd{u}_m]$, and $\bd{A}=\bd{U}\bd{\Sigma}\bd{V}^T$ where $\bd{v}_1,\dots,\bd{v}_n$ and $\bd{u}_1,\dots,\bd{u}_m$ are orthonormal bases of $\R^n$ and $\R^m$ respectively and $\bd{\Sigma}$ has diagonal entries $\sigma_1,\dots,\sigma_r$ (this is the same convention as in \ref{thm:svd} it's probably more clear there). We start from the normal equation (\ref{thm:normalequation} and expand using SVD (\ref{thm:svd}).
+\begin{gather*}
+    \bd{A}^T\bd{A}\bd{x}=\bd{A}^T\bd{b}\\
+    \bd{V}\bd{\Sigma}^T\bd{U}^T\bd{U}\bd{\Sigma}\bd{V}^T\bd{x}=\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{b}\\
+    \bd{V}\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T\bd{x}=\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{b}\\
+    \bd{\Sigma}^T\bd{\Sigma}\bd{V}^T\bd{x}=\bd{\Sigma}^T\bd{U}^T\bd{b}
+\end{gather*}
+We start by expanding the left hand side. Observe that we can write:
+\[
+\bd{V}^T\bd{x}=\begin{bmatrix}
+    \inprod{\bd{v}_1}{\bd{x}}_n\\
+    \vdots\\
+    \inprod{\bd{v}_n}{\bd{x}}_n
+\end{bmatrix}
+\]
+where $\inprod{\cdot}{\cdot}_n$ denotes the standard dot product on $\R^n$. Furthermore, we observe that $\bd{\Sigma}^T\bd{\Sigma}$ is the $n\times n$ diagonal matrix with entries $\sigma_1^2,\dots,\sigma_r^2$ followed by zeroes. Using this, we get,
+\[
+\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T\bd{x}=\begin{bmatrix}
+    \sigma_1^2\inprod{\bd{v}_1}{\bd{x}}_n\\
+    \vdots\\
+    \sigma_r^2\inprod{\bd{v}_r}{\bd{x}}_n\\
+    0 \\
+    \vdots
+\end{bmatrix}
+\]
+Performing similar analysis on the right hand side, we get,
+\[
+\bd{\Sigma}^T\bd{U}^T\bd{b}=\begin{bmatrix}
+    \sigma_1\inprod{\bd{u}_1}{\bd{b}}_m\\
+    \vdots\\
+    \sigma_r\inprod{\bd{u}_r}{\bd{b}}_m\\
+    0\\
+    \vdots
+\end{bmatrix}
+\]
+Setting the previous two equations equal, we see that $\sigma_k^2\inprod{\bd{v}_k}{\bd{x}}_n=\sigma_k\inprod{\bd{u}_k}{\bd{b}}_m$ for $k\in[r]$. Rearranging, we get that $\inprod{\bd{v}_k}{\bd{x}}_n=\frac{1}{\sigma_k}\inprod{\bd{u}_k}{\bd{b}}_m$ for $k\in[r]$. Notice that the values of $\inprod{\bd{v}_k}{\bd{x}}_n$ do not matter for $k>r$. Thus, let's just say they are zero. We can express this in the following manner:
+\begin{gather*}
+    \begin{bmatrix}
+        \inprod{\bd{v}_1}{\bd{x}}_n\\
+        \vdots\\
+        \inprod{\bd{v}_r}{\bd{x}}_n\\
+        \inprod{\bd{v}_{r+1}}{\bd{x}}_n\\
+        \vdots
+    \end{bmatrix}=\begin{bmatrix}
+        \frac{1}{\sigma_1}\inprod{\bd{u}_1}{\bd{b}}_m\\
+        \vdots\\
+        \frac{1}{\sigma_r}\inprod{\bd{u}_r}{\bd{b}}_m\\
+        0\\
+        \vdots
+    \end{bmatrix}\\
+    \bd{V}^T\bd{x}=\bd{\Sigma}^{\dagger}\bd{U}^T\bd{b}\\
+    \bd{x}=\bd{V}\bd{\Sigma}^{\dagger}\bd{U}^T\bd{b}
+\end{gather*}
+Notice that $\bd{V}\bd{\Sigma}^{\dagger}\bd{U}^T$ is the Moore-Penrose Pseudoinverse. \textcolor{red}{im pretty sure this does not encompass all solutions as it is not necessary to always have $\inprod{\bd{v}_k}{\bd{x}}_n=0$ for $k>r$}
+
+\subsubsection{$\bd{A}$ with trivial kernel}
+
+Note that we have uniqueness of the minimizer $\bd{x}^\star$ if and only if $\ker(\bd{A})$ is trivial (equivalently full rank or injective) using Theorem \ref{thm:least_squares_sol_characterization}.  If $\bd{x}^\star$ is unique, then $\ker(\bd{A})$ must be trivial since if it contained a non-zero vector $\bd{y}$ then we could find another minimizer $\bd{x}^\star+\bd{y}$ by Theorem \ref{thm:least_squares_sol_characterization}. If $\bd{A}$ has trivial kernel, then any minimizer must be unique again by Theorem \ref{thm:least_squares_sol_characterization}. \textcolor{red}{im curious if theres another way to prove this using the fact that the objective function (norm squared) is convex and perhaps when $\bd{A}$ is injective, it happens that the objective becomes strictly convex so it has a unique minimizer by some analysis - nathan}
+
+Note that by Theorem \ref{thm:equal_kernels}, if $\ker(\bd{A})$ is trivial, then so is $\ker(\bd{A}^T\bd{A})$. $\bd{A}^T\bd{A}$ is a square matrix so this implies it is invertible. The normal equation (\ref{thm:normalequation}) allows us to write:
+\begin{align*}
+    \bd{A}^T\bd{A}\bd{x}=\bd{A}^T\bd{b}\\
+    \bd{x}=(\bd{A}^T\bd{A})^{-1}\bd{A}^T\bd{b}
+\end{align*}
+where we use the fact that $\bd{A}^T\bd{A}$ is invertible.
+
+Write $\bd{A}=\bd{U}\bd{\Sigma}\bd{V}^T$ using SVD. Note that $\bd{U}$ and $\bd{V}^T$ are orthogonal and $\bd{\Sigma}$ is diagonal. Plugging this in above, we see that:
+\begin{align*}
+    \bd{x}&=(\bd{A}^T\bd{A})^{-1}\bd{A}^T\bd{b}\\
+    &=((\bd{U}\bd{\Sigma}\bd{V}^T)^T\bd{U}\bd{\Sigma}\bd{V}^T)^{-1}(\bd{U}\bd{\Sigma}\bd{V}^T)^T\bd{b}\\
+    &=(\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{U}\Sigma\bd{V}^T)^{-1}\bd{V}\Sigma\bd{U}^T\bd{b}\\
+    &=(\bd{V}\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T)^{-1}\bd{V}\bd{\Sigma}\bd{U}^T\bd{b}\\
+    &=\bd{V}(\bd{\Sigma}^T\bd{\Sigma})^{-1}\bd{V}^T\bd{V}\bd{\Sigma}\bd{U}^T\bd{b}\\
+    &=\bd{V}(\bd{\Sigma}^T\bd{\Sigma})^{-1}\bd{\Sigma}\bd{U}^T\bd{b}
+\end{align*}
+
+\subsubsection{Adding Tikhonov Regularization}\label{subsubsec:tikhonovregsol}
+
+Suppose we added Tikhonov regularization to the objective function; that is,
+            \begin{align}
+                \bd{x}_{\lambda}^\star(\bd{\theta}) = \arg\min_{\bd{x}} \frac{1}{2}\|\bd{A}(\bd{\theta}) \bd{x} - \bd{b}\|^2 + \tfrac{\lambda}{2}\|\bd{x}\|^2.
+            \end{align}
+        where $\lambda \ge 0$ is a regularization parameter. Fix some $\bd{\theta}$ and define $\bd{f}$ to be:
+        \[
+        \bd{f}(\bd{x})=\frac{1}{2}\|\bd{A} \bd{x} - \bd{b}\|^2 + \tfrac{\lambda}{2}\|\bd{x}\|^2
+        \]
+        We compute the gradient of $\bd{f}$ to be:
+        \[
+        \nabla\bd{f}(\bd{x})=\bd{A}^T(\bd{A}\bd{x}-\bd{b})+\lambda\bd{x}
+        \]
+        Setting this equal to $\bd{0}$ and rearranging, we see that:
+        \[
+        (\bd{A}^T\bd{A}+\lambda \bd{I})\bd{x}=\bd{A}^T\bd{b}
+        \]
+        We claim that $\bd{A}^T\bd{A}+\lambda \bd{I}$ is positive-definite and thus invertible. Notice that:
+        \begin{align*}
+            \inprod{(\bd{A}^T\bd{A}+\lambda\bd{I})\bd{x}}{\bd{x}}&=\inprod{\bd{A}^T\bd{A}\bd{x}}{\bd{x}}+\lambda\inprod{\bd{x}}{\bd{x}}
+        \end{align*}
+        We know $\bd{A}^T\bd{A}$ is positive semi-definite and that $\inprod{\bd{x}}{\bd{x}}=\norm{\bd{x}}^2$ is positive definite. Thus, $\bd{A}^T\bd{A}+\lambda \bd{I}$ is positive-definite and invertible (for $\lambda>0$). This means that a critical point for $\bd{f}$ is:
+        \[
+        \bd{x}=(\bd{A}^T\bd{A}+\lambda\bd{I})^{-1}\bd{A}^T\bd{b}
+        \]
+        Replacing $\bd{A}$ with its SVD, we get that:
+        \[
+        \bd{x}=(\bd{V}\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T+\lambda\bd{I})^{-1}\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{b}
+        \]
+        We can further simplify this by writing $\bd{I}=\bd{V}\bd{V}^T$.
+        \begin{align*}
+            \bd{x}&=(\bd{V}\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T+\lambda\bd{I})^{-1}\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{b}\\
+            &=(\bd{V}\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T+\lambda\bd{V}\bd{V}^T)^{-1}\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{b}\\
+            &=(\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T+\lambda\bd{V}^T)^{-1}\bd{V}^T\bd{V}\bd{\Sigma}^T\bd{U}^T\bd{b}\\
+            &=(\bd{\Sigma}^T\bd{\Sigma}\bd{V}^T+\lambda\bd{V}^T)^{-1}\bd{\Sigma}^T\bd{U}^T\bd{b}\\
+            &=\bd{V}(\bd{\Sigma}^T\bd{\Sigma}+\lambda\bd{I})^{-1}\bd{\Sigma}^T\bd{U}^T\bd{b}
+        \end{align*}
+        
+        When the regularization parameter $\lambda\approx 0$, we essentially return to the original least-squares problem in \ref{eq:leastsquares}. When $\lambda$ is large, we penalize large values of $\bd{x}$ so we encourage $\bd{x}$'s with smaller norms.
+
+

@@ -94,6 +94,66 @@
 \begin{remark}
     The Gram-Schmidt Process works for arbitrary inner products. However, it is most commonly done with the dot product since this preserves the fact that orthogonal is equivalent to the vectors being perpendicular which is not true for arbitrary inner products.
 \end{remark}
+
+\begin{theorem}[Parallelogram Identity]
+    Let $\vec{u},\vec{v}\in V$ where $V$ is an inner product space and we define $||\vec{u}||=\sqrt{\langle\vec{u},\vec{u}\rangle}$. Then
+    $$||\vec{u}+\vec{v}||^2+||\vec{u}-\vec{v}||^2=2(||\vec{u}||^2+||\vec{v}||^2)$$
+\end{theorem}
+
+\begin{theorem}
+    Let $(V,||\cdot||)$ be a normed vector space where the norm satisfies the parallelogram identity. Then there exists an inner product $\langle\cdot,\cdot\rangle$ such that $||\vec{u}||=\sqrt{\langle\vec{u},\vec{u}\rangle}$.
+\end{theorem}
+
+\begin{proof}
+    Consider $\langle\vec{u},\vec{v}\rangle=\frac{1}{4}(||\vec{u}+\vec{v}||^2+||\vec{u}-\vec{v}||^2)$.
+
+    \textbf{Step 1:} $\lin\vec{u},\vec{u}\rin=||\vec{u}||^2$, $\lin\vec{u},\vec{v}\rin=\lin\vec{v},\vec{u}\rin$, $\lin\vec{u},\vec{0}\rin=0$
+
+    \textbf{Step 2:} $2\lin\vec{u},\vec{w}\rin+2\lin\vec{v},\vec{w}\rin=\lin\vec{u}+\vec{v},\vec{w}\rin$ and $2\lin\vec{u},\vec{w}\rin=\lin\vec{u},2\vec{w}\rin$
+    
+    apply parallelogram identity to $\vec{u}+\vec{w}$ and $\vec{v}+\vec{w}$ then take $\vec{v}=0$
+
+    \textbf{Step 3:} $\lin\vec{u}+\vec{v},\vec{w}\rin=\lin\vec{u},\vec{w}\rin+\lin\vec{v},\vec{w}\rin$
+
+    Take $\frac{1}{2}\vec{w}$ in Step 2
+
+    \textbf{Step 4:} $\lin\lambda\vec{u},\vec{v}\rin=\lambda\lin\vec{u},\vec{v}\rin$
+
+    do for $\lambda\in\N$ then $\Z$ then $\Q$ then $\R$
+\end{proof}
+
+\begin{theorem}[Riesz Representation Theorem]
+    Let $V$ be a finite-dimensional complex vector space and $f:V\to\C$ be linear. Then there exists a unique vector $\vec{v}\in V$ such that for all $\vec{u}\in V$,
+    \[
+    f(\vec{u})=\lin\vec{u},\vec{v}\rin
+    \]
+\end{theorem}
+
+\begin{proof}
+    \textbf{Step 1: Existence}
+
+    Let $\vec{e}_1,\dots,\vec{e}_n$ be an orthonormal basis of $V$. Then we can write:
+    \begin{align*}
+        f(\vec{u})&=f(\lin\vec{u},\vec{e}_1\rin\vec{e}_1 + \dots + \lin\vec{u},\vec{e}_n\rin\vec{e}_n)\\
+        &=\lin\vec{u},\vec{e}_1\rin f(\vec{e}_1) + \dots + \lin\vec{u},\vec{e}_n\rin f(\vec{e}_n)\\
+        &=\lin\vec{u},\overline{f(\vec{e}_1)}\vec{e}_1\rin + \dots + \lin\vec{u},\overline{f(\vec{e}_n)}\vec{e}_n\rin\\
+        &=\lin\vec{u},\overline{f(\vec{e}_1)}\vec{e}_1 + \dots + \overline{f(\vec{e}_n)}\vec{e}_n\rin
+    \end{align*}
+    Thus, we can take $\vec{v}=\overline{f(\vec{e}_1)}\vec{e}_1 + \dots + \overline{f(\vec{e}_n)}\vec{e}_n$.
+
+    \textbf{Step 2: Uniqueness}
+
+    Suppose there exists $\vec{v}_1,\vec{v}_2\in V$ such that for all $\vec{u}\in V$,
+    \[
+    f(\vec{u})=\lin\vec{u},\vec{v}_1\rin=\lin\vec{u},\vec{v}_2\rin
+    \]
+    Observe that
+    \[
+    0 = \lin\vec{u},\vec{v}_1\rin - \lin\vec{u},\vec{v}_2\rin = \lin\vec{u},\vec{v}_1 - \vec{v}_2\rin
+    \]
+    Taking $\vec{u}=\vec{v}_1-\vec{v}_2$, we get that $\vec{v}_1-\vec{v}_2=\vec{0}$ so $\vec{v}_1=\vec{v}_2$.
+\end{proof}
+
 \section{Exercises 7}
 \begin{exercise}
     Let $\vec{x},\vec{y}\in\R^3$. Prove or disprove that $\langle\vec{x},\vec{y}\rangle=2x_1y_1+3x_2y_2+5x_3y_3$ where $\vec{x}=(x_1, x_2,x_3)$ and $\vec{y}=(y_1,y_2,y_3)$ is an inner product

@@ -11,6 +11,8 @@
 \usepackage{tikz-cd}
 \usetikzlibrary{calc}
 \usepackage{float}
+\usepackage{hyperref}
+\usepackage{cleveref}
 
 \geometry{margin=1in}
 \onehalfspacing
@@ -48,8 +50,16 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\eps}{\varepsilon}
-\DeclareMathOperator{\im}{im}
+\newcommand{\lin}{\langle}
+\newcommand{\rin}{\rangle}
+\newcommand{\bd}{\boldsymbol}
+\newcommand{\inprod}[2]{\langle#1,#2\rangle}
+\newcommand{\norm}[1]{\left\Vert#1\right\Vert}
+
+\DeclareMathOperator{\im}{Im}
 \DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\nll}{null}
 \DeclareMathOperator{\Ker}{Ker}
 \DeclareMathOperator{\Span}{span}
 \DeclareMathOperator{\sgn}{sgn}
+\DeclareMathOperator{\proj}{proj}

@@ -3,7 +3,7 @@
 \oldsection{Eigenvalues and Eigenvectors}
 Here we will only consider linear transformations $T_A:V\to V$ via $T_A(\vec{x})=A\vec{x}$ where $V$ is an arbitrary vector space over some field $\mathbb{F}$. In general, it is most common for this vector space to be $\mathbb{C}^n$ and we'll discuss the algebraic motivation behind this shortly. The motivation behind this chapter is the fact that often times we need to repeatedly apply linear transformations. This means that we need to compute $A^n\vec{x}$, but this is an expensive computation since matrix multiplication is not trivial to compute. In this chapter, we will analyze when we have "nicer" ways to compute $A^n\vec{x}$ and to what extent we can determine when we are in these scenarios.
 \begin{definition}
-    Let $A$ be a $n\times n$ matrix. Assume that we have $A\vec{x}=\lambda\vec{x}$ for $\vec{x}\in V$ and $\lambda\in\mathbb{F}$. We call $\lambda$ an eigenvalue of $A$ and $\vec{x}$ a corresponding eigenvector. $\vec{0}$ is not considered an eigenvector.
+    Let $A$ be a $n\times n$ matrix. Assume that we have $A\vec{x}=\lambda\vec{x}$ for $\vec{x}\in V\setminus\{\vec{0}\}$ and $\lambda\in\mathbb{F}$. We call $\lambda$ an eigenvalue of $A$ and $\vec{x}$ a corresponding eigenvector.
 \end{definition}
 Let's analyze when we have a solution for $A\vec{x}=\lambda\vec{x}$.
 \begin{align*}
@@ -128,6 +128,9 @@ We will use these as facts without proof as their proofs are highly unrelated to
 \begin{proof}
     Let $p(z)$ be our polynomial of degree $n\geq 1$. We induct on $n$. If $n=1$, then the Fundamental Theorem of Algebra gives us what we want. For $n>1$, the Fundamental Theorem of Algebra gives us one root $c$. Theorem 5.1.8 tells us that we can divide $p(z)$ by this $z-c$ to get a degree $n-1$ polynomial. Induction now concludes the proof.
 \end{proof}
+
+
+
 \section{Diagonalization}
 We previously discussed taking large powers of $A$. This can be very expensive especially if $A$ is high dimensional. However, if we have the special case where $A$ is diagonal, this computation is really easy since:
 $$\begin{bmatrix}

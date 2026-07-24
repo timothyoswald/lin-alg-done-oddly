@@ -72,6 +72,10 @@ A more formal definition of a vector space is as follows:
 \end{definition}
 If you do not know what a group is, you can just ignore this definition and move on. But I think that even if you don't know what that is, you can believe that this is equivalent to the previous definition based on the properties.
 
+\begin{example}
+    Let $V$ be a vector space over a field $\mathbb{F}$ and let $A$ be a non-empty subset. We define $E^A$ to be the set of all functions from $A$ to $E$. We define vector addition to be $f,g\in E^A$ then $(f+g)(x)=f(x)+g(x)$ and for $\lambda\in\mathbb{F}$, we have that $\lambda f(x)=\lambda f(x)$
+\end{example}
+
 Vector space axioms do not explicitly contain everything about vectors. However, they are written in such a way that any standard rule of vectors can be derived from them. Below is an example:
 \begin{theorem}
     Let $V$ be a vector space. For all $\vec{v}\in V$, we have that $0\cdot\vec{v}=\vec{0}$
@@ -86,7 +90,7 @@ Vector space axioms do not explicitly contain everything about vectors. However,
     \end{align*}
 \end{proof}
 \begin{remark}
-    If a problem says a vector space $V$ over a field $\mathbb{F}$, you can make no assumptions about the vector space and field outside of the axioms. However, in general, it is safe to assume that if a vector space and field are not specifically listed, you are in $\R^N$ over $\mathbb{R}$
+    If a problem says a vector space $V$ over a field $\mathbb{F}$, you can make no assumptions about the vector space and field outside of the axioms.
 \end{remark}
 Vector spaces are often contain other vector spaces. For example, if we consider the $\R^2$ over $\R$, it contains the smaller vector space of all vectors which have the same first and second coordinate. One can check that the vector space axioms hold for this. This leads us to the definition of a subspace.
 \begin{definition}
@@ -95,13 +99,23 @@ Vector spaces are often contain other vector spaces. For example, if we consider
 \begin{remark}
     When proving something is a subspace, you don't actually need to go through and check all the axioms again. We already know that axioms like commutativity and associativity hold because $U$ is a subset of $V$. Thus, you don't need to check all of the axioms when proving that $U$ is a subspace.
 \end{remark}
-In general, to prove that $U\subseteq V$ is a subspace, you need to check that $\vec{0}\in U$, $U$ contains inverses, and $U$ is closed under operations. You should convince yourself that, as mentioned in the previous remark, the other axioms follow from the fact that $U\subseteq V$.
+In general, to prove that $U\subseteq V$ is a subspace, you need to check that $\vec{0}\in U$, and $U$ is closed under operations. You should convince yourself that, as mentioned in the previous remark, the other axioms follow from the fact that $U\subseteq V$.
 \begin{remark}
     Every vector space $V$ has two "canonical" subspaces: $\{\vec{0}_V\}$ and $V$ itself.
 \end{remark}
 \begin{example}
     Let $V=\mathbb{R}$. Is $U=\mathbb{N}$ a subspace of $V$? No, since $1\in U$ does not have an additive inverse.
 \end{example}
+
+\begin{definition}
+    Let $V$ be a vector space with $W_1,W_2,\dots, W_n$ being subspaces of $V$. We define the sum of these to be:
+    $$W_1+W_2+\dots+W_n=\{x_1+x_2+\dots+x_n:x_i\in W_i\}$$
+\end{definition}
+
+\begin{definition}
+    Let $V,W$ be vector spaces. We say that $V+W$ are in direct sum if for all $\vec{u}\in V+W$, we can write $\vec{u}=\vec{v}+\vec{w}$ uniquely for $\vec{v}\in V$ and $\vec{w}\in W$. This is denoted $V\oplus W$.
+\end{definition}
+
 \section{Linear Combinations and Span}
 It's important for vector spaces to have some notion of relationships between vectors. Generally, this is captured via the idea of linear combinations.
 \begin{definition}
@@ -188,6 +202,19 @@ We will begin using the fact that $0\cdot\vec{v}=\vec{0}$
         c\vec{0}&=\vec{0}\tag{Additive Inverse}
     \end{align*}
 \end{proof}
+
+\begin{exercise}
+    Consider the vector space of $\R$ over $\R$. Show that the only subspaces are $\{0\}$ and $\R$.
+\end{exercise}
+
+\begin{exercise}
+    Show that the intersection of arbitrarily many subspaces is a subspace.
+\end{exercise}
+
+\begin{exercise}
+    Show that the union of two subspaces is not necessarily a subspace.
+\end{exercise}
+
 \begin{exercise}
     Let $L=((1,-1),(-\sqrt{2},\sqrt{2}))$ from $\mathbb{R}^2$ over $\mathbb{R}$. Find, with proof, $span(L)$
 \end{exercise}
@@ -355,7 +382,7 @@ We have had all this discussion about bases but have yet to discuss how to actua
     \end{align*}
     This is a contradiction since we have shown that $\vec{v}_{k+1}\in span(L)$. Thus, the second case is not possible and we must have $a_{k+1}=0$ which we showed implies all the coefficients are zero. This proves linear independence.
 
-    You can repeat this process until the $span(L)=V$. We've shown that at every step the new list is still linearly independent. Now we must show that it stops when $k=n$ and that the $span(L)=V$ at that point. If the process did not stop at $k=n$, then we would add another vector and the list would still be linearly dependent. However, this is impossible since we would then have a list of $n+1$ linearly independent vectors. The only way for the process to stop is if there are no more vectors in $V$ that are not in $span(L)$. Thus, the process stops when $k=n$ and $span(L)=V$.
+    You can repeat this process until the $span(L)=V$. We've shown that at every step the new list is still linearly independent. Now we must show that it stops when $k=n$ and that the $span(L)=V$ at that point. If the process did not stop at $k=n$, then we would add another vector and the list would still be linearly independent. However, this is impossible since we would then have a list of $n+1$ linearly independent vectors. The only way for the process to stop is if there are no more vectors in $V$ that are not in $span(L)$. Thus, the process stops when $k=n$ and $span(L)=V$.
 \end{proof}
 This theorem is also immensely powerful. It tells you that any linearly independent list is a component of a basis. In fact, it is a component of infinitely many bases and you can build a basis by slowly adding vectors that are not in the span of your list so far. We leave the theorem regarding shrinking spanning lists as an exercise.
 
