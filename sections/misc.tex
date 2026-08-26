@@ -1,84 +1,6 @@
-\section{Minimal Polynomial}
-This section will discuss a different point of view on eigenvalues and linear transformations. The idea of a minimal polynomial also manifests itself as the generator of ideals in polynomial rings and we'll see a similar result here.
-\begin{definition}
-    A monic polynomial is a polynomial where the coefficient of the highest degree term is $1$.
-\end{definition}
-First, we discuss a slight abuse of notation. Let $p(x)=\sum_{i=1}^nc_ix^i$ be a polynomial with coefficients in $\mathbb{F}$. For a linear transformation $T:V\to V$ where $V$ is over the field $\mathbb{F}$, we define $p(T)(\vec{v})=\sum_{i=1}^nc_iT^i(\vec{v})$.
-\begin{theorem}
-    Let $V$ be a finite-dimensional vector space over $\mathbb{F}$ and $T:V\to V$ be a linear transformation. Then there exists a unique monic polynomial of smallest degree in $\mathbb{P}(\mathbb{F})$ such that $p(T)=\vec{0}$. Moreover, $\text{deg}(p)\leq\dim(V)$.
-\end{theorem}
+\chapter{Miscellaneous/Work in Progress}
 
-\begin{proof}
-    First, we show existence of such a monic polynomial not necessarily of minimal degree. We proceed by induction on $\dim(V)$. If $\dim(V)=0$, then $V=\{0\}$ and the only linear transformation on $V$ is $T(0)=0$. The unique monic polynomial is $p(x)=1$ since then $p(T)=\text{Id}_V$ but the only vector in $V$ is the zero vector so this is exactly the zero transformation. 
-
-    Now let $\dim(V)>0$ and assume the statement is true for all vector spaces of smaller dimension. Let $n:=\dim(V)$ and $\vec{v}\in V$, $\vec{v}\neq\vec{0}$. Consider the list $(\vec{v},T(\vec{v}),T^2(\vec{v}),\dots, T^n(\vec{v}))$. This is a list of length $n+1$ in an $n$-dimensional space so it must be linearly dependent. This means we can find $k\in[n-1]$ such that $(\vec{v},T(\vec{v}),\dots,T^k(\vec{v}))$ are linearly independent and $T^{k+1}(\vec{v})\in\Span(\{\vec{v},T(\vec{v}),\dots,T^k(\vec{v})\})$ (can you see why?). Thus, we can write:
-    \[c_0\vec{v}+c_1T(\vec{v})+\dots+c_kT^k(\vec{v})+T^{k+1}(\vec{v})=\vec{0}\]
-    Let $p(x):=c_0+c_1x+\dots c_kx^k+x^{k+1}$ and note that $p(T)=0$ since the above holds for any $\vec{v}\in V$. Now we check that $\deg(p)\leq\dim(V)$. Observe that for any $i\in\N$:
-    \[p(T)(T^i(\vec{v}))=T^i(p(T)(\vec{v}))=T^i(\vec{0})=\vec{0}\]
-    Thus, $T^i(\vec{v})\in\ker p(T)$. In particular, $(\vec{v},T(\vec{v}),T^2(\vec{v}),\dots, T^k(\vec{v}))$ is a linearly independent list in the kernel of $p(T)$ so $\nll(p(T))\geq k+1=\deg(p)$. Using Rank-Nullity, we get that
-    \begin{align*}
-        \dim(V)-(k+1)\geq\dim(V)-\nll(p(T))=\rank(p(T))\tag{1}
-    \end{align*}
-
-    Consider $T:\im(p(T))\to \im(p(T))$. This is well-defined because for $\vec{y}\in\im(p(T))$, there exists some $\vec{x}\in V$ such that $p(T)(\vec{x})=\vec{y}$:
-    \[T(\vec{y})=T(p(T)(\vec{x}))=p(T)(T(\vec{x}))\in\im(p(T))\]
-    (1) tells us $\im(p(T))$ has dimension strictly less than $V$. Thus, we can apply the Induction Hypothesis to find a unique monic polynomial of minimal degree $q$ such that $q(T\restriction_{\im(p(T))})=\vec{0}$ and $\deg(q)\leq\dim(V)-(k+1)$.
-    We claim that $qp$ is the desired unique monic polynomial. We compute:
-    \[(qp)(T)(\vec{v})=(q(T)p(T))(\vec{v})=q(T)(p(T)(\vec{v}))=\vec{0}\]
-    where the final equality follows from the fact that $p(T)(\vec{v})\in\im(p(T))$ so by construction of $q$, $q\restriction_{\im(p(T))}=\vec{0}$. Thus, $qp$ is a monic polynomial such that $qp(T)=\vec{0}$. The degree of polynomials is bounded from below by $0$ thus there exists a minimal one.
-
-    Now we show uniqueness. Let $p,q\in\mathbb{P}(\mathbb{F})$ be two monic polynomials of smallest degrees such that $p(T)=q(T)=\vec{0}$ but $p\neq q$. Notice that because $p$ and $q$ are both monic, $\deg(p-q)<\deg(p)=\deg(q)$. Let $c$ be the coefficient of the leading term of $p-q$. Notice that $\frac{1}{c}(p-q)$ is monic and $\frac{1}{c}(p-q)(T)=\vec{0}$. But this polynomial has smaller degree than $p$ and $q$ so this is a contradiction. T
-    \end{proof}
-
-    Now that we know such an object exists and is unique, we can formally define it.
-    \begin{definition}
-        Let $V$ be a finite dimensional vector space over a field $\mathbb{F}$ and $T:V\to V$ be a linear transformation. Then the \textit{minimal polynomial} of $T$ is the unique monic polynomial of smallest degree $p\in\mathbb{P}(\mathbb{F})$ such that $p(T)=\vec{0}$.
-    \end{definition}
-
-\begin{theorem}
-    The set of all roots of the minimal polynomial for a linear transformation $T$ is exactly the set of all eigenvalues of $T$.
-\end{theorem}
-
-\begin{theorem}
-    The minimal polynomial divides all polynomials which annihilate $T$ 
-\end{theorem}
-
-\begin{lemma}
-    Let $V$ be an $n$-dimensional vector space and $T:V\to V$ be a linear transformation such that $T$ can be written as an upper triangular matrix with diagonal entries $\lambda_1,\dots,\lambda_n$. Then:
-    $$(T-\lambda_1 I)\dots(T-\lambda_nI)=0$$
-\end{lemma}
-
-\begin{proof}
-    We proceed by induction on $n\in\N$. If $n=1$, then $(T-\lambda _1I)\vec{v}_1=T(\vec{v}_1)-\lambda\vec{v}_1=\vec{0}$. Assume the statement is true for all $(n-1)$-dimensional spaces so,
-    $$(T-\lambda_1 I)\dots(T-\lambda_{n-1}I)=0$$
-    Let $(\vec{v}_1,\dots,\vec{v}_n)$ be a basis by which $T$ is upper triangular. In particular the above expression sends $(\vec{v}_1,\dots,\vec{v}_{n-1})$ to $\vec{0}$. Now we consider $(T-\lambda_1 I)\dots(T-\lambda_{n-1}I)(T-\lambda_nI)$. Notice that $(T-\lambda_nI)\vec{v}_n\in\Span(\{\vec{v}_1,\dots,\vec{v}_{n-1}\})$. By Induction, $(\vec{v}_1,\dots,\vec{v}_{n-1})$ are sent to $\vec{0}$ and since $(T-\lambda_nI)\vec{v}_n\in\Span(\{\vec{v}_1,\dots,\vec{v}_{n-1}\})$, $\vec{v}_n$ also gets sent to $\vec{0}$. This map sends all basis vectors to $\vec{0}$ so it is the zero operator.
-\end{proof}
-
-\begin{theorem}
-    Let $T:V\to V$ be a linear transformation such that it can be written as an upper triangular maatrix. Then the eigenvalues of $T$ are the diagonal entries of said matrix.
-\end{theorem}
-
-\begin{proof}
-    Let $(\vec{v}_1,\dots,\vec{v}_n)$ be a basis by which $T$ is upper triangular with diagonal entries $\lambda_1,\dots,\lambda_n$. Clearly, $T(\vec{v}_1)=\lambda_1\vec{v}_1$. We again use the fact that $(T-\lambda_kI)\vec{v}_k\in\Span(\{\vec{v}_1,\dots,\vec{v}_{k-1}\})$. Notice that $T-\lambda_kI:\Span(\{\vec{v}_1,\dots,\vec{v}_k\})\to\Span(\{\vec{v}_1,\dots,\vec{v}_{k-1}\})$. In particular, this map is not injective and its kernel is nontrivial. Let $\vec{v}\in\ker(T-\lambda_kI)$ with $\vec{v}\neq\vec{0}$.
-    \begin{gather*}
-        (T-\lambda_kI)\vec{v}=\vec{0}\\
-        T(\vec{v})-\lambda_k\vec{v}=\vec{0}\\
-        T(\vec{v})=\lambda_k\vec{v}
-    \end{gather*}
-    This shows $\lambda_k$ is an eigenvalue of $T$. Thus, all entries on the diagonal are eigenvalues. It remains to show all eigenvalues are also on the diagonal. Consider $q(x)=(x-\lambda_1)\dots(x-\lambda_n)$. By the previous Lemma,
-    $$q(T)=(T-\lambda_1I)\dots(T-\lambda_nI)=0$$
-    Note that the minimal polynomial of $T$ must divide $Q$. We know that the roots of the minimal polynomial are exactly all the eigenvalues of $T$ so they are also roots of $q$. These are on the diagonal of $T$ because the roots of $q$ is exactly $\lambda_1,\dots,\lambda_n$.
-\end{proof}
-We now give a characterization of what types of linear transformations can be written as upper triangular matrices.
-\begin{theorem}
-    Let $T:V\to V$ be a linear transformation. $T$ has an upper triangular matrix with entries $\lambda_1,\dots,\lambda_n$ if and only if the minimal polynomial of $T$ can be written as $(x-\lambda_1)\dots(x-\lambda_n)$.
-\end{theorem}
-
-\begin{corollary}[Schur's Theorem]
-    Let $V$ be a complex vector space. Then any linear transformation $T:V\to V$ has an associated upper triangular matrix.
-\end{corollary}
-
-\subsection{Least Squares Solution and Normal Equation}
+\section{Least Squares Solution and Normal Equation}
 Let $(V,\langle\cdot,\cdot\rangle)$ be an inner product space and $\norm{\cdot}=\sqrt{\langle\cdot,\cdot\rangle}$. We let $\proj_V(\bd{v})$ denote the orthogonal projection of $\bd{v}$ onto $V$.
 
 We are interested in solving the problem $\bd{A}{\bd{x}}=\bd{b}$ but if $A$ is not surjective then this may not necessarily have a solution. In these cases, we may be interested in instead minimizing $||\bd{A}\bd{x}-\bd{b}||^2$.
@@ -323,7 +245,7 @@ Notice that $\bd{V}\bd{\Sigma}^{\dagger}\bd{U}^T$ is the Moore-Penrose Pseudoinv
 
 \subsubsection{$\bd{A}$ with trivial kernel}
 
-Note that we have uniqueness of the minimizer $\bd{x}^\star$ if and only if $\ker(\bd{A})$ is trivial (equivalently full rank or injective) using Theorem \ref{thm:least_squares_sol_characterization}.  If $\bd{x}^\star$ is unique, then $\ker(\bd{A})$ must be trivial since if it contained a non-zero vector $\bd{y}$ then we could find another minimizer $\bd{x}^\star+\bd{y}$ by Theorem \ref{thm:least_squares_sol_characterization}. If $\bd{A}$ has trivial kernel, then any minimizer must be unique again by Theorem \ref{thm:least_squares_sol_characterization}. \textcolor{red}{im curious if theres another way to prove this using the fact that the objective function (norm squared) is convex and perhaps when $\bd{A}$ is injective, it happens that the objective becomes strictly convex so it has a unique minimizer by some analysis - nathan}
+Note that we have uniqueness of the minimizer $\bd{x}^\star$ if and only if $\ker(\bd{A})$ is trivial (equivalently full rank or injective) using Theorem \ref{thm:least_squares_sol_characterization}.  If $\bd{x}^\star$ is unique, then $\ker(\bd{A})$ must be trivial since if it contained a non-zero vector $\bd{y}$ then we could find another minimizer $\bd{x}^\star+\bd{y}$ by Theorem \ref{thm:least_squares_sol_characterization}. If $\bd{A}$ has trivial kernel, then any minimizer must be unique again by Theorem \ref{thm:least_squares_sol_characterization}.
 
 Note that by Theorem \ref{thm:equal_kernels}, if $\ker(\bd{A})$ is trivial, then so is $\ker(\bd{A}^T\bd{A})$. $\bd{A}^T\bd{A}$ is a square matrix so this implies it is invertible. The normal equation (\ref{thm:normalequation}) allows us to write:
 \begin{align*}

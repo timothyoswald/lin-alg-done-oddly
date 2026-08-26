@@ -129,8 +129,6 @@ We will use these as facts without proof as their proofs are highly unrelated to
     Let $p(z)$ be our polynomial of degree $n\geq 1$. We induct on $n$. If $n=1$, then the Fundamental Theorem of Algebra gives us what we want. For $n>1$, the Fundamental Theorem of Algebra gives us one root $c$. Theorem 5.1.8 tells us that we can divide $p(z)$ by this $z-c$ to get a degree $n-1$ polynomial. Induction now concludes the proof.
 \end{proof}
 
-
-
 \section{Diagonalization}
 We previously discussed taking large powers of $A$. This can be very expensive especially if $A$ is high dimensional. However, if we have the special case where $A$ is diagonal, this computation is really easy since:
 $$\begin{bmatrix}
@@ -188,3 +186,224 @@ A common way this is notated is $P^{-1}DP=A$. Let's talk about why this achieves
 By induction, this gives us:
 $$([T]_{EE})^n=[I]_{EB}[T]_{BB}^n[I]_{BE}$$
 Since $[T]_{BB}$ is diagonal, computing $[T]_{BB}^n$ is simple. Afterwards, we only need to perform two matrix multiplications. This is way more efficient than trying to directly compute $[T]_{EE}^n$ which would require $n$ difficult matrix multiplications.
+
+\section{Minimal Polynomial}
+This section will discuss a different point of view on eigenvalues and linear transformations. The idea of a minimal polynomial also manifests itself as the generator of ideals in polynomial rings and we'll see a similar result here.
+\begin{definition}
+    A monic polynomial is a polynomial where the coefficient of the highest degree term is $1$.
+\end{definition}
+First, we discuss a slight abuse of notation. Let $p(x)=\sum_{i=1}^nc_ix^i$ be a polynomial with coefficients in $\mathbb{F}$. For a linear transformation $\bd{T}:V\to V$ where $V$ is over the field $\mathbb{F}$, we define $p(\bd{T})(\bd{v})=\sum_{i=1}^nc_i\bd{T}^i(\bd{v})$.
+\begin{theorem}
+    Let $V$ be a finite-dimensional vector space over $\mathbb{F}$ and $\bd{T}:V\to V$ be a linear transformation. Then there exists a unique monic polynomial of smallest degree in $\mathbb{P}(\mathbb{F})$ such that $p(\bd{T})=\bd{0}$. Moreover, $\deg(p)\leq\dim(V)$.
+\end{theorem}
+
+\begin{proof}
+    First, we show existence of such a monic polynomial not necessarily of minimal degree. We proceed by induction on $\dim(V)$. If $\dim(V)=0$, then $V=\{0\}$ and the only linear transformation on $V$ is $\bd{T}(0)=0$. The unique monic polynomial is $p(x)=1$ since then $p(\bd{T})=\text{Id}_V$ but the only vector in $V$ is the zero vector so this is exactly the zero transformation. 
+
+    Now let $\dim(V)>0$ and assume the statement is true for all vector spaces of smaller dimension. Let $n:=\dim(V)$ and $\bd{v}\in V$, $\bd{v}\neq\bd{0}$. Consider the list $(\bd{v},\bd{T}(\bd{v}),\bd{T}^2(\bd{v}),\dots, \bd{T}^n(\bd{v}))$. This is a list of length $n+1$ in an $n$-dimensional space so it must be linearly dependent. This means we can find $k\in[n-1]$ such that $(\bd{v},\bd{T}(\bd{v}),\dots,\bd{T}^k(\bd{v}))$ are linearly independent and $\bd{T}^{k+1}(\bd{v})\in\Span(\{\bd{v},\bd{T}(\bd{v}),\dots,\bd{T}^k(\bd{v})\})$ (can you see why?). Thus, we can write:
+    \[c_0\bd{v}+c_1\bd{T}(\bd{v})+\dots+c_k\bd{T}^k(\bd{v})+\bd{T}^{k+1}(\bd{v})=\bd{0}\]
+    Let $p(x):=c_0+c_1x+\dots c_kx^k+x^{k+1}$ and note that $p(\bd{T})=0$ since the above holds for any $\bd{v}\in V$. Observe that for any $i\in\N$:
+    \[p(\bd{T})(\bd{T}^i(\bd{v}))=T^i(p(T)(\bd{v}))=\bd{T}^i(\bd{0})=\bd{0}\]
+    Thus, $\bd{T}^i(\bd{v})\in\ker p(\bd{T})$. In particular, $(\bd{v},\bd{T}(\bd{v}),\bd{T}^2(\bd{v}),\dots, \bd{T}^k(\bd{v}))$ is a linearly independent list in the kernel of $p(\bd{T})$ so $\nll(p(\bd{T}))\geq k+1=\deg(p)$. Using Rank-Nullity, we get that
+    \begin{align*}
+        \dim(V)-(k+1)\geq\dim(V)-\nll(p(\bd{T}))=\rank(p(\bd{T}))\tag{1}
+    \end{align*}
+
+    Consider $\bd{T}:\im(p(\bd{T}))\to \im(p(\bd{T}))$. This is well-defined because for $\bd{y}\in\im(p(\bd{T}))$, there exists some $\bd{x}\in V$ such that $p(\bd{T})(\bd{x})=\bd{y}$:
+    \[\bd{T}(\bd{y})=\bd{T}(p(\bd{T})(\bd{x}))=p(\bd{T})(\bd{T}(\bd{x}))\in\im(p(\bd{T}))\]
+    (1) tells us $\im(p(\bd{T}))$ has dimension strictly less than $V$. Thus, we can apply the Induction Hypothesis to find a unique monic polynomial of minimal degree $q$ such that $q(\bd{T}\restriction_{\im(p(\bd{T}))})=\bd{0}$ and $\deg(q)\leq\dim(V)-(k+1)$.
+    We claim that $qp$ is the desired unique monic polynomial. We compute:
+    \[(qp)(\bd{T})(\bd{v})=(q(\bd{T})p(\bd{T}))(\bd{v})=q(\bd{T})(p(\bd{T})(\bd{v}))=\bd{0}\]
+    where the final equality follows from the fact that $p(\bd{T})(\bd{v})\in\im(p(\bd{T}))$ so by construction of $q$, $q\restriction_{\im(p(\bd{T}))}=\bd{0}$. Thus, $qp$ is a monic polynomial such that $qp(\bd{T})=\bd{0}$. The degree of polynomials is bounded from below by $0$ thus there exists a minimal one.
+
+    Now we show uniqueness. Let $p,q\in\mathbb{P}(\mathbb{F})$ be two monic polynomials of smallest degrees such that $p(\bd{T})=q(\bd{T})=\bd{0}$ but $p\neq q$. Notice that because $p$ and $q$ are both monic, $\deg(p-q)<\deg(p)=\deg(q)$. Let $c$ be the coefficient of the leading term of $p-q$. Notice that $\frac{1}{c}(p-q)$ is monic and $\frac{1}{c}(p-q)(\bd{T})=\bd{0}$. But this polynomial has smaller degree than $p$ and $q$ so this is a contradiction.
+    \end{proof}
+
+    Now that we know such an object exists and is unique, we can formally define it.
+    \begin{definition}
+        Let $V$ be a finite dimensional vector space over a field $\mathbb{F}$ and $\bd{T}:V\to V$ be a linear transformation. Then the \textit{minimal polynomial} of $\bd{T}$ is the unique monic polynomial of smallest degree $p\in\mathbb{P}(\mathbb{F})$ such that $p(\bd{T})=\bd{0}$.
+    \end{definition}
+
+Now we can take a look at what relationship this minimal polynomial has to the spectrum of a linear transformation. Note that we will say that a polynomial $p$ \textit{annihilates} a linear transformation $\T$ if $p(\T)=\bd{0}$.
+
+\begin{theorem}
+    The set of all roots of the minimal polynomial for a linear transformation $\bd{T}$ is exactly the set of all eigenvalues of $\bd{T}$.
+\end{theorem}
+
+\begin{proof}
+    Let $p$ be the minimal polynomial of $\bd{T}$.
+
+    \textbf{Step 1:}
+
+    Let $\lambda$ be a root of $p$. Then we can write
+    \[
+    p(\bd{T})=(\bd{T}-\lambda \bd{I})q(\bd{T})=\bd{0}
+    \]
+    for some polynomial $q$. Note that $\deg(q)<\deg(p)$. Since $p$ is the minimal polynomial, this means that $q$ cannot annihilate $\bd{T}$ so there must exist a vector $\bd{v}\in V$ such that $q(\bd{T})(\bd{v})\neq\bd{0}$. Now notice that
+    \[
+    p(\bd{T})(\bd{v})=(\bd{T}-\lambda \bd{I})q(\bd{T})\bd{v}=\bd{0}
+    \]
+    so $\lambda$ is an eigenvalue of $\bd{T}$ with eigenvector $q(\bd{T})\bd{v}$.
+
+    \textbf{Step 2:}
+
+    Let $\lambda$ be an eigenvalue of $\T$ with eigenvector $\vecv$ so $\T(\vecv)=\lambda\vecv$. Write
+    \[
+    p(\T)=c_0+c_1\T+\dots+c_n\T^n=\bd{0}
+    \]
+    Using that $\vecv$ is an eigenvector, we see
+    \[
+    p(\T)\vecv=(c_0+c_1\lambda+\dots+c_n\lambda^n)\vecv=\bd{0}
+    \]
+    Since $\vecv$ is an eigenvector, it cannot be the zero vector. Thus, we must have that $p(\lambda)=c_0+c_1\lambda+\dots+c_n\lambda^n=0$ so $\lambda$ is a root of $p$.
+\end{proof}
+
+\begin{corollary}
+    The minimal polynomial divides all polynomials which annihilate $\T$. 
+\end{corollary}
+
+\begin{proof}
+    Let $p$ be the minimal polynomial of $\T$ and $q$ be a polynomial which annihilates $\T$. Using the same argument as Step 2 from Theorem 6.1.4, we can see that all eigenvalues of $\T$ are roots of $q$. But the eigenvalues are exactly the roots of $p$ hence $p$ divides $q$.
+\end{proof}
+
+\begin{lemma}
+    Let $V$ be an $n$-dimensional vector space and $\T:V\to V$ be a linear transformation such that $\T$ can be written as an upper triangular matrix with diagonal entries $\lambda_1,\dots,\lambda_n$. Then:
+    $$(\T-\lambda_1 \I)\dots(\T-\lambda_n\I)=\bd{0}$$
+\end{lemma}
+
+\begin{proof}
+    We proceed by induction on $n\in\N$. If $n=1$, then $(\T-\lambda_1\I)\vecv_1=\T(\vecv_1)-\lambda_1\vecv_1=\bd{0}$. Assume the statement is true for all $(n-1)$-dimensional spaces so,
+    
+    $$(\T-\lambda_1 \I)\dots(\T-\lambda_{n-1}\I)=0$$
+    
+    Let $(\bd{v}_1,\dots,\bd{v}_n)$ be a basis by which $\T$ is upper triangular. In particular the above expression sends $(\vecv_1,\dots,\vecv_{n-1})$ to $\bd{0}$. Now we consider $(\T-\lambda_1 \I)\dots(\T-\lambda_{n-1}\I)(\T-\lambda_n\I)$. Notice that $(\T-\lambda_n\I)\vecv_n\in\Span(\{\vecv_1,\dots,\vecv_{n-1}\})$. By Induction, $(\vecv_1,\dots,\vecv_{n-1})$ are sent to $\bd{0}$ and since $(\T-\lambda_n\I)\vecv_n\in\Span(\{\vecv_1,\dots,\vecv_{n-1}\})$, $\vecv_n$ also gets sent to $\bd{0}$. This map sends all basis vectors to $\bd{0}$ so it is the zero operator.
+\end{proof}
+
+\begin{theorem}
+    Let $\T:V\to V$ be a linear transformation such that it can be written as an upper triangular matrix. Then the eigenvalues of $\T$ are the diagonal entries of said matrix.
+\end{theorem}
+
+\begin{proof}
+    Let $(\bd{v}_1,\dots,\bd{v}_n)$ be a basis by which $\T$ is upper triangular with diagonal entries $\lambda_1,\dots,\lambda_n$. Clearly, $\T(\bd{v}_1)=\lambda_1\bd{v}_1$. We again use the fact that $(\T-\lambda_k\I)\bd{v}_k\in\Span(\{\bd{v}_1,\dots,\bd{v}_{k-1}\})$. Notice that $\T-\lambda_k\I:\Span(\{\bd{v}_1,\dots,\bd{v}_k\})\to\Span(\{\bd{v}_1,\dots,\bd{v}_{k-1}\})$. In particular, this map is not injective and its kernel is nontrivial. Let $\bd{v}\in\ker(\T-\lambda_k\I)$ with $\bd{v}\neq\bd{0}$.
+    \begin{gather*}
+        (\T-\lambda_k\I)\bd{v}=\bd{0}\\
+        \T(\bd{v})-\lambda_k\bd{v}=\bd{0}\\
+        \T(\bd{v})=\lambda_k\bd{v}
+    \end{gather*}
+    This shows $\lambda_k$ is an eigenvalue of $\T$. Thus, all entries on the diagonal are eigenvalues. It remains to show all eigenvalues are also on the diagonal. Consider $q(x)=(x-\lambda_1)\dots(x-\lambda_n)$. By the previous Lemma,
+    $$q(\T)=(\T-\lambda_1\I)\dots(\T-\lambda_n\I)=0$$
+    Note that the minimal polynomial of $\T$ must divide $q$. We know that the roots of the minimal polynomial are exactly all the eigenvalues of $\T$ so they are also roots of $q$. These are on the diagonal of $\T$ because the roots of $q$ is exactly $\lambda_1,\dots,\lambda_n$.
+\end{proof}
+We now give a characterization of what types of linear transformations can be written as upper triangular matrices.
+\begin{theorem}
+    Let $V$ be a finite dimensional vector space and $\T:V\to V$ be a linear transformation. Then $\T$ has an upper triangular matrix with entries $\lambda_1,\dots,\lambda_n$ if and only if the minimal polynomial of $\T$ splits into linear factors.
+\end{theorem}
+
+\begin{proof}
+
+\textbf{Step 1:}
+
+    Assume $\T$ can be written as a upper triangular matrix with diagonal entries $\lambda_1,\dots,\lambda_n$. Then by Lemma 6.1.6, we can write
+    \[
+    (\T-\lambda_1\I)\dots(\T-\lambda_n\I)=\bd{0}
+    \]
+    So the polynomial
+    \[
+    q(x)=(x-\lambda_1)\dots(x-\lambda_n)
+    \]
+    annihilates $\T$. Then Corollary 6.1.5, tells us that the minimal polynomial of $\T$ divides $q$. Since $q$ only has linear factors, so does $p$.
+
+\textbf{Step 2:}
+
+    Assume that we can write the minimal polynomial of $\T$ as
+    \[
+    p(x)=(x-\mu_1)\dots(x-\mu_k)
+    \]
+    Define
+    \begin{enumerate}
+        \item $p_0(x)=1$
+        \item $p_1(x)=(x-\mu_1)$
+        \item $p_2(x)=(x-\mu_2)(x-\mu_1)$
+        \item $\vdots$
+        \item $p_k(x)=(x-\mu_k)p_{k-1}(x)=p(x)$
+    \end{enumerate}
+    Define $W_i:=\ker(p_i(\T))$ and observe that
+    \[
+    \{\bd{0}\}=W_0\subseteq W_1\subseteq\dots\subseteq W_k=V
+    \]
+    Construct a basis $(\vecv_1,\dots,\vecv_n)$ by first taking a basis for $W_1$ then extending it to a basis of $W_2$ and continuing until you have a basis for $W_k=V$. We claim that in this basis, $\T$ is upper triangular.
+
+    First, we observe that for any $\vecv\in V$, we have that
+    \[
+    \bd{0}=p_i(\T)\vecv=p_{i-1}(x)(\T-\mu_i\I)\vecv
+    \]
+    So $(\T-\mu_i\I)\vecv\in W_{i-1}$. Now take any $\vecv_j$ in the basis. It was added to the basis for some $W_j$ and from the observation this means that it belongs to $(\T-\mu_j\I)\vecv_j\in W_{j-1}$. But a basis for $W_{j-1}$ is $(\vecv_1,\dots,\vecv_{j-1})$ so $\vecv_j\in\Span(\vecv_1,\dots,\vecv_{j-1})$ and $\T$ is upper triangular.
+\end{proof}
+
+\begin{corollary}[Schur's Theorem]
+    Let $V$ be a complex vector space. Then any linear transformation $T:V\to V$ has an associated upper triangular matrix.
+\end{corollary}
+
+\begin{proof}
+    Let $p$ be the minimal polynomial of $\T$. Since we are over the field $\C$, $p$ factors completely into linear terms. Thus, by Theorem 6.1.8, we can write $\T$ in an upper triangular form.
+\end{proof}
+
+We will go over another proof of Schur's Theorem here. This style of argument is good to see especially since it is common when working with matrices in block forms as we will see with Jordan Normal Form.
+
+\begin{proof}
+    qoiweh
+\end{proof}
+
+\section{Generalized Eigenspaces}
+
+Here we will build towards the theory of a useful matrix form called the Jordan Normal Form. Along the way, we will discover another interpretation of algebraic multiplicity. Currently, we know algebraic multiplicity of an eigenvalue as its degree in the characteristic polynomial, but we have seen little to no significance in using it at all. 
+
+\begin{definition}
+    Let $V$ be a finite dimensional complex vector space and $\bd{A}:V\to V$ be a linear map. Let $\lambda$ be an eigenvalue of $\bd{A}$. We say that $\bd{v}\in V$ is a generalized eigenvalue of $\bd{A}$ corresponding to $\lambda$ if there exists $k\in\N$ such that $(\bd{A}-\lambda\bd{I})^k\bd{v}=\bd{0}$.
+\end{definition}
+
+\begin{definition}
+    We define the generalized eigenspace corresponding to $\lambda$ to be
+    \[
+    G_\lambda :=\bigcup_{k\in\N}\ker(\bd{A}-\lambda\bd{I})^k
+    \]
+\end{definition}
+
+The eigenspace $E_{\lambda}$ is essentially all vectors that are one step away from $\bd{0}$ under $\bd{A}-\lambda\bd{I}$. However, the generalized eigenspace $G_{\lambda}$ are all vectors that can eventually hit zero under some finite number of steps. The above definition is inpractical as it is an infinite union however we can simplify it. First, observe that this is an increasing sequence of kernels so
+\[
+\ker(\bd{A}-\lambda\bd{I})^k\subseteq\ker(\bd{A}-\lambda\bd{I})^{k+1}
+\]
+Next, we observe that if there exists $k\in\N$ such that
+\[
+\ker(\bd{A}-\lambda\bd{I})^k=\ker(\bd{A}-\lambda\bd{I})^{k+1}
+\]
+then for all $j\geq k$ we have
+\[
+\ker(\bd{A}-\lambda\bd{I})^k=\ker(\bd{A}-\lambda\bd{I})^{j}
+\]
+So if there exists some point at which the kernels are no longer growing then we have permanently stopped growing. Lastly, $\ker(\bd{A}-\lambda\bd{I})^k\subseteq V$ and $V$ has finite dimension so these kernels can only grow so much. An increasing sequence that is bounded from above must stop changing at some point hence the infinite union defining $G_{\lambda}$ is not truly infinite as after some finite point, the kernels converge.
+
+The importance of generalized eigenspaces is that they are disjoint (except for the zero vector) subspaces whose union is the entire space. This allows us to decompose a vector space into individual pieces that we can understand well with respect to an operator on the space. Towards this end, we first begin with
+
+\begin{theorem}
+    Let $V$ be a finite dimensional complex vector space and $\bd{A}:V\to V$ be a linear map. Let the eigenvalues of $\bd{A}$ be $\lambda_1,\dots,\lambda_n$. Then the following are true:
+    \begin{enumerate}
+        \item For $i,j\in[n]$ with $i\neq j$, $G_{\lambda_i}\cap G_{\lambda_j}=\{\bd{0}\}$
+        \item $V=\bigcup_{i=1}^n G_{\lambda_i}$
+    \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+    \textbf{Step 1}:
+
+    Let $\bd{v}\in G_{\lambda_i}\cap G_{\lambda_j}$ and $d_i,d_j\in\N$ be the smallest such exponents such that $(\bd{A}-\lambda_i\bd{I})^{d_i}\bd{v}=(\bd{A}-\lambda_j\bd{I})^{d_j}\bd{v}=\bd{0}$. Without loss of generality, we assume that $d_i\leq d_j$. Observe that 
+    \[
+    (\bd{A}-\lambda_i\bd{I})^{d_i}\bd{v}-(\bd{A}-\lambda_j\bd{I})^{d_i}\bd{v}=
+    \]
+\end{proof}
+
+\section{Exercises 8}
+
+\begin{exercise}
+    Let $V$ be a finite dimensional vector space and $\T:V\to V$ be a linear transformation. Then $\T$ is singular if and only if the constant term of the minimal polynomial of $\T$ is $0$.
+\end{exercise}
