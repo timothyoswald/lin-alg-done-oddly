@@ -356,7 +356,7 @@ We will go over another proof of Schur's Theorem here. This style of argument is
 
 \section{Generalized Eigenspaces}
 
-Here we will build towards the theory of a useful matrix form called the Jordan Normal Form. Along the way, we will discover another interpretation of algebraic multiplicity. Currently, we know algebraic multiplicity of an eigenvalue as its degree in the characteristic polynomial, but we have seen little to no significance in using it at all. 
+Here we will build towards the theory of a useful matrix form called the Jordan Normal Form. Along the way, we will discover another interpretation of algebraic multiplicity. Currently, we know algebraic multiplicity of an eigenvalue as its degree in the characteristic polynomial, but we have seen little to no significance in using it at all. The most important part of Generalized Eigenspaces is that they decompose the vector space i.e. we can write $V=\bigoplus_i G_{\lambda_i}$. Often times we want to analyze how an operator acts on $V$ but this is a huge task for a large vector space. However, this task becomes much easier when we look at the smaller spaces that we can decompose $V$ into.
 
 \begin{definition}
     Let $V$ be a finite dimensional complex vector space and $\bd{A}:V\to V$ be a linear map. Let $\lambda$ be an eigenvalue of $\bd{A}$. We say that $\bd{v}\in V$ is a generalized eigenvalue of $\bd{A}$ corresponding to $\lambda$ if there exists $k\in\N$ such that $(\bd{A}-\lambda\bd{I})^k\bd{v}=\bd{0}$.
@@ -381,29 +381,247 @@ then for all $j\geq k$ we have
 \[
 \ker(\bd{A}-\lambda\bd{I})^k=\ker(\bd{A}-\lambda\bd{I})^{j}
 \]
-So if there exists some point at which the kernels are no longer growing then we have permanently stopped growing. Lastly, $\ker(\bd{A}-\lambda\bd{I})^k\subseteq V$ and $V$ has finite dimension so these kernels can only grow so much. An increasing sequence that is bounded from above must stop changing at some point hence the infinite union defining $G_{\lambda}$ is not truly infinite as after some finite point, the kernels converge.
+So if there exists some point at which the kernels are no longer growing then we have permanently stopped growing. Lastly, $\ker(\bd{A}-\lambda\bd{I})^k\subseteq V$ and $V$ has finite dimension so these kernels can only grow so much. An increasing sequence that is bounded from above must stop changing at some point hence the infinite union defining $G_{\lambda}$ is equal to $\ker(\A-\lambda\I)^k$ for some value $k$.
 
-The importance of generalized eigenspaces is that they are disjoint (except for the zero vector) subspaces whose union is the entire space. This allows us to decompose a vector space into individual pieces that we can understand well with respect to an operator on the space. Towards this end, we first begin with
+We will now show that the generalized eigenspaces decompose the space. To begin, we will use two Lemmas.
+
+\begin{lemma}[Bezout's Identity for Polynomials]
+    Let $p$ and $q$ be polynomials over some field $\mathbb{F}$ and $d=\gcd(p,q)$. Then there exists some polynomials $a$ and $b$ over $\mathbb{F}$ such that $d(x)=a(x)p(x)+b(x)q(x)$.
+\end{lemma}
+
+\begin{proof}
+    See an Abstract Algebra class.
+\end{proof}
+
+\begin{lemma}
+    Let $V$ be a finite dimensional vector space and $\bd{A}:V\to V$ be a linear map with $\lambda$ as an eigenvalue. Then
+    \[
+        V=G_{\lambda}\oplus \im(\bd{A}-\lambda\I)^{d}
+    \]
+    where $G_{\lambda}=\ker(\bd{A}-\lambda\I)^{d}$.
+\end{lemma}
+
+\begin{proof}
+    By Rank-Nullity,
+    \[
+        \dim(G_{\lambda})+\dim(\im(\bd{A}-\lambda\I)^d)=\dim(V)
+    \]
+    Since the dimensions sum to the entire space, it remains to show that $G_{\lambda}$ and $\im(\bd{A}-\lambda\I)^d$ have trivial intersection.
+
+    Let $\vecv\in G_{\lambda}\cap \im(\bd{A}-\lambda\I)^d$. Then we can find $\vecu\in V$ such that $(\bd{A}-\lambda\I)^d\vecu=\vecv$. Applying $(\bd{A}-\lambda\I)^d$ to both sides we see $(\bd{A}-\lambda\I)^{2d}\vecu=\bd{0}$. In particular, $\vecu\in\ker(\bd{A}-\lambda\I)^{2d}$. However, we know that the kernel stabilized at $d$ so $\ker(\bd{A}-\lambda\I)^{2d}=\ker(\bd{A}-\lambda\I)^{d}$ so $(\bd{A}-\lambda\I)^d\vecu=\vecv=\bd{0}$.
+\end{proof}
 
 \begin{theorem}
     Let $V$ be a finite dimensional complex vector space and $\bd{A}:V\to V$ be a linear map. Let the eigenvalues of $\bd{A}$ be $\lambda_1,\dots,\lambda_n$. Then the following are true:
     \begin{enumerate}
         \item For $i,j\in[n]$ with $i\neq j$, $G_{\lambda_i}\cap G_{\lambda_j}=\{\bd{0}\}$
-        \item $V=\bigcup_{i=1}^n G_{\lambda_i}$
+        \item $V=\bigoplus_{i=1}^n G_{\lambda_i}$
     \end{enumerate}
 \end{theorem}
 
 \begin{proof}
     \textbf{Step 1}:
 
-    Let $\bd{v}\in G_{\lambda_i}\cap G_{\lambda_j}$ and $d_i,d_j\in\N$ be the smallest such exponents such that $(\bd{A}-\lambda_i\bd{I})^{d_i}\bd{v}=(\bd{A}-\lambda_j\bd{I})^{d_j}\bd{v}=\bd{0}$. Without loss of generality, we assume that $d_i\leq d_j$. Observe that 
+    Let $\bd{v}\in G_{\lambda_i}\cap G_{\lambda_j}$ and $d_i,d_j\in\N$ be such that $(\bd{A}-\lambda_i\bd{I})^{d_i}\bd{v}=(\bd{A}-\lambda_j\bd{I})^{d_j}\bd{v}=\bd{0}$. Define $p(x)=(x-\lambda_i)^{d_i}$ and $q(x)=(x-\lambda_j)^{d_j}$. Since $\lambda_i\neq\lambda_j$, $\gcd(p,q)=1$. By Bezout's Identity, we can find polynomials $a$ and $b$ such that
     \[
-    (\bd{A}-\lambda_i\bd{I})^{d_i}\bd{v}-(\bd{A}-\lambda_j\bd{I})^{d_i}\bd{v}=
+    a(x)p(x)+b(x)q(x)=1
     \]
+    Plugging in $\bd{A}$ and evaluating at $\bd{v}$, we get
+    \[
+    \bd{v}=\I\bd{v}=a(\bd{A})p(\bd{A})\vecv+b(\bd{A})q(\bd{A})\vecv=a(\bd{A})\bd{0}+b(\bd{A})\bd{0}=\bd{0}
+    \]
+
+    \textbf{Step 2:}
+
+    We proceed by induction on $n$ (the number of eigenvalues). Let $n=1$. We claim that $\im(\bd{A}-\lambda_1\I)^{d_1}=\{\bd{0}\}$. Suppose the space is nonzero. Then we can restrict $\bd{A}\restriction_{\im(\bd{A}-\lambda_1\I)^{d_1}}:\im(\bd{A}-\lambda_1\I)^{d_1}\to \im(\bd{A}-\lambda_1\I)^{d_1}$. Since it is over the complex numbers, this map must have at least one eigenvector $\vecw$. But then $\vecw\in G_{\lambda_1}\cap\im(\bd{A}-\lambda_1\I)^{d_1}$ so $\vecw=\bd{0}$ but eigenvectors can't be the zero vector. Thus, $\im(\bd{A}-\lambda_1\I)^{d_1}$ must be trivial and $V=G_{\lambda_1}$.
+
+    Let $n\in\N$ and assume the statement holds for all smaller dimensions. Again we consider the restriction $\bd{A}\restriction_{\im(\bd{A}-\lambda_1\I)^{d_1}}:\im(\bd{A}-\lambda_1\I)^{d_1}\to \im(\bd{A}-\lambda_1\I)^{d_1}$. Note that $\bd{A}\restriction_{\im(\bd{A}-\lambda_1\I)^{d_1}}$ is injective and has eigenvalues $\lambda_2,\dots,\lambda_{n-1}$. Thus, we can apply the Induction Hypothesis to get that
+    \[
+    V=G_{\lambda_1}\oplus\left(\bigoplus_{i=2}^nG_{\lambda_i}\right)=\bigoplus_{i=1}^nG_{\lambda_i}
+    \]
+\end{proof}
+Now we build towards the Jordan Normal Form of a matrix. This form is particularly useful for computing matrix exponentials i.e. $e^{\A}:=\sum_{k=0}^\infty\frac{\A^k}{k!}$ because it turns this infinite summation into a finite one (this will be an exercise). Matrix exponentials are extremely useful in many areas of math particularly differential equations.
+\begin{definition}
+    A block diagonal matrix $\A$ is a matrix of the form
+    \[
+    \A=\begin{bmatrix}
+        \A_1 & & & \\
+        & \A_2 & & \\
+        & & \ddots & \\
+        & & & \A_{k-1} & \\
+        & & & & \A_k
+    \end{bmatrix}
+    \]
+    where $\A_1,\dots,\A_k$ are square matrices along the main diagonal and all other entries are $0$.
+\end{definition}
+
+\begin{theorem}
+    Let $V$ be a complex vector space and $\A:V\to V$ be a linear transformation. Then there exists a basis $B$ such that $\A$ is block diagonal.
+\end{theorem}
+
+\begin{proof}
+    Let $\A$ have distinct eigenvalues $\lambda_1,\dots\lambda_k$. Consider $\A\restriction_{G_{\lambda_1}}$. We know that $\A(G_{\lambda_1})\subseteq G_{\lambda_1}$. Let $B_1$ be a basis for $G_{\lambda_1}$. This means that when we apply $\A\restriction_{G_{\lambda_1}}$ to $G_{\lambda_1}$ we only need basis vectors from $B_1$ to represent the result. Let $\A_1$ be a $\dim(G_{\lambda_1})\times\dim(G_{\lambda_1})$ matrix representing $\A\restriction_{G_{\lambda_1}}$ from $B_1$ to $B_1$. Define $\A_2,\dots,\A_k$ similarly. Then we have for $B=(B_1,\dots,B_k)$
+    \[
+    [\A]_{BB}=\begin{bmatrix}
+        \A_1 & & & \\
+        & \A_2 & & \\
+        & & \ddots & \\
+        & & & \A_{k-1} & \\
+        & & & & \A_k
+    \end{bmatrix}
+    \]
+    First, we note that $B$ is a basis for $V$ since We know that $V=\bigoplus_{i=1}^k G_{\lambda_i}$. Within each generalized eigenspace, the image of that generalized eigenspace is contained with itself. Thus, we only need the vectors from that individual space to represent the output. This leads to the blocks for each generalized eigenspace.
+\end{proof}
+
+\begin{definition}
+    Let $\bd{N}$ be a linear transformation. We say that $\bd{N}$ is nilpotent if there exists $k\in\N$ such that $\bd{N}^k=\bd{0}$
+\end{definition}
+Suppose we are working in a generalized eigenspace $G_{\lambda}$ for a linear transformation $\T$. We know that $(\T-\lambda\I)^k=\bd{0}$ for some $k\in\N$ inside $G_{\lambda}$. In particular, $\bd{N}:=\T-\lambda\I$ is nilpotent. Using this we can write, $\T=\bd{N}+\lambda\I$ so if we can understand the nilpotent matrix $\bd{N}$ then all we have to do is add $\lambda$ on the diagonal to understand $\T$.
+
+Further suppose that you can find some $\vecv$ such that for some constant $j\in\N$, $\bd{N}^j\vecv=\bd{0}$ but $\bd{N}^{j-1}\vecv\neq\bd{0}$. We call the sequence $\vecv,\bd{N}\vecv,\bd{N}^2\vecv,\dots,\bd{N}^{j-1}\vecv$ a Jordan Chain. Now let $\vecv_1=\bd{N}^{j-1}\vecv,\vecv_2=\bd{N}^{j-2}\vecv,\dots$. We observe that
+\begin{gather*}
+    \bd{N}\vecv_1=\bd{0}\\
+    \bd{N}\vecv_2=\vecv_1\\
+    \bd{N}\vecv_3=\vecv_2\\
+    \vdots\\
+    \bd{N}\vecv_j=\vecv_{j-1}
+\end{gather*}
+We will be particularly concerned with cycles of this form.
+
+\begin{theorem}
+    Let $\bd{N}$ be a nilpotent matrix and $\vecv,\bd{N}\vecv,\bd{N}^2\vecv,\dots,\bd{N}^{j-1}\vecv$ be a Jordan Chain. Then $\vecv,\bd{N}\vecv,\bd{N}^2\vecv,\dots,\bd{N}^{j-1}\vecv$ are linearly independent.
+\end{theorem}
+
+\begin{proof}
+    Suppose there exists constants $\alpha_0,\dots\alpha_{j-1}$ such that
+    \[\alpha_0\vecv+\alpha_1\bd{N}\vecv+\alpha_2\bd{N}^2\vecv+\dots+\alpha_{j-1}\bd{N}^{j-1}\vecv=\bd{0}
+    \]
+    Assume, for sake of contradiction, that there exists some constant that is nonzero. Let $i$ be the smallest index such that $\alpha_i\neq 0$. So all the terms before $\alpha_i$ vanish. Apply $\bd{N}^{j-i-1}$ to both sides to get
+    \[
+    \alpha_{i}\bd{N}^{j-1}\vecv=\bd{0}
+    \]
+    since this makes all the terms after $\alpha_i$ vanish. But this implies that $\alpha_i=0$ which is a contradiction.
+\end{proof}
+Suppose that for a nilpotent matrix $\bd{N}$ we have a Jordan Chain with length equal to the dimension of the space $\vecv, \bd{N}\vecv,\dots,\bd{N}^{n-1}\vecv$. By the previous Theorem, this list is linearly indenpendent and since it has the correct size,  the Jordan Chain is actually a basis for the space. As before, we will name these vectors using the convention $\vecv_i=\bd{N}^{n-i}\vecv$ and define the ordered basis $B=(\vecv_1,\dots,\vecv_{n})$. Now we can write $\bd{N}$ in this basis as
+\[
+[\bd{N}]_{BB}=\begin{bmatrix}
+     0 & 1 & & & 0\\
+     & 0 & 1 & & \\
+     & & \ddots& \ddots & \\
+     & & & 0 & 1 \\
+     0 & & & & 0
+\end{bmatrix}
+\]
+where the $1$'s are on the diagonal directly above the main diagonal and all other entries are $0$. We will refer to this as a "one-off" matrix.
+\begin{definition}
+    Let $\bd{N}$ be a nilpotent operator. We say that non-zero vectors $\vecv_1,\dots,\vecv_j$ form a cycle of generalized eigenvectors if $\bd{N}\vecv_1=\bd{0}$ and $\bd{N}\vecv_i=\vecv_{i-1}$ for $i\in[j]$.
+\end{definition}
+Note that this is essentially just taking a Jordan Chain and reversing it as we did previously. Recall the goal of this section: we want to analyze an operator by understanding how it acts on different pieces of the vector space. These cycles will more or less be the individual pieces that we are looking at.
+\begin{theorem}
+    Let $\bd{N}:V\to V$ be a nilpotent matrix and $\mathcal{C}_1,\dots,\mathcal{C}_k$ be cycles of generalized eigenvectors where $\mathcal{C}_i=\vecv_1^i,\dots,\vecv_{\ell_i}^i$ and the collection of $\vecv^i_1$ is linearly independent. Then $\mathcal{C}_1,\dots,\mathcal{C}_k$ are pairwise disjoint and their union is linearly independent.
+\end{theorem}
+
+\begin{proof}
+    Without loss of generality, we assume that the $\vecv_j^i$'s span $V$. If not, we instead consider the restriction of $\bd{N}$ to the invariant subspace which is the span of the $\vecv_j^i$'s. Let $n=\ell_1+\dots+\ell_k$. We proceed by induction on $n$. If $n=1$, then there is nothing to prove. Now suppose that for all operators and all cycles such that the total number of vectors is strictly less than $n$, the Theorem holds.
+
+    Consider the subspace $\im\bd{N}$. By the definition of a cycle, any vector in the image does not use the vector $\vecv^i_{\ell_i}$. Each vector $\vecv^i_j$ maps to the vector "below" it $\vecv^i_{j-1}$ so the final vector $\vecv^i_{\ell_i}$ is never used. This means that the cycles $\mathcal{C}'_i=\vecv^i_1,\dots,\vecv^i_{\ell_{i}-1}$ form a collection of $n-k$ vectors. Thus, we can apply the Induction Hypothesis to get that all of these vectors are linearly independent. 
+    
+    Since these vectors also span the image, we get that $\dim(\im\bd{N})=n-k$. Observe that all of the $\vecv_1^i$'s belong to $\ker(\bd{N})$ and that they are linearly independent. This implies that $\dim(\ker(\bd{N}))\geq k$. Rank-Nullity tells us that
+    \[
+    \dim(V)=\dim(\im(\bd{N}))+\dim(\ker(\bd{N}))\geq n-k+k=n
+    \]
+    We assumed that the collection of the $n$ $\vecv^i_j$'s spans $V$ so in fact these vectors form a basis for $V$.
+\end{proof}
+
+\begin{remark}
+    It seems like at the end we conclude that in fact the union of any number of cycles forms a basis for the space. This should be extremely suspicious as we can simply consider the case when we only have $1$ cycle and there should be no reason this forms a basis. This is hidden in the fact that we assumed, without loss of generality, that the vectors span the vector space. In general, this means we are forced to restrict to the smaller space which is the true span of the collection of cycles.
+\end{remark}
+
+We have shown that unions of "special" cycles are linearly independent. The natural next step now is to go from linear independence to a basis. This next Theorem will show just that and you will notice that the argument is borderline the inverse of the previous argument: instead of removing a vector from each chain, we will take a chain and add a vector.
+
+\begin{theorem}
+    Let $\bd{N}:V\to V$ be a nilpotent matrix. Then there exists a basis of $V$ which is the union of cycles of generalized eigenvectors of $\bd{N}$.
+\end{theorem}
+
+\begin{proof}
+    Let $n=\dim(V)$. We proceed by induction on $n$. If $n=1$, then there is nothing to prove. Assume that the Theorem holds for any nilpotent operator on a space of dimension strictly less than $n$.
+
+    Since $\bd{N}$ is nilpotent, $\bd{N}$ is not invertible (exercise). Thus, $\dim(\im\bd{N})<\dim(V)=n$. Furthermore, $\bd{N}$ is invariant on $\im\bd{N}$ so consider the operator that is $\bd{N}_{\restriction_{\im\bd{N}}}:\im\bd{N}\to \im\bd{N}$. We can apply the Induction Hypothesis to $\bd{N}_{\restriction_{\im\bd{N}}}$ to get a collection of cycles $\mathcal{C}_1,\dots,\mathcal{C}_k$ where $\mathcal{C}_i=\vecv^i_1,\dots,\vecv^i_{\ell_i}$ and their union forms a basis for $\im\bd{N}$.
+
+    Since $\vecv^i_{\ell_i}\in\im\bd{N}$, we can find a vector $\vecv^i_{\ell_i+1}$ such that $\bd{N}\vecv^i_{\ell_i+1}=\vecv^i_{\ell_i}$. Now consider the cycles $\mathcal{C}_i'=\vecv^i_1,\dots,\vecv^i_{\ell_i},\vecv^i_{\ell_i+1}$. We know the collection of $\mathcal{C}_1,\dots,\mathcal{C}_k$ form a basis, so the $\vecv_1^i$'s are linearly independent. This means that the previous Theorem tells us that the union of the $\mathcal{C}'_i$'s is linearly independent.
+
+    The vectors $\vecv^i_1$ are linearly independent and all belong to $\ker(\bd{N})$, so we can extend them to a basis of $\ker(\bd{N})$, $\vecv^1_1,\dots\vecv^k_1,\vecu_1,\dots\vecu_j$. Treating the $\vecu_h$'s as cycles of length $1$, the previous Theorem tells us that the union $\mathcal{C}_1',\dots,\mathcal{C}_k',\vecu_1,\dots,\vecu_j$ is linearly independent. We claim that this union is a basis for $V$.
+
+    Observe that the total number of vectors in $\mathcal{C}'_1,\dots,\mathcal{C}'_k$ is $\dim(\im\bd{N})+k$ since we constructed these cycles by taking a basis for the image and then adding one vector to each cycle in the basis for the image. We also know that the dimension of the kernel is $k+j$.
+
+    This means that the total number of vectors in $\mathcal{C}_1',\dots,\mathcal{C}_k',\vecu_1,\dots,\vecu_j$ is $$\dim(\im(\bd{N}))+k+j=\dim(\im(\bd{N}))+\dim(\ker(\bd{N}))=\dim(V)$$
+\end{proof}
+
+\begin{definition}
+    Let $\bd{N}:V\to V$ be a nilpotent matrix. A basis of $V$ that can be written as the union of cycles of generalized eigenvectors of $\bd{N}$ is called a Jordan Canonical Basis for $\bd{N}$.
+\end{definition}
+
+Now we can define the Jordan Canonical Form of a nilpotent matrix.
+
+\begin{theorem}
+    Let $\bd{N}:V\to V$ be a nilpotent matrix. Then there exists a basis $B$ of $V$ such that $[\bd{N}]_{BB}$ is block diagonal, $[\bd{N}]_{BB}=\mathrm{diag}(\A_1,\dots,\A_k)$ where $\A_i$ are all "one-off" matrices except for at most one which can be a zero matrix.
+\end{theorem}
+
+\begin{proof}
+    We know that we can find a Jordan Canonical Basis $B$. A length $\ell$ cycle corresponds to a $\ell\times\ell$ "one-off" matrix. When $\ell=1$, this is just a $1\times 1$ matrix containing $0$. To get the at most one zero matrix, we simply place these $1\times 1$ matrices next to each other so if we have $k$ of them they form a $k\times k$ zero matrix since all other entries are zero and all the diagonal entries are zero.
+\end{proof}
+
+Now we return to general matrices $\bd{A}:V\to V$ and show that we can decompose them.
+
+\begin{theorem}[Jordan Decomposition Theorem]
+    Let $\bd{A}:V\to V$ be a linear transformation. Then there exists a basis $B$ of $V$ such that $[\A]_{BB}$ is block diagonal and each block has the form
+    \[
+    \begin{bmatrix}
+        \lambda & 1 & & &\\
+        & \lambda & 1 & &\\
+        & & \ddots & \ddots &\\
+        & & & \lambda & 1\\
+        & & & & \lambda
+    \end{bmatrix}
+    \]
+    where $\lambda$ is an eigenvalue of $\A$. This form is known as the Jordan Canonical Form (or Jordan Normal Form) of $\A$.
+\end{theorem}
+
+\begin{proof}
+    Let $\lambda_1,\dots,\lambda_n$ be the distinct eigenvalues of $\A$. We know that we can find a basis where $\A$ is in block diagonal form with blocks $\A_1,\dots,\A_n$ ($\A_k=\A\restriction_{G_{\lambda_k}}$) corresponding to each individual generalized eigenspace. Define the nilpotent operator $\bd{N}_k=\bd{A}_k-\lambda_k\I$ and choose a basis of $G_{\lambda_k}$ where $\bd{N}_k$ is in Jordan Canonical Form. Then adding $\lambda_k\I$ yields the desired form.
 \end{proof}
 
 \section{Exercises 8}
 
 \begin{exercise}
     Let $V$ be a finite dimensional vector space and $\T:V\to V$ be a linear transformation. Then $\T$ is singular if and only if the constant term of the minimal polynomial of $\T$ is $0$.
+\end{exercise}
+
+\begin{exercise}
+    Let $\bd{N}$ be a nilpotent operator. Prove the following:
+    \begin{enumerate}[label=(\alph*)]
+        \item $\bd{N}$ is not invertible.
+        \item $\bd{N}$ is invariant on $\im(\bd{N}^{k})$ for $k\geq 1$
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+    Let $\A:V\to V$ be a linear transformation. Determine which of the following are true for the Jordan Normal Form of $\A$
+    \begin{enumerate}[label=(\alph*)]
+        \item The superdiagonal is all $1$'s
+        \item The superdiagonal within each generalized eigenspace is all $1$'s
+        \item The superdiagonal for each Jordan Block is all $1$'s
+    \end{enumerate}
+\end{exercise}
+
+\begin{exercise}
+    This exercise will be a short case study on matrix exponentials and why Jordan Normal Form is useful. For a matrix $\A$, we define
+    \[
+    e^{\A}:=\sum_{k=0}^\infty\frac{\A^k}{k!}
+    \]
+    Note that this is just the Taylor Series for $e^x$ with $\A$ plugged in. Unfortunately, this is an infinite sum and summing infinite powers of matrices is generally impossible, but Jordan Normal Form makes this much better.
+    \begin{enumerate}[label=(\alph*)]
+        \item Show that for $n\times n$ matrices $\A,\bd{B}$ such that $\A$ and $\bd{B}$ commute, $e^{\A+\B}=e^{\A}e^{\B}$. Note that this is false in general without commutativity.
+        \item Find an alternate formula for $e^{\A}$ with a finite summation. (Hint: Use Jordan Normal Form!)
+    \end{enumerate}
 \end{exercise}
